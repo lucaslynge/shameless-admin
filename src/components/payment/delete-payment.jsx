@@ -11,9 +11,10 @@ import { Button } from "../ui/button";
 import Loader from "../loader";
 import { Slide, toast } from "react-toastify";
 import { useDeleteUserMutation, useGetAllUsersQuery } from "@/lib/services/userApi";
-export default function DeleteUser({ isOpen, setIsOpen,customer }) {
-  const [DeleteUser,{isLoading}]=useDeleteUserMutation()
-  const { refetch: refetchUser } = useGetAllUsersQuery()
+import { useDeletePaymentMutation, useGetAllPaymentQuery } from "@/lib/services/paymentApi";
+export default function DeletePayment({ isOpen, setIsOpen,paymentId }) {
+  const [DeletePayment,{isLoading}]=useDeletePaymentMutation()
+  const {data,refetch}=useGetAllPaymentQuery()
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -30,9 +31,9 @@ export default function DeleteUser({ isOpen, setIsOpen,customer }) {
           type="button"
           variant="destructive"
           onClick={async() =>{
-            const id=customer._id
             try {
-              const response = await DeleteUser(id).unwrap();
+              const response = await DeletePayment(paymentId).unwrap();
+              refetch()
               toast.success(response.message, {
                 position: "bottom-right",
                 autoClose: 3000,
@@ -41,8 +42,8 @@ export default function DeleteUser({ isOpen, setIsOpen,customer }) {
                 type: "warning",
               });
               setIsOpen(false)
-              refetchUser()
             } catch (error) {
+              refetch()
               toast.error(error.data.message, {
                 position: "top-center",
                 autoClose: 3000,
@@ -50,6 +51,8 @@ export default function DeleteUser({ isOpen, setIsOpen,customer }) {
                 transition: Slide,
                 type: "error",
               });
+            } finally{
+              refetch()
             }
 
           }}

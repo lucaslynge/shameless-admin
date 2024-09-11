@@ -12,24 +12,22 @@ import Loader from "../loader";
 import { useGetAllUsersQuery, useUpdateUserMutation } from "@/lib/services/userApi";
 import { Slide, toast } from "react-toastify";
 import { Switch } from "../ui/switch";
-export default function EidtUser({ customer,isOpen, setIsOpen, customerId }) {
-  const [UpdateUser, { isLoading }] = useUpdateUserMutation();
-  const { refetch: refetchUser } = useGetAllUsersQuery()
-
-  console.log("customerId", customerId);
-  console.log("customer", customer);
+import { useGetAllCommunityQuery, useUpdateCommunityMutation } from "@/lib/services/communityApi";
+export default function EidtCommunity({ community,isOpen, setIsOpen, communityId }) {
+  const [UpdateCommunity, { isLoading }] = useUpdateCommunityMutation();
+  const { refetch: refetchCommunity } = useGetAllCommunityQuery()
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent >
         <Formik
           initialValues={{
-            is_paid: customer.is_paid,
+            is_paid: community?.is_paid,
           }}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             try {
-              const response = await UpdateUser({
-                id: customerId,
+              const response = await UpdateCommunity({
+                id: communityId,
                 body: values,
               }).unwrap();
               toast.success(response.message, {
@@ -40,7 +38,7 @@ export default function EidtUser({ customer,isOpen, setIsOpen, customerId }) {
                 transition: Slide,
                 type: "success",
               });
-              refetchUser()
+              refetchCommunity()
               setIsOpen(false);
               
             } catch (error) {

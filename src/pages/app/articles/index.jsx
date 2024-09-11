@@ -7,15 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Skeleton } from "@/components/ui/skeleton";
+
 import {
   Table,
   TableBody,
@@ -26,45 +18,44 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import AppLayout from "@/layouts/AppLayout";
-import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
-import AddUser from "@/components/user/add-user";
-import { useGetAllUsersQuery } from "@/lib/services/userApi";
 import Loader from "@/components/loader";
 import Mypaginations from "@/components/my-paginations";
-import { useGetAllCommunityQuery } from "@/lib/services/communityApi";
-import CummunityItem from "@/components/community/community-item";
-import AddCommunity from "@/components/community/add-community";
+import ArticelItem from "@/components/articel/articel";
+import { useGetAllArticleQuery } from "@/lib/services/articleApi";
+import { useRouter } from "next/router";
 
-export default function Community() {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Articel() {
+  const router=useRouter()
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading } = useGetAllCommunityQuery({
+  const { data, isLoading } = useGetAllArticleQuery({
     page:currentPage
   });
+
+  console.log("data",data)
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-  console.log("data",data)
   return (
     <AppLayout>
       <Card x-chunk="dashboard-05-chunk-3">
         <CardHeader className="px-7">
           <div className="flex gap-x-4">
             <div className="flex flex-col gap-2">
-              <CardTitle>Community</CardTitle>
-              <CardDescription>Recent Community from your store.</CardDescription>
+              <CardTitle>Articles</CardTitle>
+              <CardDescription>Recent Articels from your store.</CardDescription>
             </div>
             <div>
               <Button
-                onClick={() => setIsOpen(true)}
+                onClick={() => {
+                    router.push('/app/articles/add-article?isediting=false')
+                }}
                 size={"sm"}
                 variant={"default"}
               >
                 Add New
               </Button>
-              <AddCommunity isOpen={isOpen} setIsOpen={setIsOpen} />
             </div>
           </div>
         </CardHeader>
@@ -72,8 +63,10 @@ export default function Community() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Email</TableHead>
-                <TableHead className="hidden sm:table-cell">IsPaid</TableHead>
+                <TableHead>Headline</TableHead>
+                <TableHead className="hidden sm:table-cell">Age</TableHead>
+                <TableHead className="hidden sm:table-cell">Gender</TableHead>
+                <TableHead className="hidden sm:table-cell">Type</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
                 <TableHead className="hidden md:table-cell">Actions</TableHead>
               </TableRow>
@@ -88,8 +81,8 @@ export default function Community() {
                   </TableCell>
                 </TableRow>
               ) : (
-                 data.commmunity?.map((community, index) => (
-                  <CummunityItem key={index} community={community} />
+                data?.artical?.map((articel, index) => (
+                  <ArticelItem key={index} articel={articel} />
                 ))
               )}
             </TableBody>

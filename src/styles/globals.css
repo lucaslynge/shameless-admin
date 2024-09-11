@@ -13,3 +13,27 @@
     --radius: 0.5rem;
   }
 }
+.quill-container {
+  position: relative;
+}
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+  border-radius: 6px !important;
+  border-top: 1px solid #c8c8c8 !important;
+}
+.ql-editor {
+  height: 150px !important;
+}
+
+.ql-toolbar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+  border: 0 !important;
+}
+
+.ql-toolbar button {
+  background: #f2f2f2 !important;
+  border-radius: 5px !important;
+  margin: 5px !important;
+}

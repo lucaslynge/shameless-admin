@@ -9,13 +9,15 @@ import { useRouter } from "next/router";
 import { MdOutlinePayment } from "react-icons/md";
 import { CgCommunity } from "react-icons/cg";
 import { FaBlogger } from "react-icons/fa";
+import { getToken } from "next-auth/jwt";
 
 
 let sidebarNavigation = [
+  { name: "Dashboard", href: "dashboard", icon:HomeIcon , current: false },
   { name: "Users", href: "user", icon: UsersIcon, current: false },
+  { name: "Articles", href: "articles", icon: MdEditDocument, current: false },
   { name: "Community", href: "community", icon: CgCommunity, current: false },
   { name: "Payments", href: "payment", icon: MdOutlinePayment, current: false },
-  { name: "Articels", href: "ariticel", icon: MdEditDocument, current: false },
 ];
 
 const userNavigation = [
@@ -63,3 +65,5 @@ export default function AppLayout({ children }) {
     </>
   );
 }
+
+

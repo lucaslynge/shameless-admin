@@ -11,9 +11,10 @@ import { Button } from "../ui/button";
 import Loader from "../loader";
 import { Slide, toast } from "react-toastify";
 import { useDeleteUserMutation, useGetAllUsersQuery } from "@/lib/services/userApi";
-export default function DeleteUser({ isOpen, setIsOpen,customer }) {
-  const [DeleteUser,{isLoading}]=useDeleteUserMutation()
-  const { refetch: refetchUser } = useGetAllUsersQuery()
+import { useDeleteArticleMutation, useGetAllArticleQuery } from "@/lib/services/articleApi";
+export default function DeleteArticle({ isOpen, setIsOpen,articelId }) {
+  const [DeleteArticle,{isLoading}]=useDeleteArticleMutation()
+  const { refetch: refetchArticle } = useGetAllArticleQuery()
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -22,7 +23,7 @@ export default function DeleteUser({ isOpen, setIsOpen,customer }) {
           <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription>
             This action cannot be undone. Are you sure you want to permanently
-            delete this user from our servers?
+            delete this from our servers?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -30,9 +31,9 @@ export default function DeleteUser({ isOpen, setIsOpen,customer }) {
           type="button"
           variant="destructive"
           onClick={async() =>{
-            const id=customer._id
+       
             try {
-              const response = await DeleteUser(id).unwrap();
+              const response = await DeleteArticle(articelId).unwrap();
               toast.success(response.message, {
                 position: "bottom-right",
                 autoClose: 3000,
@@ -40,8 +41,8 @@ export default function DeleteUser({ isOpen, setIsOpen,customer }) {
                 transition: Slide,
                 type: "warning",
               });
+              refetchArticle()
               setIsOpen(false)
-              refetchUser()
             } catch (error) {
               toast.error(error.data.message, {
                 position: "top-center",

@@ -2,44 +2,34 @@ import React from 'react'
 import { TableCell, TableRow } from '../ui/table'
 import { Button } from '../ui/button'
 import { MdDelete, MdEdit } from 'react-icons/md'
-import { useDeleteUserMutation, useGetAllUsersQuery } from '@/lib/services/userApi'
-import { Badge } from '../ui/badge'
-import Loader from '../loader'
-import EidtUser from './edit-user'
-import DeleteUser from './delete-user'
+import dateFormat, { masks } from "dateformat";
+import DeletePayment from './delete-payment'
 
-export default function CustomerItem({customer}) {
+export default function PaymentItem({payment}) {
     const [isOpenEdit, setIsOpenEdit] = React.useState(false)
     const [isOpenDelete, setIsOpenDelete] = React.useState(false)
 
   return (
     <TableRow  className="bg-accent">
                       <TableCell>
-                        <div className="font-medium">{customer.name}</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          {customer.email}
-                        </div>
+                        <div className="font-medium">{payment.amount}</div>
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
-                        {customer.is_paid ? 'Yes':'No'}
+                          {payment.subscription_type}
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        {payment.payment_status}
                       </TableCell>
                   
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge
-                          className="text-xs"
-                          variant="secondary"
-                        >
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
+                  
                       <TableCell className="hidden md:table-cell">
-                        2023-06-23 
+                        {dateFormat(payment.payment_date, "dd-mm-yyyy")}
                       </TableCell>
                       <TableCell className="hidden md:table-cell ">
                         <Button variant={'secondary'} size={'icon'} onClick={()=>setIsOpenEdit(true)}>
                           <MdEdit size={20} />
                         </Button>
-                        <EidtUser customer={customer} isOpen={isOpenEdit} customerId={customer._id} setIsOpen={setIsOpenEdit}/>
+                        {/* <EidtUser customer={customer} isOpen={isOpenEdit} customerId={customer._id} setIsOpen={setIsOpenEdit}/> */}
 
                         <Button variant={'destructive'}  size={'icon'} onClick={async () => {
                           setIsOpenDelete(true)
@@ -48,7 +38,7 @@ export default function CustomerItem({customer}) {
                           {<MdDelete size={20} />}
 
                         </Button>
-                        <DeleteUser customer={customer} isOpen={isOpenDelete} customerId={customer._id} setIsOpen={setIsOpenDelete}/>
+                        <DeletePayment payment={payment} isOpen={isOpenDelete} paymentId={payment._id} setIsOpen={setIsOpenDelete}/>
 
                       </TableCell>
                     </TableRow>

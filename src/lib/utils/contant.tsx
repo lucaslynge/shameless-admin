@@ -1,1 +1,1 @@
-export const BASE_URL='https://second-payment-method-569204d96e9f.herokuapp.com'
+export const BASE_URL='https://hiv-be.onrender.com'

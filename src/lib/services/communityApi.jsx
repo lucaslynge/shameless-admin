@@ -2,8 +2,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../utils/contant";
 import { getToken } from "../utils/helper";
-export const userApi = createApi({
-  reducerPath: 'userApi',
+export const communityApi = createApi({
+  reducerPath: 'communityApi',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
@@ -16,15 +16,15 @@ export const userApi = createApi({
 
   }),
   endpoints: (build) => ({
-    GetAllUsers: build.query({
+    GetAllCommunity: build.query({
       query: (filter) => {
         const params=new URLSearchParams(filter).toString()
-        return { url: `/user/allData?${params}` }
+       return  { url: `community/allCommunity?${params}` }
       },
       transformResponse: (response) => response.data
     }),
-    CreateUser: build.mutation({
-      query: (credentials) => ({ url: `/user/userRegistration/`, method: 'POST', body: credentials }),
+    CreateCommunity: build.mutation({
+      query: (credentials) => ({ url: `community/createCommunity`, method: 'POST', body: credentials }),
       transformResponse: (response) => {
         return {
           response: response.data,
@@ -33,18 +33,8 @@ export const userApi = createApi({
         }
       }
     }),
-    LoginAdminUser: build.mutation({
-      query: (credentials) => ({ url: `/user/adminLogin`, method: 'POST', body: credentials }),
-      transformResponse: (response) => {
-        return {
-          data: response.data,
-          token: response.token,
-          success:response.success
-        }
-      }
-    }),
-    UpdateUser: build.mutation({
-      query: ({ id, body }) => ({ url: `/user/updateUser/${id}`, method: 'PUT', body: body }),
+    UpdateCommunity: build.mutation({
+      query: ({ id, body }) => ({ url: `/community/communityUpdate/${id}`, method: 'PUT', body: body }),
       transformResponse: (response) => {
         return {
           response: response.data,
@@ -54,8 +44,8 @@ export const userApi = createApi({
         }
       }
     }),
-    DeleteUser: build.mutation({
-      query: (id) => ({ url: `/user/userDelete/${id} `, method: 'DELETE' }),
+    DeleteCommunity: build.mutation({
+      query: (id) => ({ url: `/community/communityDelete/${id} `, method: 'DELETE' }),
       transformResponse: (response) => {
         return {
           response: response.data,
@@ -70,10 +60,9 @@ export const userApi = createApi({
 });
 
 export const { 
-  useGetAllUsersQuery,
-   useDeleteUserMutation, 
-  useCreateUserMutation,
-  useLoginAdminUserMutation,
-   useUpdateUserMutation } = userApi;
+ useGetAllCommunityQuery,
+ useCreateCommunityMutation,
+ useDeleteCommunityMutation,
+ useUpdateCommunityMutation
+} = communityApi;
 
-// Usage example

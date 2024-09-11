@@ -2,6 +2,7 @@ import { ReduxProvider } from "@/lib/redux/redux-provider";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 const inter = Inter({
   subsets: ["latin"],

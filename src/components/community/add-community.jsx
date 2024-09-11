@@ -8,24 +8,24 @@ import Input from "../form-input";
 import { useCreateUserMutation } from "@/lib/services/userApi";
 import { Slide, toast } from "react-toastify";
 import Loader from "../loader";
-export default function AddUser({ isOpen, setIsOpen }) {
-  const [CreateUser,{isLoading}]=useCreateUserMutation()
+import { useCreateCommunityMutation, useGetAllCommunityQuery } from "@/lib/services/communityApi";
+export default function AddCommunity({ isOpen, setIsOpen }) {
+  const [CreateCommunity,{isLoading}]=useCreateCommunityMutation()
+  const {refetch}=useGetAllCommunityQuery()
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
       <Formik
           initialValues={{
             email: "",
-            password: "",
-            expression:""
           }}
           onSubmit={async (
             values,
             { setSubmitting, resetForm }
           ) => {
-            console.log("values",values)
             try {
-              const response = await CreateUser(values).unwrap();
+              const response = await CreateCommunity(values).unwrap();
               toast.success(response.message, {
                 position: "top-center",
                 autoClose: 3000,
@@ -36,6 +36,7 @@ export default function AddUser({ isOpen, setIsOpen }) {
               });
               resetForm();
               setIsOpen(false)
+              refetch()
             } catch (error) {
               toast.error(error.data.message, {
                 position: "top-center",
@@ -47,7 +48,6 @@ export default function AddUser({ isOpen, setIsOpen }) {
             } finally {
               setSubmitting(false);
               resetForm();
-
             }
 
           }}
@@ -68,28 +68,7 @@ export default function AddUser({ isOpen, setIsOpen }) {
                   <div id="feedback" className="text-[12px]  text-red-500	">
                     {errors.email}
                   </div>
-                )}
-                <label className="text-sm font-semibold">Password</label>
-                <Field
-                  component={Input}
-                  type="password"
-                  name="password"
-                  placeholder="************"
-                />
-                {errors.password && touched.password && (
-                  <div id="feedback" className="text-[12px]  text-red-500	">
-                    {errors.password}
-                  </div>
-                )}
-                <label className="text-sm font-semibold">2+2</label>
-                <Field
-                  component={Input}
-                  type="number"
-                  name="expression"
-                  id="expression"
-                />
-                <ErrorMessage name="expression" component="div" />
-              </div>
+                )}              </div>
               <button
                 type="submit"
                 className=" mx-auto px-10 text-base text-center font-semibold bg-[#00132F] rounded-md text-white py-3 mt-4"
@@ -99,7 +78,7 @@ export default function AddUser({ isOpen, setIsOpen }) {
                      <Loader color="#00132f" /> <span>Loading...</span>
                   </div>
                 ) : (
-                  "Register"
+                  "Join Community"
                 )}
               </button>
             </Form>

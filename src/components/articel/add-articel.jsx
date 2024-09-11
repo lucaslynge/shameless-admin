@@ -8,7 +8,7 @@ import Input from "../form-input";
 import { useCreateUserMutation } from "@/lib/services/userApi";
 import { Slide, toast } from "react-toastify";
 import Loader from "../loader";
-export default function AddUser({ isOpen, setIsOpen }) {
+export default function AddArticel({ isOpen, setIsOpen }) {
   const [CreateUser,{isLoading}]=useCreateUserMutation()
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
