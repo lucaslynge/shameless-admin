@@ -11,9 +11,8 @@ import { Button } from "../ui/button";
 import Loader from "../loader";
 import { Slide, toast } from "react-toastify";
 import { useDeleteUserMutation, useGetAllUsersQuery } from "@/lib/services/userApi";
-export default function DeleteUser({ isOpen, setIsOpen,customer }) {
+export default function DeleteUser({ isOpen, setIsOpen,customer,refetch }) {
   const [DeleteUser,{isLoading}]=useDeleteUserMutation()
-  const { refetch: refetchUser } = useGetAllUsersQuery()
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -40,16 +39,20 @@ export default function DeleteUser({ isOpen, setIsOpen,customer }) {
                 transition: Slide,
                 type: "warning",
               });
+              refetch()
+
               setIsOpen(false)
-              refetchUser()
+              
             } catch (error) {
-              toast.error(error.data.message, {
+              toast.error(error?.data?.message, {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: true,
                 transition: Slide,
                 type: "error",
               });
+            } finally{
+              refetch()
             }
 
           }}

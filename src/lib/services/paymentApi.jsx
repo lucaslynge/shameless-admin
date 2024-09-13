@@ -34,7 +34,7 @@ export const paymentApi = createApi({
       }
     }),
     UpdatePayment: build.mutation({
-      query: ({ id, body }) => ({ url: `/community/communityUpdate/${id}`, method: 'PUT', body: body }),
+      query: ({ id, body }) => ({ url: `/payment/updateByAdminPayment/${id}`, method: 'PUT', body: body }),
       transformResponse: (response) => {
         return {
           response: response.data,

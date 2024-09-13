@@ -5,7 +5,7 @@ import { MdDelete, MdEdit } from 'react-icons/md'
 import DeleteArticle from './delete-article'
 import { useRouter } from 'next/router'
 
-export default function ArticelItem({articel}) {
+export default function ArticelItem({articel,refetch}) {
     const [isOpenDelete, setIsOpenDelete] = React.useState(false)
     const router=useRouter()
 
@@ -43,7 +43,7 @@ export default function ArticelItem({articel}) {
                           {<MdDelete size={20} />}
 
                         </Button>
-                        <DeleteArticle isOpen={isOpenDelete} articelId={articel._id} setIsOpen={setIsOpenDelete}/>
+                        <DeleteArticle refetch={refetch} isOpen={isOpenDelete} articelId={articel._id} setIsOpen={setIsOpenDelete}/>
 
                       </TableCell>
                     </TableRow>

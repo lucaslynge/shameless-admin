@@ -37,7 +37,7 @@ export default function AddUser({ isOpen, setIsOpen }) {
               resetForm();
               setIsOpen(false)
             } catch (error) {
-              toast.error(error.data.message, {
+              toast.error(error?.data?.message, {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: true,

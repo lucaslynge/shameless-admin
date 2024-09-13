@@ -12,7 +12,7 @@ import Loader from "../loader";
 import { Slide, toast } from "react-toastify";
 import { useDeleteUserMutation, useGetAllUsersQuery } from "@/lib/services/userApi";
 import { useDeleteArticleMutation, useGetAllArticleQuery } from "@/lib/services/articleApi";
-export default function DeleteArticle({ isOpen, setIsOpen,articelId }) {
+export default function DeleteArticle({ isOpen, setIsOpen,articelId,refetch }) {
   const [DeleteArticle,{isLoading}]=useDeleteArticleMutation()
   const { refetch: refetchArticle } = useGetAllArticleQuery()
 
@@ -51,6 +51,8 @@ export default function DeleteArticle({ isOpen, setIsOpen,articelId }) {
                 transition: Slide,
                 type: "error",
               });
+            } finally {
+              refetch()
             }
 
           }}

@@ -22,8 +22,11 @@ export default NextAuth({
                 password: credentials.password,
               }),
             });
-  
+ 
+            
             const user = await res.json();  
+
+            console.log("user....",user)
             // Return the user object if the request was successful
             if (res.ok && user?.token) {
 
@@ -51,7 +54,14 @@ export default NextAuth({
         token.accessToken=user.token
       }
       return token
+    },
+    async session({ session, token, user }) {
+      session.accessToken=token.accessToken
+      session.user.id = token.accessToken
+      return session
     }
-  }
+  },
+  secret:process.env.NEXTAUTH_SECRET,
+  
   
 });

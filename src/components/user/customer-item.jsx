@@ -8,7 +8,7 @@ import Loader from '../loader'
 import EidtUser from './edit-user'
 import DeleteUser from './delete-user'
 
-export default function CustomerItem({customer}) {
+export default function CustomerItem({customer,refetch}) {
     const [isOpenEdit, setIsOpenEdit] = React.useState(false)
     const [isOpenDelete, setIsOpenDelete] = React.useState(false)
 
@@ -48,7 +48,7 @@ export default function CustomerItem({customer}) {
                           {<MdDelete size={20} />}
 
                         </Button>
-                        <DeleteUser customer={customer} isOpen={isOpenDelete} customerId={customer._id} setIsOpen={setIsOpenDelete}/>
+                        <DeleteUser refetch={refetch} customer={customer} isOpen={isOpenDelete} customerId={customer._id} setIsOpen={setIsOpenDelete}/>
 
                       </TableCell>
                     </TableRow>

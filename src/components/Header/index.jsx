@@ -9,9 +9,15 @@ import {
 } from "@heroicons/react/24/outline";
 import { classNames } from "@/utils/generics";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@mui/material";
+import { useRouter } from "next/router";
+import { signOut } from "next-auth/react";
+import { logout } from "@/lib/features/authSlice";
 export default function Header({ userNavigation, setSidebarOpen }) {
   const user=useSelector((state)=>state.auth.user)
+  const router=useRouter()
+  const dispatch=useDispatch()
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
       <button
@@ -102,6 +108,24 @@ export default function Header({ userNavigation, setSidebarOpen }) {
                     )}
                   </Menu.Item>
                 ))}
+                   <Menu.Item >
+                    {({ active }) => (
+                      <Button
+                      
+                        onClick={()=>{
+                          signOut()
+                          dispatch(logout)
+                          router.push('/')
+                        }}
+                        className={classNames(
+                          active ? "bg-gray-50" : "",
+                          "block px-3 py-1 text-xs leading-6 text-gray-900"
+                        )}
+                      >
+                        Sign Out
+                      </Button>
+                    )}
+                  </Menu.Item>
               </Menu.Items>
             </Transition>
           </Menu>

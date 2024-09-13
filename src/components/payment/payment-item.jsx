@@ -4,8 +4,10 @@ import { Button } from '../ui/button'
 import { MdDelete, MdEdit } from 'react-icons/md'
 import dateFormat, { masks } from "dateformat";
 import DeletePayment from './delete-payment'
+import EidtUser from './edit-payment';
+import EidtPayemnt from './edit-payment';
 
-export default function PaymentItem({payment}) {
+export default function PaymentItem({payment,refetch}) {
     const [isOpenEdit, setIsOpenEdit] = React.useState(false)
     const [isOpenDelete, setIsOpenDelete] = React.useState(false)
 
@@ -29,7 +31,7 @@ export default function PaymentItem({payment}) {
                         <Button variant={'secondary'} size={'icon'} onClick={()=>setIsOpenEdit(true)}>
                           <MdEdit size={20} />
                         </Button>
-                        {/* <EidtUser customer={customer} isOpen={isOpenEdit} customerId={customer._id} setIsOpen={setIsOpenEdit}/> */}
+                        <EidtPayemnt paymentId={payment._id} isOpen={isOpenEdit} setIsOpen={setIsOpenEdit}/>
 
                         <Button variant={'destructive'}  size={'icon'} onClick={async () => {
                           setIsOpenDelete(true)
@@ -38,7 +40,7 @@ export default function PaymentItem({payment}) {
                           {<MdDelete size={20} />}
 
                         </Button>
-                        <DeletePayment payment={payment} isOpen={isOpenDelete} paymentId={payment._id} setIsOpen={setIsOpenDelete}/>
+                        <DeletePayment refetch={refetch} payment={payment} isOpen={isOpenDelete} paymentId={payment._id} setIsOpen={setIsOpenDelete}/>
 
                       </TableCell>
                     </TableRow>

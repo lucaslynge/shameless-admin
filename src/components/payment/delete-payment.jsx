@@ -12,9 +12,8 @@ import Loader from "../loader";
 import { Slide, toast } from "react-toastify";
 import { useDeleteUserMutation, useGetAllUsersQuery } from "@/lib/services/userApi";
 import { useDeletePaymentMutation, useGetAllPaymentQuery } from "@/lib/services/paymentApi";
-export default function DeletePayment({ isOpen, setIsOpen,paymentId }) {
+export default function DeletePayment({ isOpen, setIsOpen,paymentId,refetch }) {
   const [DeletePayment,{isLoading}]=useDeletePaymentMutation()
-  const {data,refetch}=useGetAllPaymentQuery()
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

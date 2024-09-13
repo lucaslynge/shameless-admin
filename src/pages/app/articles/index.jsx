@@ -24,11 +24,12 @@ import Mypaginations from "@/components/my-paginations";
 import ArticelItem from "@/components/articel/articel";
 import { useGetAllArticleQuery } from "@/lib/services/articleApi";
 import { useRouter } from "next/router";
+import { getToken } from "next-auth/jwt";
 
 export default function Articel() {
   const router=useRouter()
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading } = useGetAllArticleQuery({
+  const { data, isLoading,refetch } = useGetAllArticleQuery({
     page:currentPage
   });
 
@@ -82,7 +83,7 @@ export default function Articel() {
                 </TableRow>
               ) : (
                 data?.artical?.map((articel, index) => (
-                  <ArticelItem key={index} articel={articel} />
+                  <ArticelItem refetch={refetch} key={index} articel={articel} />
                 ))
               )}
             </TableBody>
@@ -99,3 +100,22 @@ export default function Articel() {
     </AppLayout>
   );
 }
+
+
+// export async function getServerSideProps(context) {
+//   const result=await getToken(context)
+//   const accessToken=result?.accessToken
+//   console.log("getToken",accessToken)
+//   if(!accessToken){
+//     return {
+//       redirect: {
+//         destination: '/',
+//         permanent: false,
+//       },
+//     }
+//   }
+//   return{
+//     props:{accessToken}
+//   }
+  
+// }

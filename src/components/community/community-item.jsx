@@ -10,7 +10,7 @@ import DeleteUser from './delete-community'
 import DeleteCommunity from './delete-community'
 import EidtCommunity from './edit-community'
 
-export default function CummunityItem({community}) {
+export default function CummunityItem({community,refetch}) {
     const [isOpenEdit, setIsOpenEdit] = React.useState(false)
     const [isOpenDelete, setIsOpenDelete] = React.useState(false)
 
@@ -43,7 +43,7 @@ export default function CummunityItem({community}) {
                           {<MdDelete size={20} />}
 
                         </Button>
-                        <DeleteCommunity community={community} isOpen={isOpenDelete} communityId={community._id} setIsOpen={setIsOpenDelete}/>
+                        <DeleteCommunity refetch={refetch} community={community} isOpen={isOpenDelete} communityId={community._id} setIsOpen={setIsOpenDelete}/>
 
                       </TableCell>
                     </TableRow>

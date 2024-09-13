@@ -11,10 +11,8 @@ import { Button } from "../ui/button";
 import Loader from "../loader";
 import { Slide, toast } from "react-toastify";
 import { useDeleteCommunityMutation, useGetAllCommunityQuery } from "@/lib/services/communityApi";
-export default function DeleteCommunity({ isOpen, setIsOpen,community,communityId }) {
+export default function DeleteCommunity({ isOpen, setIsOpen,refetch,communityId }) {
   const [DeleteCommunity,{isLoading}]=useDeleteCommunityMutation()
-  const { refetch: refetchCommunity } = useGetAllCommunityQuery()
-
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
@@ -40,7 +38,7 @@ export default function DeleteCommunity({ isOpen, setIsOpen,community,communityI
                 type: "warning",
               });
               setIsOpen(false)
-              refetchCommunity()
+              refetch()
             } catch (error) {
               toast.error(error.data.message, {
                 position: "top-center",
@@ -49,6 +47,8 @@ export default function DeleteCommunity({ isOpen, setIsOpen,community,communityI
                 transition: Slide,
                 type: "error",
               });
+            } finally{
+              refetch()
             }
 
           }}

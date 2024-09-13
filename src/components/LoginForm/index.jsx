@@ -33,18 +33,20 @@ export default function LoginForm() {
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         try {
           const response = await LoginAdminUser(values).unwrap();
-          // const result = signIn("credentials", {
-          //   redirect: false,
-          //   email: values.email,
-          //   password: values.password,
-          // });
+      
 
           if (response.success) {
+            // const result = signIn("credentials", {
+            //   redirect: false,
+            //   email: values.email,
+            //   password: values.password,
+            // });
             localStorage.setItem("token", response.token);
             localStorage.setItem("data", JSON.stringify(response.data));
             dispatch(authuser(response.data));
             dispatch(addtoken(response.token));
             resetForm();
+          
             toast.success("Login Successfuly", {
               position: "top-center",
               autoClose: 3000,
@@ -53,6 +55,7 @@ export default function LoginForm() {
               type: "success",
             
             });
+
             router.push("/app/user");
           }
         } catch (error) {

@@ -37,7 +37,7 @@ import { getToken } from "next-auth/jwt";
 export default function User() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading } = useGetAllUsersQuery({
+  const { data, isLoading,refetch } = useGetAllUsersQuery({
     page:currentPage
   });
 
@@ -88,7 +88,7 @@ export default function User() {
                 </TableRow>
               ) : (
                  data.userData?.map((user, index) => (
-                  <CustomerItem key={index} customer={user} />
+                  <CustomerItem refetch={refetch} key={index} customer={user} />
                 ))
               )}
             </TableBody>
@@ -107,11 +107,19 @@ export default function User() {
 }
 
 // export async function getServerSideProps(context) {
-//   const token=await getToken(context)
-//   console.log("token",token)
-
+//   const result=await getToken(context)
+//   const accessToken=result?.accessToken
+//   console.log("getToken",accessToken)
+//   if(!accessToken){
+//     return {
+//       redirect: {
+//         destination: '/',
+//         permanent: false,
+//       },
+//     }
+//   }
 //   return{
-//     props:{}
+//     props:{accessToken}
 //   }
   
 // }

@@ -35,11 +35,12 @@ import Mypaginations from "@/components/my-paginations";
 import { useGetAllCommunityQuery } from "@/lib/services/communityApi";
 import CummunityItem from "@/components/community/community-item";
 import AddCommunity from "@/components/community/add-community";
+import { getToken } from "next-auth/jwt";
 
 export default function Community() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading } = useGetAllCommunityQuery({
+  const { data, isLoading,refetch } = useGetAllCommunityQuery({
     page:currentPage
   });
 
@@ -89,7 +90,7 @@ export default function Community() {
                 </TableRow>
               ) : (
                  data.commmunity?.map((community, index) => (
-                  <CummunityItem key={index} community={community} />
+                  <CummunityItem refetch={refetch} key={index} community={community} />
                 ))
               )}
             </TableBody>
@@ -106,3 +107,23 @@ export default function Community() {
     </AppLayout>
   );
 }
+
+
+
+// export async function getServerSideProps(context) {
+//   const result=await getToken(context)
+//   const accessToken=result?.accessToken
+//   console.log("getToken",accessToken)
+//   if(!accessToken){
+//     return {
+//       redirect: {
+//         destination: '/',
+//         permanent: false,
+//       },
+//     }
+//   }
+//   return{
+//     props:{accessToken}
+//   }
+  
+// }

@@ -22,7 +22,6 @@ let sidebarNavigation = [
 
 const userNavigation = [
   { name: "Your profile", href: "/app/profile" },
-  { name: "Sign out", href: "/" },
 ];
 
 export default function AppLayout({ children }) {

@@ -35,11 +35,12 @@ import Mypaginations from "@/components/my-paginations";
 import { getToken } from "next-auth/jwt";
 import { useGetAllPaymentQuery } from "@/lib/services/paymentApi";
 import PaymentItem from "@/components/payment/payment-item";
+import AddPayment from "@/components/payment/add-payment";
 
 export default function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading } = useGetAllPaymentQuery({
+  const { data, isLoading,refetch } = useGetAllPaymentQuery({
     page:currentPage
   });
 
@@ -63,7 +64,7 @@ export default function Dashboard() {
               >
                 Add New
               </Button>
-              <AddUser isOpen={isOpen} setIsOpen={setIsOpen} />
+              <AddPayment isOpen={isOpen} setIsOpen={setIsOpen} />
             </div>
           </div>
         </CardHeader>
@@ -89,7 +90,7 @@ export default function Dashboard() {
                 </TableRow>
               ) : (
                  data?.payment?.map((payment, index) => (
-                  <PaymentItem key={index} payment={payment} />
+                  <PaymentItem refetch={refetch} key={index} payment={payment} />
                 ))
               )}
             </TableBody>
@@ -107,12 +108,21 @@ export default function Dashboard() {
   );
 }
 
-// export async function getServerSideProps(context) {
-//   const token=await getToken(context)
-//   console.log("token",token)
 
+// export async function getServerSideProps(context) {
+//   const result=await getToken(context)
+//   const accessToken=result?.accessToken
+//   console.log("getToken",accessToken)
+//   if(!accessToken){
+//     return {
+//       redirect: {
+//         destination: '/',
+//         permanent: false,
+//       },
+//     }
+//   }
 //   return{
-//     props:{}
+//     props:{accessToken}
 //   }
   
 // }
