@@ -10,7 +10,6 @@ import { getUser } from "@/lib/utils/helper";
 import * as Yup from "yup";
 import Image from "next/image";
 import { Slide, toast } from "react-toastify";
-import Loader from "../Loader";
 import {
   useCreateArticleMutation,
   useGetAllArticleQuery,
@@ -20,6 +19,7 @@ import {
 import { Button } from "../ui/button";
 import { useSelector } from "react-redux";
 import { Router, useRouter } from "next/router";
+import Loader from "../loader";
 
 export default function ShareMain() {
   const [headline, setHeadline] = useState("");
