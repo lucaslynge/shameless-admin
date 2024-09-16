@@ -43,7 +43,7 @@ export default function ShareMain() {
 
   console.log("data", data);
   const validationSchema = Yup.object().shape({
-    headline: Yup.string().required("Headline is required"),
+    headline: Yup.string().required("Headline is required "),
     primary_message: Yup.string().required("Primary message is required"),
     age: Yup.string().required("Age is required"),
     gender: Yup.string().required("Gender is required"),
