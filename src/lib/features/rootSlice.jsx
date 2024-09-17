@@ -5,6 +5,8 @@ import { userApi } from '../services/userApi';
 import { articleApi } from '../services/articleApi';
 import { communityApi } from '../services/communityApi';
 import { paymentApi } from '../services/paymentApi';
+import { contactApi } from '../services/contactApi';
+
 
 
 
@@ -19,8 +21,7 @@ const rootReducer = combineReducers({
   [articleApi.reducerPath]:articleApi.reducer,
   [communityApi.reducerPath]:communityApi.reducer,
   [paymentApi.reducerPath]:paymentApi.reducer,
-
-
+  [contactApi.reducerPath]:contactApi.reducer,
 });
 
 export default rootReducer;
