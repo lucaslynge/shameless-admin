@@ -5,7 +5,7 @@ import FormInput from "../form-input";
 import TextAreaInput from "../form-textarea-input";
 import * as Yup from "yup";
 import { useSendMessageMutation, useUpdateMessageMutation } from "../../lib/services/contactApi"
-import Loader from "../Loader";
+import Loader from "../loader";
 import { Slide, toast } from "react-toastify";
 import { Button } from "../ui/button";
 
