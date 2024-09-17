@@ -13,7 +13,7 @@ import {
   useGetAllUsersQuery,
   useUpdateUserMutation,
 } from "@/lib/services/userApi";
-import { Slide, toast } from "react-toastify";
+import { cssTransition, Slide, toast } from "react-toastify";
 import { Switch } from "../ui/switch";
 import Input from "../form-input";
 export default function EidtUser({ customer, isOpen, setIsOpen, customerId }) {
@@ -30,6 +30,8 @@ export default function EidtUser({ customer, isOpen, setIsOpen, customerId }) {
           initialValues={{
             is_paid: customer.is_paid,
             role: customer.role,
+            email: customer.email,
+            password: customer.password,
           }}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             try {
@@ -81,8 +83,8 @@ export default function EidtUser({ customer, isOpen, setIsOpen, customerId }) {
                       </div>
                     )}
                   </Field>
-                  </div>
-                  <div>
+                </div>
+                <div>
                   <Field
                     component={Input}
                     type="text"
@@ -90,6 +92,20 @@ export default function EidtUser({ customer, isOpen, setIsOpen, customerId }) {
                     placeholder="Role"
                   />
                 </div>
+                <label className="text-sm font-semibold">Email address</label>
+                <Field
+                  component={Input}
+                  name="email"
+                  placeholder="your@email.com"
+                />
+
+                <label className="text-sm font-semibold">Password</label>
+                <Field
+                  component={Input}
+                  type="text"
+                  name="password"
+                  placeholder="************"
+                />
               </div>
               <button
                 type="submit"

@@ -13,6 +13,7 @@ import { useGetAllUsersQuery, useUpdateUserMutation } from "@/lib/services/userA
 import { Slide, toast } from "react-toastify";
 import { Switch } from "../ui/switch";
 import { useGetAllCommunityQuery, useUpdateCommunityMutation } from "@/lib/services/communityApi";
+import Input from "../form-input";
 export default function EidtCommunity({ community,isOpen, setIsOpen, communityId }) {
   const [UpdateCommunity, { isLoading }] = useUpdateCommunityMutation();
   const { refetch: refetchCommunity } = useGetAllCommunityQuery()
@@ -24,6 +25,8 @@ export default function EidtCommunity({ community,isOpen, setIsOpen, communityId
           initialValues={{
             is_paid: community?.is_paid,
             status: community?.status,
+            email:community?.email,
+
 
 
           }}
@@ -59,7 +62,7 @@ export default function EidtCommunity({ community,isOpen, setIsOpen, communityId
           {({ errors, touched, handleSubmit, values }) => (
             <Form
               onSubmit={handleSubmit}
-              className="flex flex-col py-5 justify-center items-center "
+              className="flex flex-col py-5 gap-2 "
             >
               <div className="w-full  flex flex-col gap-y-5 ">
                 <div className="flex flex-col gap-2">
@@ -97,7 +100,16 @@ export default function EidtCommunity({ community,isOpen, setIsOpen, communityId
                     )}
                   </Field>
                 </div>
-              </div>
+                <div>           
+                <Label>Email address</Label>
+                <Field
+                  component={Input}
+                  name="email"
+                  placeholder="your@email.com"
+                />
+                </div>
+
+                   </div>
               <button
                 type="submit"
                 className=" mx-auto px-10 text-base text-center font-semibold bg-[#00132F] rounded-md text-white py-3 mt-4"

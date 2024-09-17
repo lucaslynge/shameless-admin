@@ -21,6 +21,9 @@ export default function CummunityItem({community,refetch}) {
                       <TableCell className="hidden sm:table-cell">
                         {community.is_paid ? 'Yes':'No'}
                       </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        {community.status}
+                      </TableCell>
                   
                   
                       <TableCell className="hidden md:table-cell">

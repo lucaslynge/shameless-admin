@@ -75,6 +75,7 @@ export default function Community() {
               <TableRow>
                 <TableHead>Email</TableHead>
                 <TableHead className="hidden sm:table-cell">IsPaid</TableHead>
+                <TableHead className="hidden sm:table-cell">Status</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
                 <TableHead className="hidden md:table-cell">Actions</TableHead>
               </TableRow>
