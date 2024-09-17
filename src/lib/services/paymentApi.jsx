@@ -12,9 +12,12 @@ export const paymentApi = createApi({
         headers.set('x-auth-token', token);
       }
       return headers;
-    }
+    },
+    
 
   }),
+  refetchOnFocus:true,
+  
   endpoints: (build) => ({
     GetAllPayment: build.query({
       query: (filter) => {

@@ -54,18 +54,9 @@ export default function Dashboard() {
           <div className="flex gap-x-4">
             <div className="flex flex-col gap-2">
               <CardTitle>Payment</CardTitle>
-              <CardDescription>Recent Payment from your store.</CardDescription>
+              <CardDescription>Recent Payment from your shamelessPath.</CardDescription>
             </div>
-            <div>
-              <Button
-                onClick={() => setIsOpen(true)}
-                size={"sm"}
-                variant={"default"}
-              >
-                Add New
-              </Button>
-              <AddPayment isOpen={isOpen} setIsOpen={setIsOpen} />
-            </div>
+          
           </div>
         </CardHeader>
         <CardContent>
@@ -74,7 +65,7 @@ export default function Dashboard() {
               <TableRow>
                 <TableHead>Amount</TableHead>
                 <TableHead className="hidden sm:table-cell">Subscription Type</TableHead>
-                <TableHead className="hidden sm:table-cell">Status</TableHead>
+                <TableHead className="hidden sm:table-cell">Payment Status</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
                 <TableHead className="hidden md:table-cell">Actions</TableHead>
               </TableRow>

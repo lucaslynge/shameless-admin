@@ -23,6 +23,9 @@ export default function EidtCommunity({ community,isOpen, setIsOpen, communityId
         <Formik
           initialValues={{
             is_paid: community?.is_paid,
+            status: community?.status,
+
+
           }}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             try {
@@ -34,7 +37,6 @@ export default function EidtCommunity({ community,isOpen, setIsOpen, communityId
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: true,
-                theme: "colored",
                 transition: Slide,
                 type: "success",
               });
@@ -57,10 +59,11 @@ export default function EidtCommunity({ community,isOpen, setIsOpen, communityId
           {({ errors, touched, handleSubmit, values }) => (
             <Form
               onSubmit={handleSubmit}
-              className="flex flex-col justify-center items-center "
+              className="flex flex-col py-5 justify-center items-center "
             >
-              <div className="w-full flex flex-col gap-y-2 gap-1">
-                <div>
+              <div className="w-full  flex flex-col gap-y-5 ">
+                <div className="flex flex-col gap-2">
+                  <Label>Paid</Label>
                   <Field name="is_paid" id="is_paid">
                     {({ field, form }) => (
                       <div className="flex items-center space-x-2">
@@ -72,6 +75,24 @@ export default function EidtCommunity({ community,isOpen, setIsOpen, communityId
                           id="airplane-mode"
                         />
                         <Label htmlFor="airplane-mode">Is Paid</Label>
+                      </div>
+                    )}
+                  </Field>
+                </div>
+                <div className="flex flex-col gap-2">
+                <Label>Future mailings. </Label>
+
+                  <Field name="status" id="status">
+                    {({ field, form }) => (
+                      <div className="flex items-center space-x-2">
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={(value) =>
+                            form.setFieldValue(field.name, value)
+                          }
+                          id="airplane-mode"
+                        />
+                        <Label htmlFor="airplane-mode">Active</Label>
                       </div>
                     )}
                   </Field>

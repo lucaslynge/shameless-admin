@@ -30,7 +30,7 @@ export default function ShareMain() {
   const [UpdateArticle, { isLoading:isLoadingUpdate }] = useUpdateArticleMutation();
   const {refetch:allarticle}=useGetAllArticleQuery()
 
-  const [option, setOption] = useState("Full annonymus");
+  const [option, setOption] = useState("Select Type");
   const router = useRouter();
   const [ageOption, setAgeOption] = useState("Select");
   const [genderOption, setGenderOption] = useState("Select");
@@ -90,7 +90,7 @@ export default function ShareMain() {
           initialValues={{
             headline: isEditing ? data?.headline : "",
             primary_message: isEditing ? data?.primary_message : "",
-            option: "",
+            type: "",
             age: isEditing ? data?.age : "",
             gender: isEditing ? data?.gender : "",
             user_id: "",
@@ -134,10 +134,11 @@ export default function ShareMain() {
             let data = {
               ...values,
               primary_message: valueTextEditor,
-              option: option,
+              type: option,
               age: ageOption,
               gender: genderOption,
             };
+            console.log("data share main",data)
             if(file){
               data={
                 ...data,
@@ -148,7 +149,7 @@ export default function ShareMain() {
             const formdata = new FormData();
             formdata.append("headline", data.headline);
             formdata.append("primary_message", data.primary_message);
-            formdata.append("option", data.option);
+            formdata.append("type", data.type);
             formdata.append("age", data.age);
             formdata.append("gender", data.gender);
             formdata.append("image", data.image);
@@ -167,7 +168,6 @@ export default function ShareMain() {
                   position: "top-center",
                   autoClose: 3000,
                   hideProgressBar: true,
-                  theme: "colored",
                   transition: Slide,
                   type: "success",
                 });
@@ -180,14 +180,9 @@ export default function ShareMain() {
                   position: "top-center",
                   autoClose: 3000,
                   hideProgressBar: true,
-                  theme: "colored",
                   transition: Slide,
                   type: "error",
-                  style: {
-                    textAlign: "center",
-                    backgroundColor: "#ea3b44",
-                    color: "white",
-                  },
+                
                 });
               }
             } finally {
@@ -214,13 +209,12 @@ export default function ShareMain() {
                   position: "top-center",
                   autoClose: 3000,
                   hideProgressBar: true,
-                  theme: "colored",
                   transition: Slide,
                   type: "success",
                 });
                 refetch()
                 allarticle()
-                // router.push("/app/articles");
+                router.push("/app/articles");
               }
             } catch (error) {
               if (error.status == 404) {
@@ -231,11 +225,7 @@ export default function ShareMain() {
                   theme: "colored",
                   transition: Slide,
                   type: "error",
-                  style: {
-                    textAlign: "center",
-                    backgroundColor: "#ea3b44",
-                    color: "white",
-                  },
+                 
                 });
               }
             } finally {
@@ -302,7 +292,7 @@ export default function ShareMain() {
                 </div>
 
                 <div className="mt-5">
-                  <p className="text-sm font-semibold mb-2">Option</p>
+                  <p className="text-sm font-semibold mb-2">Type</p>
                   <OptionSelection setOption={setOption} option={option} />
                 </div>
                 <div className="flex flex-col md:flex-row justify-between gap-4 mt-3">
@@ -313,18 +303,7 @@ export default function ShareMain() {
                       ageOption={ageOption}
                       setAgeOption={setAgeOption}
                       />
-                      {/* <Field
-                        type="text"
-                        id="age"
-                        value={values.headline}
-                        onChange={(e) => {
-                          handleChange(e);
-                          setHeadline(e.target.value);
-                        }}
-                        name="age"
-                        placeholder="Type here"
-                        className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-3"
-                      /> */}
+                    
 
                       {errors.age && touched.age && (
                         <div

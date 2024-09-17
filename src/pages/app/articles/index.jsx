@@ -45,7 +45,7 @@ export default function Articel() {
           <div className="flex gap-x-4">
             <div className="flex flex-col gap-2">
               <CardTitle>Articles</CardTitle>
-              <CardDescription>Recent Articels from your store.</CardDescription>
+              <CardDescription>Recent Articels from your shamelessPath.</CardDescription>
             </div>
             <div>
               <Button

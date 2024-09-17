@@ -55,7 +55,7 @@ export default function Community() {
           <div className="flex gap-x-4">
             <div className="flex flex-col gap-2">
               <CardTitle>Community</CardTitle>
-              <CardDescription>Recent Community from your store.</CardDescription>
+              <CardDescription>Recent Community from your shamelessPath.</CardDescription>
             </div>
             <div>
               <Button

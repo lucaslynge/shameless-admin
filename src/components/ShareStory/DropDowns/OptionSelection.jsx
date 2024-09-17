@@ -6,7 +6,7 @@ export const OptionSelection = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] =
-    useState("Full annonymus");
+    useState("Select Type");
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -50,36 +50,29 @@ export const OptionSelection = ({
           >
             <li>
               <p
-                onClick={() => handleOptionClick("Option 1")}
+                onClick={() => handleOptionClick("medical_trial")}
                 className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               >
-                Option 1
+                Medical Trial
               </p>
             </li>
             <li>
               <p
-                onClick={() => handleOptionClick("Option 2")}
+                onClick={() => handleOptionClick("artical")}
                 className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               >
-                Option 2
+                Artical
               </p>
             </li>
             <li>
               <p
-                onClick={() => handleOptionClick("Option 3")}
+                onClick={() => handleOptionClick("personal_story")}
                 className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               >
-                Option 3
+                Personal Story
               </p>
             </li>
-            <li>
-              <p
-                onClick={() => handleOptionClick("Option 4")}
-                className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Option 4
-              </p>
-            </li>
+           
           </ul>
         </div>
       )}

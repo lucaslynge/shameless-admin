@@ -9,22 +9,27 @@ import {
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Label } from "../ui/label";
 import Loader from "../loader";
-import { useGetAllUsersQuery, useUpdateUserMutation } from "@/lib/services/userApi";
+import {
+  useGetAllUsersQuery,
+  useUpdateUserMutation,
+} from "@/lib/services/userApi";
 import { Slide, toast } from "react-toastify";
 import { Switch } from "../ui/switch";
-export default function EidtUser({ customer,isOpen, setIsOpen, customerId }) {
+import Input from "../form-input";
+export default function EidtUser({ customer, isOpen, setIsOpen, customerId }) {
   const [UpdateUser, { isLoading }] = useUpdateUserMutation();
-  const { refetch: refetchUser } = useGetAllUsersQuery()
+  const { refetch: refetchUser } = useGetAllUsersQuery();
 
   console.log("customerId", customerId);
   console.log("customer", customer);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent >
+      <DialogContent>
         <Formik
           initialValues={{
             is_paid: customer.is_paid,
+            role: customer.role,
           }}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             try {
@@ -40,9 +45,8 @@ export default function EidtUser({ customer,isOpen, setIsOpen, customerId }) {
                 transition: Slide,
                 type: "success",
               });
-              refetchUser()
+              refetchUser();
               setIsOpen(false);
-              
             } catch (error) {
               toast.error(error.data.message, {
                 position: "top-center",
@@ -61,7 +65,7 @@ export default function EidtUser({ customer,isOpen, setIsOpen, customerId }) {
               onSubmit={handleSubmit}
               className="flex flex-col justify-center items-center "
             >
-              <div className="w-full flex flex-col gap-y-2 gap-1">
+              <div className="w-full flex flex-col gap-y-5 gap-1">
                 <div>
                   <Field name="is_paid" id="is_paid">
                     {({ field, form }) => (
@@ -77,6 +81,14 @@ export default function EidtUser({ customer,isOpen, setIsOpen, customerId }) {
                       </div>
                     )}
                   </Field>
+                  </div>
+                  <div>
+                  <Field
+                    component={Input}
+                    type="text"
+                    name="role"
+                    placeholder="Role"
+                  />
                 </div>
               </div>
               <button

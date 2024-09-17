@@ -1,5 +1,3 @@
-import { FieldInputProps } from 'formik'
-import React from 'react'
 export default function Input({ field, form, placeholder, ...props}) {
   const  { name, value, onChange, onBlur}=field
       return (

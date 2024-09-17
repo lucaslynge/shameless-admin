@@ -2,13 +2,9 @@ import React from 'react'
 import { TableCell, TableRow } from '../ui/table'
 import { Button } from '../ui/button'
 import { MdDelete, MdEdit } from 'react-icons/md'
-import { useDeleteUserMutation, useGetAllUsersQuery } from '@/lib/services/userApi'
-import { Badge } from '../ui/badge'
-import Loader from '../loader'
-import EidtUser from './edit-community'
-import DeleteUser from './delete-community'
 import DeleteCommunity from './delete-community'
 import EidtCommunity from './edit-community'
+import dateFormat from 'dateformat'
 
 export default function CummunityItem({community,refetch}) {
     const [isOpenEdit, setIsOpenEdit] = React.useState(false)
@@ -28,7 +24,7 @@ export default function CummunityItem({community,refetch}) {
                   
                   
                       <TableCell className="hidden md:table-cell">
-                        2023-06-23 
+                        {dateFormat(community.created,'dd-mm-yyyy')}
                       </TableCell>
                       <TableCell className="hidden md:table-cell ">
                         <Button variant={'secondary'} size={'icon'} onClick={()=>setIsOpenEdit(true)}>

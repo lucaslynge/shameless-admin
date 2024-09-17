@@ -7,15 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Skeleton } from "@/components/ui/skeleton";
+
 import {
   Table,
   TableBody,
@@ -52,7 +44,7 @@ export default function User() {
           <div className="flex gap-x-4">
             <div className="flex flex-col gap-2">
               <CardTitle>Users</CardTitle>
-              <CardDescription>Recent Users from your store.</CardDescription>
+              <CardDescription>Recent Users from your shamelessPath.</CardDescription>
             </div>
             <div>
               <Button
@@ -70,9 +62,9 @@ export default function User() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>User</TableHead>
+                <TableHead>Email</TableHead>
                 <TableHead className="hidden sm:table-cell">IsPaid</TableHead>
-                <TableHead className="hidden sm:table-cell">Status</TableHead>
+                <TableHead className="hidden sm:table-cell">Role</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
                 <TableHead className="hidden md:table-cell">Actions</TableHead>
               </TableRow>

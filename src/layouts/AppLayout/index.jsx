@@ -13,7 +13,6 @@ import { getToken } from "next-auth/jwt";
 
 
 let sidebarNavigation = [
-  { name: "Dashboard", href: "dashboard", icon:HomeIcon , current: false },
   { name: "Users", href: "user", icon: UsersIcon, current: false },
   { name: "Articles", href: "articles", icon: MdEditDocument, current: false },
   { name: "Community", href: "community", icon: CgCommunity, current: false },

@@ -25,13 +25,13 @@ export default function PaymentItem({payment,refetch}) {
                   
                   
                       <TableCell className="hidden md:table-cell">
-                        {dateFormat(payment.payment_date, "dd-mm-yyyy")}
+                        {dateFormat(payment.createdAt, "dd-mm-yyyy")}
                       </TableCell>
                       <TableCell className="hidden md:table-cell ">
                         <Button variant={'secondary'} size={'icon'} onClick={()=>setIsOpenEdit(true)}>
                           <MdEdit size={20} />
                         </Button>
-                        <EidtPayemnt paymentId={payment._id} isOpen={isOpenEdit} setIsOpen={setIsOpenEdit}/>
+                        <EidtPayemnt refetch={refetch} paymentId={payment._id} isOpen={isOpenEdit} setIsOpen={setIsOpenEdit}/>
 
                         <Button variant={'destructive'}  size={'icon'} onClick={async () => {
                           setIsOpenDelete(true)

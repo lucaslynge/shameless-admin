@@ -25,9 +25,8 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useUpdatePaymentMutation } from "@/lib/services/paymentApi";
-export default function EidtPayemnt({  isOpen, setIsOpen, paymentId }) {
+export default function EidtPayemnt({  isOpen, setIsOpen, paymentId,refetch }) {
   const [UpdatePayment, { isLoading }] = useUpdatePaymentMutation();
-  const { refetch: refetchUser } = useGetAllUsersQuery();
 
   return (
     <Dialog  open={isOpen} onOpenChange={setIsOpen}>
@@ -53,7 +52,7 @@ export default function EidtPayemnt({  isOpen, setIsOpen, paymentId }) {
                 transition: Slide,
                 type: "success",
               });
-              refetchUser();
+              refetch();
               setIsOpen(false);
             } catch (error) {
               toast.error(error.data.message, {
@@ -126,8 +125,9 @@ export default function EidtPayemnt({  isOpen, setIsOpen, paymentId }) {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem value={"one_time"}>One Time</SelectItem>
-                            <SelectItem value={"monthly"}>Monthly</SelectItem>
+                            <SelectItem value={"Monthly"}>Monthly</SelectItem>
+                            <SelectItem value={"Lifetime"}>Lifetime</SelectItem>
+
                           </SelectGroup>
                         </SelectContent>
                       </Select>
