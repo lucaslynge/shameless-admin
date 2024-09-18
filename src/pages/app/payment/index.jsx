@@ -36,6 +36,7 @@ import { getToken } from "next-auth/jwt";
 import { useGetAllPaymentQuery } from "@/lib/services/paymentApi";
 import PaymentItem from "@/components/payment/payment-item";
 import AddPayment from "@/components/payment/add-payment";
+import AuthGuard from "@/components/authgaurd";
 
 export default function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,6 +49,7 @@ export default function Dashboard() {
     setCurrentPage(newPage);
   };
   return (
+    <AuthGuard>
     <AppLayout>
       <Card x-chunk="dashboard-05-chunk-3">
         <CardHeader className="px-7">
@@ -96,6 +98,7 @@ export default function Dashboard() {
         </CardContent>
       </Card>
     </AppLayout>
+    </AuthGuard>
   );
 }
 

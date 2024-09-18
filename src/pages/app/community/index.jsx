@@ -36,95 +36,88 @@ import { useGetAllCommunityQuery } from "@/lib/services/communityApi";
 import CummunityItem from "@/components/community/community-item";
 import AddCommunity from "@/components/community/add-community";
 import { getToken } from "next-auth/jwt";
+import AuthGuard from "@/components/authgaurd";
 
 export default function Community() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading,refetch } = useGetAllCommunityQuery({
-    page:currentPage
+  const { data, isLoading, refetch } = useGetAllCommunityQuery({
+    page: currentPage,
   });
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-  console.log("data",data)
+  console.log("data", data);
   return (
-    <AppLayout>
-      <Card x-chunk="dashboard-05-chunk-3">
-        <CardHeader className="px-7">
-          <div className="flex gap-x-4">
-            <div className="flex flex-col gap-2">
-              <CardTitle>Community</CardTitle>
-              <CardDescription>Recent Community from your shamelessPath.</CardDescription>
+    <AuthGuard>
+      <AppLayout>
+        <Card x-chunk="dashboard-05-chunk-3">
+          <CardHeader className="px-7">
+            <div className="flex gap-x-4">
+              <div className="flex flex-col gap-2">
+                <CardTitle>Community</CardTitle>
+                <CardDescription>
+                  Recent Community from your shamelessPath.
+                </CardDescription>
+              </div>
+              <div>
+                <Button
+                  onClick={() => setIsOpen(true)}
+                  size={"sm"}
+                  variant={"default"}
+                >
+                  Add New
+                </Button>
+                <AddCommunity isOpen={isOpen} setIsOpen={setIsOpen} />
+              </div>
             </div>
-            <div>
-              <Button
-                onClick={() => setIsOpen(true)}
-                size={"sm"}
-                variant={"default"}
-              >
-                Add New
-              </Button>
-              <AddCommunity isOpen={isOpen} setIsOpen={setIsOpen} />
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Email</TableHead>
-                <TableHead className="hidden sm:table-cell">IsPaid</TableHead>
-                <TableHead className="hidden sm:table-cell">Status</TableHead>
-                <TableHead className="hidden md:table-cell">Date</TableHead>
-                <TableHead className="hidden md:table-cell">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {isLoading ? (
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan="5" className="w-full">
-                    <div className="flex justify-center mx-auto w-full text-center">
-                      <Loader />
-                    </div>
-                  </TableCell>
+                  <TableHead>Email</TableHead>
+                  <TableHead className="hidden sm:table-cell">IsPaid</TableHead>
+                  <TableHead className="hidden sm:table-cell">Status</TableHead>
+                  <TableHead className="hidden md:table-cell">Date</TableHead>
+                  <TableHead className="hidden md:table-cell">
+                    Actions
+                  </TableHead>
                 </TableRow>
-              ) : (
-                 data.commmunity?.map((community, index) => (
-                  <CummunityItem refetch={refetch} key={index} community={community} />
-                ))
-              )}
-            </TableBody>
-          </Table>
-          <div className="flex mt-5 justify-center">
-                    <Mypaginations
-                      count={data?.pageCount}
-                      page={currentPage}
-                      onChange={onPageChange}
+              </TableHeader>
+              <TableBody>
+                {isLoading ? (
+                  <TableRow>
+                    <TableCell colSpan="5" className="w-full">
+                      <div className="flex justify-center mx-auto w-full text-center">
+                        <Loader />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  data.commmunity?.map((community, index) => (
+                    <CummunityItem
+                      refetch={refetch}
+                      key={index}
+                      community={community}
                     />
-                  </div>
-        </CardContent>
-      </Card>
-    </AppLayout>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+            <div className="flex mt-5 justify-center">
+              <Mypaginations
+                count={data?.pageCount}
+                page={currentPage}
+                onChange={onPageChange}
+              />
+            </div>
+          </CardContent>
+        </Card>
+      </AppLayout>
+    </AuthGuard>
   );
 }
 
 
-
-// export async function getServerSideProps(context) {
-//   const result=await getToken(context)
-//   const accessToken=result?.accessToken
-//   console.log("getToken",accessToken)
-//   if(!accessToken){
-//     return {
-//       redirect: {
-//         destination: '/',
-//         permanent: false,
-//       },
-//     }
-//   }
-//   return{
-//     props:{accessToken}
-//   }
-  
-// }
