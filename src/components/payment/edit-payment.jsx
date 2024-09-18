@@ -127,6 +127,8 @@ export default function EidtPayemnt({  isOpen, setIsOpen, paymentId,refetch }) {
                           <SelectGroup>
                             <SelectItem value={"Monthly"}>Monthly</SelectItem>
                             <SelectItem value={"Lifetime"}>Lifetime</SelectItem>
+                            <SelectItem value={"none"}>None</SelectItem>
+
 
                           </SelectGroup>
                         </SelectContent>

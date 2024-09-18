@@ -20,8 +20,6 @@ export default function EidtUser({ customer, isOpen, setIsOpen, customerId }) {
   const [UpdateUser, { isLoading }] = useUpdateUserMutation();
   const { refetch: refetchUser } = useGetAllUsersQuery();
 
-  console.log("customerId", customerId);
-  console.log("customer", customer);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

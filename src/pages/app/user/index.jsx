@@ -63,7 +63,6 @@ export default function User() {
             <TableHeader>
               <TableRow>
                 <TableHead>Email</TableHead>
-                <TableHead className="hidden sm:table-cell">IsPaid</TableHead>
                 <TableHead className="hidden sm:table-cell">Role</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
                 <TableHead className="hidden md:table-cell">Actions</TableHead>

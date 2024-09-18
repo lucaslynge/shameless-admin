@@ -18,10 +18,7 @@ export default function CustomerItem({customer,refetch}) {
                           {customer.email}
                         </div>
                       </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        {customer.is_paid ? 'Yes':'No'}
-                      </TableCell>
-                  
+                    
                       <TableCell className="hidden sm:table-cell">
                         {customer.role}
                       </TableCell>

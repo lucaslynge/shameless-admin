@@ -20,6 +20,7 @@ import { Button } from "../ui/button";
 import { useSelector } from "react-redux";
 import { Router, useRouter } from "next/router";
 import Loader from "../loader";
+import AdditionalDetails from "./Additional-details";
 
 export default function ShareMain() {
   const [headline, setHeadline] = useState("");
@@ -127,6 +128,14 @@ export default function ShareMain() {
                     answer: "",
                   },
                 ],
+                
+            details: [
+              {
+                icon: "",
+                title: "",
+                description: "",
+              },
+            ],
           }}
           enableReinitialize
           validationSchema={validationSchema}
@@ -157,6 +166,21 @@ export default function ShareMain() {
               "question_answers",
               JSON.stringify(values.question_answers)
             );
+            const filteredetails=values.details.map((detail)=>{
+              return {
+                icon: detail.icon,
+                title: detail.title,
+                description: detail.description,
+              }
+            })
+
+            filteredetails.forEach((detail, index) => {
+              console.log("detail",detail)
+              formdata.append(`details[${index}][icon]`, detail.icon);
+              formdata.append(`details[${index}][title]`, detail.title);
+              formdata.append(`details[${index}][description]`, detail.description);
+            });
+
             if(isEditing==="false"){
               formdata.append("user_id", user._id);
             try {
@@ -391,8 +415,15 @@ export default function ShareMain() {
                 <div className="mt-5">
                   <ShareAccordion />
                 </div>
+                <div className="my-5">
+
+                <AdditionalDetails/>
+                </div>
+
+
+
               </div>
-              <div className="my-4 text-right">
+              <div className="mt-10 ">
                 <Button type="submit">
                   {isEditing==="true" ? 
                   ( isLoadingUpdate ? (

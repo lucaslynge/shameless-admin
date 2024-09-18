@@ -110,6 +110,8 @@ export default function AddPayment({ isOpen, setIsOpen }) {
                           <SelectGroup>
                             <SelectItem value={"one_time"}>One Time</SelectItem>
                             <SelectItem value={"monthly"}>Monthly</SelectItem>
+                            <SelectItem value={"none"}>None</SelectItem>
+
                           </SelectGroup>
                         </SelectContent>
                       </Select>
