@@ -38,7 +38,6 @@ export default function User() {
     setCurrentPage(newPage);
   };
   return (
-    <AuthGuard>
       <AppLayout>
         <Card x-chunk="dashboard-05-chunk-3">
           <CardHeader className="px-7">
@@ -103,7 +102,6 @@ export default function User() {
           </CardContent>
         </Card>
       </AppLayout>
-    </AuthGuard>
   );
 }
 

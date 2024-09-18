@@ -50,7 +50,6 @@ export default function Community() {
   };
   console.log("data", data);
   return (
-    <AuthGuard>
       <AppLayout>
         <Card x-chunk="dashboard-05-chunk-3">
           <CardHeader className="px-7">
@@ -116,7 +115,6 @@ export default function Community() {
           </CardContent>
         </Card>
       </AppLayout>
-    </AuthGuard>
   );
 }
 

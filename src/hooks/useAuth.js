@@ -10,6 +10,7 @@ export const useAuth = () => {
     // Check authentication status, for example using a token
     const token = localStorage.getItem('token'); // Use cookies or any other storage
     if (token) {
+        
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);

@@ -4,9 +4,7 @@ import { getToken } from "next-auth/jwt";
 
 export default function MainApp() {
   return (
-    <AuthGuard>
       <AppLayout></AppLayout>
-    </AuthGuard>
   );
 }
 

@@ -25,7 +25,6 @@ import ArticelItem from "@/components/articel/articel";
 import { useGetAllArticleQuery } from "@/lib/services/articleApi";
 import { useRouter } from "next/router";
 import { getToken } from "next-auth/jwt";
-import AuthGuard from "@/components/authgaurd";
 
 export default function Articel() {
   const router=useRouter()
@@ -40,8 +39,7 @@ export default function Articel() {
     setCurrentPage(newPage);
   };
   return (
-    <AuthGuard>
-     
+    
     <AppLayout>
       <Card x-chunk="dashboard-05-chunk-3">
         <CardHeader className="px-7">
@@ -101,7 +99,6 @@ export default function Articel() {
         </CardContent>
       </Card>
     </AppLayout>
-    </AuthGuard>
   );
 }
 

@@ -42,7 +42,6 @@ export default function Contact() {
     setCurrentPage(newPage);
   };
   return (
-    <AuthGuard>
       <AppLayout>
         <Card x-chunk="dashboard-05-chunk-3">
           <CardHeader className="px-7">
@@ -115,6 +114,5 @@ export default function Contact() {
           </CardContent>
         </Card>
       </AppLayout>
-    </AuthGuard>
   );
 }
