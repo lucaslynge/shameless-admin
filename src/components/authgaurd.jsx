@@ -1,25 +1,24 @@
-// components/AuthGuard.js
+// components/AuthGarud.js
 import { useEffect } from 'react';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/router';
 
-const AuthGuard = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+const AuthGarud = ({ children }) => {
+  const { authToken } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      // Redirect to login page if not authenticated
-      router.push('/');
+    if (!authToken) {
+      router.push('/'); // Redirect to login if no token
     }
-  }, [isAuthenticated, router]);
+  }, [authToken, router]);
 
-  // If the user is authenticated, render the children components
-  if (!isAuthenticated) {
-    return null; // or a loading spinner while checking auth status
+  // If there is no token, don't render the page
+  if (!authToken) {
+    return null;
   }
 
   return <>{children}</>;
 };
 
-export default AuthGuard;
+export default AuthGarud;

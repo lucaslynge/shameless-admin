@@ -26,24 +26,23 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import AppLayout from "@/layouts/AppLayout";
-import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
-import AddUser from "@/components/user/add-user";
-import { useGetAllUsersQuery } from "@/lib/services/userApi";
 import Loader from "@/components/loader";
 import Mypaginations from "@/components/my-paginations";
-import { getToken } from "next-auth/jwt";
 import { useGetAllPaymentQuery } from "@/lib/services/paymentApi";
 import PaymentItem from "@/components/payment/payment-item";
-import AddPayment from "@/components/payment/add-payment";
-import AuthGuard from "@/components/authgaurd";
+import withAuth from "@/hoc/withAuth";
+import SearchBox from "@/components/search-box";
 
-export default function Dashboard() {
+ function Payment() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading,refetch } = useGetAllPaymentQuery({
-    page:currentPage
+  const [search, onSearch] = useState();
+  const [query, setQuery] = useState();
+  const [filters, setFilters] = useState({
+    page: currentPage,
   });
+  const { data, isLoading,refetch } = useGetAllPaymentQuery(filters);
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -52,6 +51,7 @@ export default function Dashboard() {
     <AppLayout>
       <Card x-chunk="dashboard-05-chunk-3">
         <CardHeader className="px-7">
+        <div className="grid grid-cols-2">
           <div className="flex gap-x-4">
             <div className="flex flex-col gap-2">
               <CardTitle>Payment</CardTitle>
@@ -59,11 +59,23 @@ export default function Dashboard() {
             </div>
           
           </div>
+          <SearchBox
+            onSearch={onSearch}
+            query={query}
+            searchArray={["item 1", "item 2", "item 3"]}
+            setQuery={(searchQuery) => {
+              setQuery(searchQuery);
+              setFilters({
+                search: searchQuery,
+              });
+            }}/>
+            </div>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
+               <TableHead>Email</TableHead>      
                 <TableHead>Amount</TableHead>
                 <TableHead className="hidden sm:table-cell">Subscription Type</TableHead>
                 <TableHead className="hidden sm:table-cell">Payment Status</TableHead>
@@ -100,21 +112,4 @@ export default function Dashboard() {
   );
 }
 
-
-// export async function getServerSideProps(context) {
-//   const result=await getToken(context)
-//   const accessToken=result?.accessToken
-//   console.log("getToken",accessToken)
-//   if(!accessToken){
-//     return {
-//       redirect: {
-//         destination: '/',
-//         permanent: false,
-//       },
-//     }
-//   }
-//   return{
-//     props:{accessToken}
-//   }
-  
-// }
+export default withAuth(Payment)

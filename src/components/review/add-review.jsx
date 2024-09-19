@@ -3,13 +3,13 @@ import {
     DialogContent,
   } from "@/components/ui/dialog";
 import ContactForm from "./form";
-  export default function AddContact({ isOpen, setIsOpen,refetch,isedit,object }) {
-    console.log('refetch',refetch)
+import WriteComment from "./write-comment";
+  export default function AddReview({ isOpen, setIsOpen,refetch,isedit,object }) {
   
     return (
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
-            <ContactForm setIsOpen={setIsOpen} isedit={isedit} refetch={refetch} contact={object}/>
+            <WriteComment setIsOpen={setIsOpen} refetchReviews={refetch} isedit={isedit} review={object}/>
         </DialogContent>
       </Dialog>
     );

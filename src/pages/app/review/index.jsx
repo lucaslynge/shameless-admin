@@ -26,8 +26,11 @@ import ContactItem from "@/components/contact/contact-item";
 import AddContact from "@/components/contact/add-contact";
 import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";
+import { useGetAllReviewsQuery } from "@/lib/services/reviewApi";
+import ReviewItem from "@/components/review/review-item";
+import AddReview from "@/components/review/add-review";
 
-function Contact() {
+function Review() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, onSearch] = useState();
@@ -35,12 +38,11 @@ function Contact() {
   const [filters, setFilters] = useState({
     page: currentPage,
   });
-  const { data, isLoading, refetch } = useGetAllContactsQuery(filters);
-  console.log("data", data);
-
+  const { data, isLoading, refetch } = useGetAllReviewsQuery(filters);
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
   };
+  console.log("review data",data)
   return (
       <AppLayout>
         <Card x-chunk="dashboard-05-chunk-3">
@@ -49,9 +51,9 @@ function Contact() {
 
             <div className="flex gap-x-4">
               <div className="flex flex-col gap-2">
-                <CardTitle>Contacts</CardTitle>
+                <CardTitle>Reviews</CardTitle>
                 <CardDescription>
-                  Recent Contacts from your shamelessPath.
+                  Recent Reviews from your shamelessPath.
                 </CardDescription>
               </div>
               <div>
@@ -62,7 +64,7 @@ function Contact() {
                 >
                   Add New
                 </Button>
-                <AddContact
+                <AddReview
                   isOpen={isOpen}
                   isedit={false}
                   refetch={refetch}
@@ -86,14 +88,10 @@ function Contact() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Email</TableHead>
                   <TableHead className="hidden sm:table-cell">Name</TableHead>
-                  <TableHead className="hidden sm:table-cell">Status</TableHead>
+                  <TableHead className="hidden sm:table-cell">Ratting</TableHead>
                   <TableHead className="hidden sm:table-cell">
-                    Subject
-                  </TableHead>
-                  <TableHead className="hidden sm:table-cell">
-                    Message
+                    Review
                   </TableHead>
                   <TableHead className="hidden md:table-cell">Date</TableHead>
                   <TableHead className="hidden md:table-cell">
@@ -111,8 +109,8 @@ function Contact() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  data.contact?.map((item, index) => (
-                    <ContactItem refetch={refetch} key={index} contact={item} />
+                  data.review?.map((item, index) => (
+                    <ReviewItem  refetch={refetch} key={index} review={item} />
                   ))
                 )}
               </TableBody>
@@ -130,4 +128,4 @@ function Contact() {
   );
 }
 
-export default withAuth(Contact)
+export default withAuth(Review)

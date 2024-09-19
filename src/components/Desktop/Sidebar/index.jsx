@@ -1,3 +1,4 @@
+import Logo from "@/components/logo";
 import { classNames } from "@/utils/generics";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -8,7 +9,8 @@ export default function DesktopSidebar({ navigation }) {
       {/* Sidebar component, swap this element with another sidebar if you like */}
       <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
         <div className="flex h-16 shrink-0 items-center">
-            <p className="font-bold uppercase text-[#001C46">Shameless<span className="text-[#EA3B44]">path</span></p>
+          <Logo/>
+     
         </div>
         <nav className="flex flex-1 flex-col">
           <ul role="list" className="flex flex-1 flex-col gap-y-7">

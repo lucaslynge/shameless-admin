@@ -3,15 +3,16 @@ import { useLoginAdminUserMutation } from "@/lib/services/userApi";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
-import {signIn} from "next-auth/react"
 
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Slide, toast } from "react-toastify";
 import Loader from "../loader";
+import { useAuth } from "@/context/AuthContext";
 export default function LoginForm() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const {login}=useAuth()
   const [LoginAdminUser, { isLoading, isSuccess }] =
     useLoginAdminUserMutation();
   const validationSchema = Yup.object().shape({
@@ -36,15 +37,13 @@ export default function LoginForm() {
       
 
           if (response.success) {
-            // const result = signIn("credentials", {
-            //   redirect: false,
-            //   email: values.email,
-            //   password: values.password,
-            // });
+       
             localStorage.setItem("token", response.token);
             localStorage.setItem("data", JSON.stringify(response.data));
             dispatch(authuser(response.data));
             dispatch(addtoken(response.token));
+            login(response.token);
+
             resetForm();
           
             toast.success("Login Successfuly", {

@@ -35,15 +35,18 @@ import Mypaginations from "@/components/my-paginations";
 import { useGetAllCommunityQuery } from "@/lib/services/communityApi";
 import CummunityItem from "@/components/community/community-item";
 import AddCommunity from "@/components/community/add-community";
-import { getToken } from "next-auth/jwt";
-import AuthGuard from "@/components/authgaurd";
+import withAuth from "@/hoc/withAuth";
+import SearchBox from "@/components/search-box";
 
-export default function Community() {
+ function Community() {
   const [isOpen, setIsOpen] = useState(false);
+  const [search, onSearch] = useState();
+  const [query, setQuery] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading, refetch } = useGetAllCommunityQuery({
+  const [filters, setFilters] = useState({
     page: currentPage,
   });
+  const { data, isLoading, refetch } = useGetAllCommunityQuery(filters);
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -53,6 +56,8 @@ export default function Community() {
       <AppLayout>
         <Card x-chunk="dashboard-05-chunk-3">
           <CardHeader className="px-7">
+          <div className="grid grid-cols-2">
+
             <div className="flex gap-x-4">
               <div className="flex flex-col gap-2">
                 <CardTitle>Community</CardTitle>
@@ -71,12 +76,24 @@ export default function Community() {
                 <AddCommunity isOpen={isOpen} setIsOpen={setIsOpen} />
               </div>
             </div>
+            <SearchBox
+            onSearch={onSearch}
+            query={query}
+            searchArray={["item 1", "item 2", "item 3"]}
+            setQuery={(searchQuery) => {
+              setQuery(searchQuery);
+              setFilters({
+                search: searchQuery,
+              });
+            }}/>
+            </div>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Email</TableHead>
+                  <TableHead className="hidden sm:table-cell">Subscription Type</TableHead>
                   <TableHead className="hidden sm:table-cell">IsPaid</TableHead>
                   <TableHead className="hidden sm:table-cell">Status</TableHead>
                   <TableHead className="hidden md:table-cell">Date</TableHead>
@@ -118,4 +135,4 @@ export default function Community() {
   );
 }
 
-
+export default withAuth(Community)

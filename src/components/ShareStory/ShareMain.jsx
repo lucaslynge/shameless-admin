@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { Router, useRouter } from "next/router";
 import Loader from "../loader";
 import AdditionalDetails from "./Additional-details";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 export default function ShareMain() {
   const [headline, setHeadline] = useState("");
@@ -28,8 +29,9 @@ export default function ShareMain() {
   const [file, setFile] = useState(null);
 
   const [CreateArticle, { isLoading }] = useCreateArticleMutation();
-  const [UpdateArticle, { isLoading:isLoadingUpdate }] = useUpdateArticleMutation();
-  const {refetch:allarticle}=useGetAllArticleQuery()
+  const [UpdateArticle, { isLoading: isLoadingUpdate }] =
+    useUpdateArticleMutation();
+  const { refetch: allarticle } = useGetAllArticleQuery();
 
   const [option, setOption] = useState("Select Type");
   const router = useRouter();
@@ -38,9 +40,8 @@ export default function ShareMain() {
   const user = useSelector((state) => state.auth.user);
   const id = router.query.id;
   const isEditing = router.query.isediting;
-  const { data,refetch } = useGetByIdArticleQuery(id);
+  const { data, refetch } = useGetByIdArticleQuery(id);
   const [filepath, setfilepath] = useState("");
-
 
   console.log("data", data);
   const validationSchema = Yup.object().shape({
@@ -53,12 +54,12 @@ export default function ShareMain() {
   const [valueTextEditor, setValueTextEditor] = useState("");
 
   const maxChars = 15;
-  useEffect(()=>{
-    if(isEditing){
-      setfilepath(data?.image)
-      setValueTextEditor(data?.primary_message)
+  useEffect(() => {
+    if (isEditing) {
+      setfilepath(data?.image);
+      setValueTextEditor(data?.primary_message);
     }
-  },[])
+  }, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
@@ -95,40 +96,40 @@ export default function ShareMain() {
             age: isEditing ? data?.age : "",
             gender: isEditing ? data?.gender : "",
             user_id: "",
+            STI_status:"",
             image: "",
             question_answers: [
-                  {
-                    question:
-                      "How has your STI diagnosis impacted your daily life?",
-                    answer: "",
-                  },
-                  {
-                    question:
-                      "What have been the biggest challenges you've faced?",
-                    answer: "",
-                  },
-                  {
-                    question:
-                      "How do you manage your STI, both physically and emotionally?",
-                    answer: "",
-                  },
-                  {
-                    question:
-                      "What advice would you give to someone newly diagnosed?",
-                    answer: "",
-                  },
-                  {
-                    question:
-                      "What misconceptions about STIs would you like to correct?",
-                    answer: "",
-                  },
-                  {
-                    question:
-                      "What are your goals moving forward in managing your STI?",
-                    answer: "",
-                  },
-                ],
-                
+              {
+                question:
+                  "How has your STI diagnosis impacted your daily life?",
+                answer: "",
+              },
+              {
+                question: "What have been the biggest challenges you've faced?",
+                answer: "",
+              },
+              {
+                question:
+                  "How do you manage your STI, both physically and emotionally?",
+                answer: "",
+              },
+              {
+                question:
+                  "What advice would you give to someone newly diagnosed?",
+                answer: "",
+              },
+              {
+                question:
+                  "What misconceptions about STIs would you like to correct?",
+                answer: "",
+              },
+              {
+                question:
+                  "What are your goals moving forward in managing your STI?",
+                answer: "",
+              },
+            ],
+
             details: [
               {
                 icon: "",
@@ -147,125 +148,130 @@ export default function ShareMain() {
               age: ageOption,
               gender: genderOption,
             };
-            console.log("data share main",data)
-            if(file){
-              data={
+            console.log("data share main", data);
+            if (file) {
+              data = {
                 ...data,
-                image: file
-              }
+                image: file,
+              };
             }
-            console.log("data",data)
+            console.log("data", data);
             const formdata = new FormData();
             formdata.append("headline", data.headline);
             formdata.append("primary_message", data.primary_message);
             formdata.append("type", data.type);
             formdata.append("age", data.age);
             formdata.append("gender", data.gender);
+            formdata.append("STI_status", data.STI_status);            
             formdata.append("image", data.image);
             formdata.append(
               "question_answers",
               JSON.stringify(values.question_answers)
             );
-            const filteredetails=values.details.map((detail)=>{
+            const filteredetails = values.details.map((detail) => {
               return {
                 icon: detail.icon,
                 title: detail.title,
                 description: detail.description,
-              }
-            })
+              };
+            });
 
             filteredetails.forEach((detail, index) => {
-              console.log("detail",detail)
+              console.log("detail", detail);
               formdata.append(`details[${index}][icon]`, detail.icon);
               formdata.append(`details[${index}][title]`, detail.title);
-              formdata.append(`details[${index}][description]`, detail.description);
-            });
+              formdata.append(
+                `details[${index}][description]`,
+                detail.description
+              );
+            });
 
-            if(isEditing==="false"){
+            if (isEditing === "false") {
               formdata.append("user_id", user._id);
-            try {
-              const response = await CreateArticle(formdata).unwrap();
-              if (response.success) {
-                console.log("response", response);
+              try {
+                const response = await CreateArticle(formdata).unwrap();
+                if (response.success) {
+                  console.log("response", response);
+                  resetForm();
+                  toast.success(response.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    transition: Slide,
+                    type: "success",
+                  });
+                  allarticle();
+                  router.push("/app/articles");
+                }
+              } catch (error) {
+                if (error.status == 404) {
+                  toast.error(error.data.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    transition: Slide,
+                    type: "error",
+                  });
+                }
+              } finally {
+                setSubmitting(false);
+                setFile("");
+                setGenderOption("Select");
+                setAgeOption("Select");
+                setHeadline("");
                 resetForm();
-                toast.success(response.message, {
-                  position: "top-center",
-                  autoClose: 3000,
-                  hideProgressBar: true,
-                  transition: Slide,
-                  type: "success",
-                });
-                allarticle()
-                router.push("/app/articles");
+                setOption("Full annonymus");
+                setValueTextEditor("");
+                setFileName("");
+                setfilepath("");
+                allarticle();
               }
-            } catch (error) {
-              if (error.status == 404) {
-                toast.error(error.data.message, {
-                  position: "top-center",
-                  autoClose: 3000,
-                  hideProgressBar: true,
-                  transition: Slide,
-                  type: "error",
-                
-                });
-              }
-            } finally {
-              setSubmitting(false);
-              setFile("");
-              setGenderOption("Select");
-              setAgeOption("Select");
-              setHeadline("");
-              resetForm();
-              setOption("Full annonymus");
-              setValueTextEditor("");
-              setFileName("");
-              setfilepath("");
-              allarticle()
             }
-           }
-           if(isEditing==="true"){
-            try {
-              const response = await UpdateArticle({id:id,body:formdata}).unwrap();
-              if (response.success) {
-                console.log("response", response);
+            if (isEditing === "true") {
+              try {
+                const response = await UpdateArticle({
+                  id: id,
+                  body: formdata,
+                }).unwrap();
+                if (response.success) {
+                  console.log("response", response);
+                  resetForm();
+                  toast.success(response.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    transition: Slide,
+                    type: "success",
+                  });
+                  refetch();
+                  allarticle();
+                  router.push("/app/articles");
+                }
+              } catch (error) {
+                if (error.status == 404) {
+                  toast.error(error.data.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    theme: "colored",
+                    transition: Slide,
+                    type: "error",
+                  });
+                }
+              } finally {
+                setSubmitting(false);
+                setFile("");
+                setGenderOption("Select");
+                setAgeOption("Select");
+                setHeadline("");
                 resetForm();
-                toast.success(response.message, {
-                  position: "top-center",
-                  autoClose: 3000,
-                  hideProgressBar: true,
-                  transition: Slide,
-                  type: "success",
-                });
-                refetch()
-                allarticle()
-                router.push("/app/articles");
+                setOption("Full annonymus");
+                setValueTextEditor("");
+                setFileName("");
+                setfilepath("");
+                allarticle();
               }
-            } catch (error) {
-              if (error.status == 404) {
-                toast.error(error.data.message, {
-                  position: "top-center",
-                  autoClose: 3000,
-                  hideProgressBar: true,
-                  theme: "colored",
-                  transition: Slide,
-                  type: "error",
-                 
-                });
-              }
-            } finally {
-              setSubmitting(false);
-              setFile("");
-              setGenderOption("Select");
-              setAgeOption("Select");
-              setHeadline("");
-              resetForm();
-              setOption("Full annonymus");
-              setValueTextEditor("");
-              setFileName("");
-              setfilepath("");
-              allarticle()
             }
-           }
             resetForm();
           }}
         >
@@ -314,7 +320,30 @@ export default function ShareMain() {
                     </div>
                   )}
                 </div>
-
+                <div className="mt-5">
+                  <p className="text-sm font-semibold">STI Status</p>
+                  <Field name="STI_status">
+                    {({ field, form }) => (
+                      <Select
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={(value) =>
+                          form.setFieldValue(field.name, value)
+                        }
+                      >
+                        <SelectTrigger className="lg:min-w-[300px]">
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value={"HIV"}>HIV</SelectItem>
+                            <SelectItem value={"STI"}>STI</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </Field>
+                </div>
                 <div className="mt-5">
                   <p className="text-sm font-semibold mb-2">Type</p>
                   <OptionSelection setOption={setOption} option={option} />
@@ -324,10 +353,9 @@ export default function ShareMain() {
                     <p className="text-sm font-semibold">Age</p>
                     <div className="mt-1">
                       <AgeSelection
-                      ageOption={ageOption}
-                      setAgeOption={setAgeOption}
+                        ageOption={ageOption}
+                        setAgeOption={setAgeOption}
                       />
-                    
 
                       {errors.age && touched.age && (
                         <div
@@ -416,30 +444,26 @@ export default function ShareMain() {
                   <ShareAccordion />
                 </div>
                 <div className="my-5">
-
-                <AdditionalDetails/>
+                  <AdditionalDetails />
                 </div>
-
-
-
               </div>
               <div className="mt-10 ">
                 <Button type="submit">
-                  {isEditing==="true" ? 
-                  ( isLoadingUpdate ? (
+                  {isEditing === "true" ? (
+                    isLoadingUpdate ? (
+                      <div className="flex gap-x-2 justify-center">
+                        <Loader /> <p> Loading...</p>
+                      </div>
+                    ) : (
+                      " Post the Story"
+                    )
+                  ) : isLoading ? (
                     <div className="flex gap-x-2 justify-center">
                       <Loader /> <p> Loading...</p>
                     </div>
                   ) : (
                     " Post the Story"
-                  ))
-                  : ( isLoading ? (
-                    <div className="flex gap-x-2 justify-center">
-                      <Loader /> <p> Loading...</p>
-                    </div>
-                  ) : (
-                    " Post the Story"
-                  ))}
+                  )}
                 </Button>
               </div>
             </Form>

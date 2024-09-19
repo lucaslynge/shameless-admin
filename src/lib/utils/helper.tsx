@@ -1,3 +1,4 @@
+import dateFormat from 'dateformat'
 export const getToken = () => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('token');
@@ -10,3 +11,7 @@ export const getUser:any = () => {
     }
     return null;
 };
+
+export const dateFormated:any=(date:any)=>{
+  return dateFormat(date,'dd-mm-yyyy')
+}

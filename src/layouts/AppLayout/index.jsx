@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FolderIcon, HomeIcon, UsersIcon, } from "@heroicons/react/24/outline";
-import { MdContactEmergency, MdEditDocument } from "react-icons/md";
+import { MdContactEmergency, MdEditDocument, MdReviews } from "react-icons/md";
 
 import MobileSidebar from "@/components/Mobile/Sidebar";
 import DesktopSidebar from "@/components/Desktop/Sidebar";
@@ -8,16 +8,16 @@ import Header from "@/components/Header";
 import { useRouter } from "next/router";
 import { MdOutlinePayment } from "react-icons/md";
 import { CgCommunity } from "react-icons/cg";
-import { FaBlogger } from "react-icons/fa";
-import { getToken } from "next-auth/jwt";
 
 
 let sidebarNavigation = [
   { name: "Users", href: "user", icon: UsersIcon, current: false },
   { name: "Articles", href: "articles", icon: MdEditDocument, current: false },
+  { name: "Reviews", href: "review", icon: MdReviews, current: false },
   { name: "Community", href: "community", icon: CgCommunity, current: false },
   { name: "Payments", href: "payment", icon: MdOutlinePayment, current: false },
   { name: "Contacts", href: "contact", icon: MdContactEmergency, current: false },
+
 
 ];
 

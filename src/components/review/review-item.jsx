@@ -1,20 +1,13 @@
 import dateFormat from "dateformat";
 import GenericTableItem from "../GenericTableItem";
-import { useDeleteContactMutation } from "@/lib/services/contactApi";
-import AddContact from "./add-contact";
+import { useDeleteReviewMutation } from "@/lib/services/reviewApi";
+import AddContact from "../contact/add-contact";
+import AddReview from "./add-review";
 
-export default function ContactItem({ contact, refetch }) {
-  const onDelete=useDeleteContactMutation()
-  console.log("contact",contact)
+export default function ReviewItem({ review, refetch,editComponent }) {
+  const onDelete=useDeleteReviewMutation()
 
   const columns = [
-    {
-      value: (item) => (
-        <div className="hidden text-sm text-muted-foreground md:inline">
-          {item.email}
-        </div>
-      ),
-    },
     {
       value: (item) => (
         <div className="hidden text-sm text-muted-foreground md:inline">
@@ -23,26 +16,21 @@ export default function ContactItem({ contact, refetch }) {
       ),
     },
     {
+      value: (item) => (
+        <div className="hidden text-sm text-muted-foreground md:inline">
+          {item.rating}
+        </div>
+      ),
+    },
+    {
         value: (item) => (
           <div className="hidden text-sm text-muted-foreground md:inline">
-            {item.status}
+            {item.review}
           </div>
         ),
       },
-      {
-        value: (item) => (
-          <div className="hidden text-sm text-muted-foreground md:inline">
-            {item.subject}
-          </div>
-        ),
-      },
-      {
-        value: (item) => (
-          <div className="hidden text-sm text-muted-foreground md:inline">
-            {item.message}
-          </div>
-        ),
-      },
+     
+    
     {
       value: (item) => dateFormat(item.createdAt, "dd-mm-yyyy"),
       className: "hidden md:table-cell",
@@ -51,12 +39,12 @@ export default function ContactItem({ contact, refetch }) {
 
   return (
     <GenericTableItem
-      item={contact}
+      item={review}
       refetch={refetch}
       columns={columns}
       onDelete={onDelete}
-      EditComponent={AddContact}
-      entityName="contact"
+      EditComponent={AddReview}
+      entityName="review"
     />
   );
 }

@@ -1,11 +1,10 @@
-import AuthGuard from "@/components/authgaurd";
+import withAuth from "@/hoc/withAuth";
 import AppLayout from "@/layouts/AppLayout";
-import { getToken } from "next-auth/jwt";
 
-export default function MainApp() {
+function MainApp() {
   return (
       <AppLayout></AppLayout>
   );
 }
-
+export default withAuth(MainApp)
 

@@ -13,10 +13,12 @@ export default function CummunityItem({community,refetch}) {
   return (
     <TableRow  className="bg-accent">
                       <TableCell>
-                        <div className="font-medium">{community.name}</div>
                         <div className="hidden text-sm text-muted-foreground md:inline">
                           {community.email}
                         </div>
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        {community?.payment_id?.subscription_type }
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
                         {community.is_paid ? 'Yes':'No'}

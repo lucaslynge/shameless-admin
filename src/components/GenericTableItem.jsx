@@ -16,7 +16,7 @@ import AddContact from './contact/add-contact';
  * @param {Array} props.columns - Array of column objects with label and accessor for the item data.
  * @param {String} props.entityName - Name of the entity being displayed (for edit/delete dialogs).
  */
-export default function GenericTableItem({ item, onEdit, onDelete, refetch, columns, entityName }) {
+export default function GenericTableItem({ item, onEdit, onDelete, refetch, columns, entityName,EditComponent }) {
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   
@@ -25,16 +25,18 @@ export default function GenericTableItem({ item, onEdit, onDelete, refetch, colu
     <TableRow className="bg-accent">
      {/* Dynamically render each column based on the columns array */}
      {columns.map((column, index) => (
-        <TableCell key={index} className={column.className || ''}>
+        <TableCell  key={index} className={column.className || ''}>
           {column.value(item)}
         </TableCell>
       ))}
       {/* Action buttons for Edit/Delete */}
-      <TableCell className="actions-cell">
+      <TableCell style={{
+        width:'180px'
+      }}  colSpan="2" className="actions-cell flex gap-1" >
         <Button variant={'secondary'} size={'icon'} onClick={() => setIsOpenEdit(true)}>
           <MdEdit size={20} />
         </Button>
-        <AddContact isOpen={isOpenEdit} refetch={refetch} isedit={true}  setIsOpen={setIsOpenEdit} contact={item} />
+        <EditComponent isOpen={isOpenEdit} refetch={refetch} isedit={true}  setIsOpen={setIsOpenEdit} object={item} />
 
         <Button variant={'destructive'} size={'icon'} onClick={() => setIsOpenDelete(true)}>
           <MdDelete size={20} />

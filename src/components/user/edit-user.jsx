@@ -26,7 +26,6 @@ export default function EidtUser({ customer, isOpen, setIsOpen, customerId }) {
       <DialogContent>
         <Formik
           initialValues={{
-            is_paid: customer.is_paid,
             role: customer.role,
             email: customer.email,
             password: customer.password,
@@ -63,25 +62,10 @@ export default function EidtUser({ customer, isOpen, setIsOpen, customerId }) {
           {({ errors, touched, handleSubmit, values }) => (
             <Form
               onSubmit={handleSubmit}
-              className="flex flex-col justify-center items-center "
+              className="flex flex-col justify-center py-2 items-center "
             >
               <div className="w-full flex flex-col gap-y-5 gap-1">
-                <div>
-                  <Field name="is_paid" id="is_paid">
-                    {({ field, form }) => (
-                      <div className="flex items-center space-x-2">
-                        <Switch
-                          checked={field.value}
-                          onCheckedChange={(value) =>
-                            form.setFieldValue(field.name, value)
-                          }
-                          id="airplane-mode"
-                        />
-                        <Label htmlFor="airplane-mode">Is Paid</Label>
-                      </div>
-                    )}
-                  </Field>
-                </div>
+             
                 <div>
                   <Field
                     component={Input}

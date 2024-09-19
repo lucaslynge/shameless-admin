@@ -18,29 +18,34 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import AppLayout from "@/layouts/AppLayout";
-import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import AddUser from "@/components/user/add-user";
 import { useGetAllUsersQuery } from "@/lib/services/userApi";
 import Loader from "@/components/loader";
 import Mypaginations from "@/components/my-paginations";
-import { getToken } from "next-auth/jwt";
-import AuthGuard from "@/components/authgaurd";
+import withAuth from "@/hoc/withAuth";
+import SearchBox from "@/components/search-box";
 
-export default function User() {
+ function User() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading, refetch } = useGetAllUsersQuery({
+  const [search, onSearch] = useState();
+  const [query, setQuery] = useState();
+
+  const [filters, setFilters] = useState({
     page: currentPage,
   });
+  const { data, isLoading, refetch } = useGetAllUsersQuery(filters);
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
   };
+
   return (
       <AppLayout>
         <Card x-chunk="dashboard-05-chunk-3">
-          <CardHeader className="px-7">
+          <CardHeader className="px-7 ">
+            <div className="grid grid-cols-2">
             <div className="flex gap-x-4">
               <div className="flex flex-col gap-2">
                 <CardTitle>Users</CardTitle>
@@ -59,6 +64,18 @@ export default function User() {
                 <AddUser isOpen={isOpen} setIsOpen={setIsOpen} />
               </div>
             </div>
+            <SearchBox
+            onSearch={onSearch}
+            query={query}
+            searchArray={["item 1", "item 2", "item 3"]}
+            setQuery={(searchQuery) => {
+              setQuery(searchQuery);
+              setFilters({
+                search: searchQuery,
+              });
+            }}/>
+            </div>
+
           </CardHeader>
           <CardContent>
             <Table>
@@ -104,21 +121,4 @@ export default function User() {
       </AppLayout>
   );
 }
-
-// export async function getServerSideProps(context) {
-//   const result=await getToken(context)
-//   const accessToken=result?.accessToken
-//   console.log("getToken",accessToken)
-//   if(!accessToken){
-//     return {
-//       redirect: {
-//         destination: '/',
-//         permanent: false,
-//       },
-//     }
-//   }
-//   return{
-//     props:{accessToken}
-//   }
-
-// }
+export default withAuth(User)

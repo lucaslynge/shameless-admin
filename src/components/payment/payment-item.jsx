@@ -13,6 +13,9 @@ export default function PaymentItem({payment,refetch}) {
 
   return (
     <TableRow  className="bg-accent">
+        <TableCell>
+                        <div className="font-medium">{payment?.community_id?.email}</div>
+                      </TableCell>
                       <TableCell>
                         <div className="font-medium">{payment.amount}</div>
                       </TableCell>
