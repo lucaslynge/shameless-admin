@@ -88,6 +88,7 @@ function Review() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="hidden sm:table-cell">ID</TableHead>
                   <TableHead className="hidden sm:table-cell">Name</TableHead>
                   <TableHead className="hidden sm:table-cell">Ratting</TableHead>
                   <TableHead className="hidden sm:table-cell">

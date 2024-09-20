@@ -12,6 +12,9 @@ export default function ArticelItem({articel,refetch}) {
   return (
        <TableRow  className="bg-accent">
                       <TableCell>
+                        <div className="font-medium">{articel._id}</div>
+                      </TableCell>
+                      <TableCell>
                         <div className="font-medium">{articel.headline}</div>
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">

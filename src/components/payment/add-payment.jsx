@@ -19,7 +19,6 @@ export default function AddPayment({ isOpen, setIsOpen }) {
           initialValues={{
             community_id: "",
             amount: "",
-            name: "",
             subscription_type: "",
             payment_status: "",
             email: "",
@@ -56,11 +55,7 @@ export default function AddPayment({ isOpen, setIsOpen }) {
               className="flex flex-col justify-center items-center "
             >
               <div className="w-full flex flex-col gap-y-2 gap-1">
-           
-              <div>
-                  <label className="text-sm font-semibold">Name</label>
-                  <Field component={Input} name="text" placeholder="ex jon" />
-                </div>
+        
                 <div>
                   <label className="text-sm font-semibold">Amount</label>
                   <Field component={Input} name="text" placeholder="ex 50.00" />

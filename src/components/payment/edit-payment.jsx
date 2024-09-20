@@ -34,7 +34,6 @@ export default function EidtPayemnt({  isOpen, setIsOpen, paymentId,refetch }) {
         <Formik
           initialValues={{
             amount: "",
-            name: "",
             subscription_type: "",
             payment_status: "",
           }}
@@ -74,10 +73,7 @@ export default function EidtPayemnt({  isOpen, setIsOpen, paymentId,refetch }) {
             >
               <div className="w-full flex flex-col gap-y-2 gap-1">
            
-              <div>
-                  <label className="text-sm font-semibold">Name</label>
-                  <Field component={Input} name="name" placeholder="ex jon" />
-                </div>
+         
                 <div>
                   <label className="text-sm font-semibold">Amount</label>
                   <Field component={Input} name="amount" placeholder="ex 50.00" />

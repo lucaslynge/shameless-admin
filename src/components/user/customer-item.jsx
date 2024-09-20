@@ -13,20 +13,24 @@ export default function CustomerItem({customer,refetch}) {
   return (
     <TableRow  className="bg-accent">
                       <TableCell>
-                        <div className="font-medium">{customer.name}</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
+                        <div className=" text-sm text-muted-foreground md:inline">
+                          {customer._id}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className=" text-sm text-muted-foreground md:inline">
                           {customer.email}
                         </div>
                       </TableCell>
                     
-                      <TableCell className="hidden sm:table-cell">
+                      <TableCell className=" sm:table-cell">
                         {customer.role}
                       </TableCell>
-                      <TableCell className="hidden md:table-cell">
+                      <TableCell className=" md:table-cell">
                         {dateFormat(customer?.createdAt,'dd-mm-yyyy')}
                         
                       </TableCell>
-                      <TableCell className="hidden md:table-cell ">
+                      <TableCell className=" md:table-cell ">
                         <Button variant={'secondary'} size={'icon'} onClick={()=>setIsOpenEdit(true)}>
                           <MdEdit size={20} />
                         </Button>

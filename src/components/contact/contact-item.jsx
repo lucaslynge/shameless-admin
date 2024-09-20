@@ -2,12 +2,19 @@ import dateFormat from "dateformat";
 import GenericTableItem from "../GenericTableItem";
 import { useDeleteContactMutation } from "@/lib/services/contactApi";
 import AddContact from "./add-contact";
+import TexTruncate from "../text-truncate";
 
 export default function ContactItem({ contact, refetch }) {
   const onDelete=useDeleteContactMutation()
   console.log("contact",contact)
 
   const columns = [
+    {
+      value: (item) => (
+        <TexTruncate text={item?._id}/>
+
+      ),
+    },
     {
       value: (item) => (
         <div className="hidden text-sm text-muted-foreground md:inline">

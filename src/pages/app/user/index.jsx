@@ -81,10 +81,11 @@ import SearchBox from "@/components/search-box";
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>ID</TableHead>
                   <TableHead>Email</TableHead>
-                  <TableHead className="hidden sm:table-cell">Role</TableHead>
-                  <TableHead className="hidden md:table-cell">Date</TableHead>
-                  <TableHead className="hidden md:table-cell">
+                  <TableHead >Role</TableHead>
+                  <TableHead >Date</TableHead>
+                  <TableHead >
                     Actions
                   </TableHead>
                 </TableRow>

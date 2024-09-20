@@ -11,6 +11,13 @@ export default function ReviewItem({ review, refetch,editComponent }) {
     {
       value: (item) => (
         <div className="hidden text-sm text-muted-foreground md:inline">
+          {item._id}
+        </div>
+      ),
+    },
+    {
+      value: (item) => (
+        <div className="hidden text-sm text-muted-foreground md:inline">
           {item.name}
         </div>
       ),

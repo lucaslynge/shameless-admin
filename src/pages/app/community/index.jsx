@@ -92,8 +92,9 @@ import SearchBox from "@/components/search-box";
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>ID</TableHead>
                   <TableHead>Email</TableHead>
-                  <TableHead className="hidden sm:table-cell">Subscription Type</TableHead>
+                  <TableHead className="hidden sm:table-cell">Subscription</TableHead>
                   <TableHead className="hidden sm:table-cell">IsPaid</TableHead>
                   <TableHead className="hidden sm:table-cell">Status</TableHead>
                   <TableHead className="hidden md:table-cell">Date</TableHead>

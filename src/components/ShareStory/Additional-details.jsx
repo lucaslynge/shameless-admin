@@ -103,7 +103,7 @@ export default function AdditionalDetails() {
                     {/* You can uncomment and implement the Quill editor if needed */}
                     <Quill
                       name={`details[${index}].description`}
-                      valueText={valueTextEditor}
+                      valueText={values.details[index]?.description || ''} // Directly bind Formik's value
                       onSetValueTextEditor={(value) => {
                         setValueTextEditor(value);
                         handleChange({

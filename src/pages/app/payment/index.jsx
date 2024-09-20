@@ -75,10 +75,13 @@ import SearchBox from "@/components/search-box";
           <Table>
             <TableHeader>
               <TableRow>
+               <TableHead>ID</TableHead>
+               <TableHead>Transaction ID</TableHead>   
+               <TableHead>Customer ID</TableHead>      
                <TableHead>Email</TableHead>      
                 <TableHead>Amount</TableHead>
-                <TableHead className="hidden sm:table-cell">Subscription Type</TableHead>
-                <TableHead className="hidden sm:table-cell">Payment Status</TableHead>
+                <TableHead className="hidden sm:table-cell">Subscription</TableHead>
+                <TableHead className="hidden sm:table-cell">Status</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
                 <TableHead className="hidden md:table-cell">Actions</TableHead>
               </TableRow>

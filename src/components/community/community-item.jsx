@@ -14,8 +14,15 @@ export default function CummunityItem({community,refetch}) {
     <TableRow  className="bg-accent">
                       <TableCell>
                         <div className="hidden text-sm text-muted-foreground md:inline">
+                          {community._id}
+                        </div>
+                        
+                      </TableCell>
+                      <TableCell>
+                        <div className="hidden text-sm text-muted-foreground md:inline">
                           {community.email}
                         </div>
+                        
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
                         {community?.payment_id?.subscription_type }

@@ -86,6 +86,7 @@ function Contact() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>ID</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead className="hidden sm:table-cell">Name</TableHead>
                   <TableHead className="hidden sm:table-cell">Status</TableHead>
