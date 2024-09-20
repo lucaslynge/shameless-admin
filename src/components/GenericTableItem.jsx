@@ -5,6 +5,7 @@ import dateFormat from 'dateformat';
 import { useState } from 'react';
 import GenericDeleteDialog from './GenericDeleteDialog';
 import AddContact from './contact/add-contact';
+import { Eye } from 'lucide-react';
 
 /**
  * GenericTableItem component
@@ -16,8 +17,9 @@ import AddContact from './contact/add-contact';
  * @param {Array} props.columns - Array of column objects with label and accessor for the item data.
  * @param {String} props.entityName - Name of the entity being displayed (for edit/delete dialogs).
  */
-export default function GenericTableItem({ item, onEdit, onDelete, refetch, columns, entityName,EditComponent }) {
+export default function GenericTableItem({ item, onEdit, onDelete, refetch, columns, entityName,EditComponent,ViewComponent }) {
   const [isOpenEdit, setIsOpenEdit] = useState(false);
+  const [isOpenView, setIsOpenView] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   
 
@@ -37,6 +39,11 @@ export default function GenericTableItem({ item, onEdit, onDelete, refetch, colu
           <MdEdit size={20} />
         </Button>
         <EditComponent isOpen={isOpenEdit} refetch={refetch} isedit={true}  setIsOpen={setIsOpenEdit} object={item} />
+        <Button variant={'secondary'} size={'icon'} onClick={() => setIsOpenView(true)}>
+          <Eye size={20} />
+        </Button>
+        <EditComponent isOpen={isOpenEdit} refetch={refetch} isedit={true}  setIsOpen={setIsOpenEdit} object={item} />
+        <ViewComponent  isOpen={isOpenView} refetch={refetch}   setIsOpen={setIsOpenView} object={item}/>
 
         <Button variant={'destructive'} size={'icon'} onClick={() => setIsOpenDelete(true)}>
           <MdDelete size={20} />

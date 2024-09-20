@@ -3,6 +3,7 @@ import GenericTableItem from "../GenericTableItem";
 import { useDeleteContactMutation } from "@/lib/services/contactApi";
 import AddContact from "./add-contact";
 import TexTruncate from "../text-truncate";
+import ViewContact from "./view-contact";
 
 export default function ContactItem({ contact, refetch }) {
   const onDelete=useDeleteContactMutation()
@@ -43,13 +44,7 @@ export default function ContactItem({ contact, refetch }) {
           </div>
         ),
       },
-      {
-        value: (item) => (
-          <div className="hidden text-sm text-muted-foreground md:inline">
-            {item.message}
-          </div>
-        ),
-      },
+     
     {
       value: (item) => dateFormat(item.createdAt, "dd-mm-yyyy"),
       className: "hidden md:table-cell",
@@ -63,6 +58,7 @@ export default function ContactItem({ contact, refetch }) {
       columns={columns}
       onDelete={onDelete}
       EditComponent={AddContact}
+      ViewComponent={ViewContact}
       entityName="contact"
     />
   );

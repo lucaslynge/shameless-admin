@@ -81,6 +81,11 @@ function Review() {
               setFilters({
                 search: searchQuery,
               });
+              if (searchQuery === "") {
+                setFilters({
+                  page: currentPage,
+                });
+              }
             }}/>
             </div>
           </CardHeader>
@@ -91,9 +96,7 @@ function Review() {
                   <TableHead className="hidden sm:table-cell">ID</TableHead>
                   <TableHead className="hidden sm:table-cell">Name</TableHead>
                   <TableHead className="hidden sm:table-cell">Ratting</TableHead>
-                  <TableHead className="hidden sm:table-cell">
-                    Review
-                  </TableHead>
+                 
                   <TableHead className="hidden md:table-cell">Date</TableHead>
                   <TableHead className="hidden md:table-cell">
                     Actions

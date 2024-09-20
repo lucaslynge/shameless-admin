@@ -85,6 +85,11 @@ import SearchBox from "@/components/search-box";
               setFilters({
                 search: searchQuery,
               });
+              if (searchQuery === "") {
+                setFilters({
+                  page: currentPage,
+                });
+              }
             }}/>
             </div>
           </CardHeader>

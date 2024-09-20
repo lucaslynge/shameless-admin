@@ -79,6 +79,11 @@ function Contact() {
               setFilters({
                 search: searchQuery,
               });
+              if (searchQuery === "") {
+                setFilters({
+                  page: currentPage,
+                });
+              }
             }}/>
             </div>
           </CardHeader>
@@ -93,9 +98,7 @@ function Contact() {
                   <TableHead className="hidden sm:table-cell">
                     Subject
                   </TableHead>
-                  <TableHead className="hidden sm:table-cell">
-                    Message
-                  </TableHead>
+                
                   <TableHead className="hidden md:table-cell">Date</TableHead>
                   <TableHead className="hidden md:table-cell">
                     Actions

@@ -3,6 +3,7 @@ import GenericTableItem from "../GenericTableItem";
 import { useDeleteReviewMutation } from "@/lib/services/reviewApi";
 import AddContact from "../contact/add-contact";
 import AddReview from "./add-review";
+import ViewReview from "./view-review";
 
 export default function ReviewItem({ review, refetch,editComponent }) {
   const onDelete=useDeleteReviewMutation()
@@ -29,13 +30,13 @@ export default function ReviewItem({ review, refetch,editComponent }) {
         </div>
       ),
     },
-    {
-        value: (item) => (
-          <div className="hidden text-sm text-muted-foreground md:inline">
-            {item.review}
-          </div>
-        ),
-      },
+    // {
+    //     value: (item) => (
+    //       <div className="hidden text-sm text-muted-foreground md:inline">
+    //         {item.review}
+    //       </div>
+    //     ),
+    //   },
      
     
     {
@@ -51,6 +52,7 @@ export default function ReviewItem({ review, refetch,editComponent }) {
       columns={columns}
       onDelete={onDelete}
       EditComponent={AddReview}
+      ViewComponent={ViewReview}
       entityName="review"
     />
   );
