@@ -113,7 +113,7 @@ import SearchBox from "@/components/search-box";
                     </TableCell>
                   </TableRow>
                 ) : (
-                  data.commmunity?.map((community, index) => (
+                  data.community?.map((community, index) => (
                     <CummunityItem
                       refetch={refetch}
                       key={index}
