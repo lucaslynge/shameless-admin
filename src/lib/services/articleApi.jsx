@@ -15,6 +15,7 @@ export const articleApi = createApi({
     }
 
   }),
+  refetchOnFocus:true,
   endpoints: (build) => ({
     GetAllArticle: build.query({
       query: (filter) => {
@@ -24,7 +25,13 @@ export const articleApi = createApi({
       transformResponse: (response) => response.data
     }),
     GetByIdArticle: build.query({
-      query: (id) => ({ url: `artical/reviewById/${id}` }),
+      
+      query: (id) => {
+        console.log("id",id)
+        
+      return  { url: `artical/reviewById/${id}` }
+      
+      },
       transformResponse: (response) => response.data
     }),
     CreateArticle: build.mutation({

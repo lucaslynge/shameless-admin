@@ -21,16 +21,14 @@ import AppLayout from "@/layouts/AppLayout";
 import { useState } from "react";
 import Loader from "@/components/loader";
 import Mypaginations from "@/components/my-paginations";
-import { useGetAllContactsQuery } from "@/lib/services/contactApi";
-import ContactItem from "@/components/contact/contact-item";
 import AddContact from "@/components/contact/add-contact";
 import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";
-import { useGetAllReviewsQuery } from "@/lib/services/reviewApi";
-import ReviewItem from "@/components/review/review-item";
-import AddReview from "@/components/review/add-review";
+import { useGetAllCategoryQuery } from "@/lib/services/categoryApi";
+import CatgoryItem from "@/components/category/category-item";
+import AddCatgory from "@/components/category/add-category";
 
-function Review() {
+function Category() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, onSearch] = useState();
@@ -38,7 +36,8 @@ function Review() {
   const [filters, setFilters] = useState({
     page: currentPage,
   });
-  const { data, isLoading, refetch } = useGetAllReviewsQuery(filters);
+  const { data, isLoading, refetch } = useGetAllCategoryQuery(filters);
+
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
     setFilters({
@@ -47,7 +46,6 @@ function Review() {
 
     })
   };
-  console.log("review data",data)
   return (
       <AppLayout>
         <Card x-chunk="dashboard-05-chunk-3">
@@ -56,9 +54,9 @@ function Review() {
 
             <div className="flex gap-x-4">
               <div className="flex flex-col gap-2">
-                <CardTitle>Reviews</CardTitle>
+                <CardTitle>Category</CardTitle>
                 <CardDescription>
-                  Recent Reviews from your shamelessPath.
+                  Recent Category from your shamelessPath.
                 </CardDescription>
               </div>
               <div>
@@ -69,7 +67,7 @@ function Review() {
                 >
                   Add New
                 </Button>
-                <AddReview
+                <AddCatgory
                   isOpen={isOpen}
                   isedit={false}
                   refetch={refetch}
@@ -98,10 +96,10 @@ function Review() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="hidden sm:table-cell">ID</TableHead>
+                  <TableHead>ID</TableHead>
                   <TableHead className="hidden sm:table-cell">Name</TableHead>
-                  <TableHead className="hidden sm:table-cell">Ratting</TableHead>
-                 
+              
+                
                   <TableHead className="hidden md:table-cell">Date</TableHead>
                   <TableHead className="hidden md:table-cell">
                     Actions
@@ -118,8 +116,8 @@ function Review() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  data.review?.map((item, index) => (
-                    <ReviewItem  refetch={refetch} key={index} review={item} />
+                  data?.categoryData?.map((item, index) => (
+                    <CatgoryItem refetch={refetch} key={index} category={item} />
                   ))
                 )}
               </TableBody>
@@ -137,4 +135,4 @@ function Review() {
   );
 }
 
-export default withAuth(Review)
+export default withAuth(Category)

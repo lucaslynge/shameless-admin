@@ -7,6 +7,8 @@ import { communityApi } from '../services/communityApi';
 import { paymentApi } from '../services/paymentApi';
 import { contactApi } from '../services/contactApi';
 import { reviewApi } from '../services/reviewApi';
+import { categoryApi } from '../services/categoryApi';
+
 import authReducer from './authSlice';
 
 
@@ -19,7 +21,9 @@ const rootReducer = combineReducers({
   [communityApi.reducerPath]:communityApi.reducer,
   [paymentApi.reducerPath]:paymentApi.reducer,
   [contactApi.reducerPath]:contactApi.reducer,
-  [reviewApi.reducerPath]:reviewApi.reducer
+  [reviewApi.reducerPath]:reviewApi.reducer,
+  [categoryApi.reducerPath]:categoryApi.reducer
+
 
 });
 

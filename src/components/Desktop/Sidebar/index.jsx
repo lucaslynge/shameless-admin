@@ -44,7 +44,7 @@ export default function DesktopSidebar({ navigation }) {
             </li>
 
             <li className="mt-auto">
-              <Link
+              {/* <Link
                 href={`/app/settings`}
                 className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-[#001C46]"
               >
@@ -53,7 +53,7 @@ export default function DesktopSidebar({ navigation }) {
                   aria-hidden="true"
                 />
                 Settings
-              </Link>
+              </Link> */}
             </li>
           </ul>
         </nav>

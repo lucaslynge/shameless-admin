@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { OptionSelection } from "./DropDowns/OptionSelection";
-import { AgeSelection } from "./DropDowns/AgeSelection";
-import { GenderSelection } from "./DropDowns/GenderSelection";
+import React, { useState, useEffect } from "react";;
 import { ShareAccordion } from "./ShareAccordion";
-import ProgressBar from "./ProgressBar";
 import Quill from "./TextEditor";
 import { Field, Form, Formik, useFormikContext } from "formik";
-import { getUser } from "@/lib/utils/helper";
-import * as Yup from "yup";
 import Image from "next/image";
+import placeholderImg from "../../../public/assest/placeholder_img.png"
 import { Slide, toast } from "react-toastify";
 import {
   useCreateArticleMutation,
@@ -21,46 +16,34 @@ import { useSelector } from "react-redux";
 import { Router, useRouter } from "next/router";
 import Loader from "../loader";
 import AdditionalDetails from "./Additional-details";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import DatePickerPopover from "../Date-single-picker-input";
+import { useGetAllCategoryQuery } from "@/lib/services/categoryApi";
 export default function ShareMain() {
   const [headline, setHeadline] = useState("");
   const [fileName, setFileName] = useState("");
+  const [initialCategory,setInitialCategory]=useState("")
+  const router = useRouter();
+  const id = router.query.id;
   const [file, setFile] = useState(null);
-
+  const { data, refetch } = useGetByIdArticleQuery(id);
   const [CreateArticle, { isLoading }] = useCreateArticleMutation();
   const [UpdateArticle, { isLoading: isLoadingUpdate }] =
     useUpdateArticleMutation();
   const { refetch: allarticle } = useGetAllArticleQuery();
-
-  const [option, setOption] = useState("Select Type");
-  const router = useRouter();
-  const [ageOption, setAgeOption] = useState("Select");
-  const [genderOption, setGenderOption] = useState("Select");
   const user = useSelector((state) => state.auth.user);
-  const id = router.query.id;
   const isEditing = router.query.isediting;
-  const { data, refetch } = useGetByIdArticleQuery(id);
+  const { data: dataCategory } = useGetAllCategoryQuery();
   const [filepath, setfilepath] = useState("");
-
-  console.log("data", data);
-  const validationSchema = Yup.object().shape({
-    headline: Yup.string().required("Headline is required "),
-    primary_message: Yup.string().required("Primary message is required"),
-    age: Yup.string().required("Age is required"),
-    gender: Yup.string().required("Gender is required"),
-  });
-
-  const [valueTextEditor, setValueTextEditor] = useState("");
-
   const maxChars = 15;
-  useEffect(() => {
-    if (isEditing) {
-      setfilepath(data?.image);
-      setValueTextEditor(data?.primary_message);
-    }
-  }, []);
-
+  const [valueTextEditor, setValueTextEditor] = useState(data?.primary_message);
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
     const reader = new FileReader();
@@ -77,6 +60,15 @@ export default function ShareMain() {
     }
   };
 
+  useEffect(()=>{
+    if(isEditing){
+      setValueTextEditor(data?.primary_message)
+      setfilepath(data?.image ? data?.image :placeholderImg)
+      setInitialCategory(data?.category?._id)
+    }
+  },[data])
+
+
   const handleFileClick = () => {
     const fileInput = document.getElementById("fileInput");
     if (fileInput) {
@@ -84,21 +76,25 @@ export default function ShareMain() {
     }
   };
 
+  const ageOptions = Array.from({ length: 48 }, (_, i) => (i + 18).toString());
   return (
     <div className="w-[90%] md:w-[75%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%] mx-auto bg-white rounded-md px-7 mb-5">
       <div>
         <p className="text-2xl font-bold">Share Your Story</p>
         <Formik
           initialValues={{
-            headline: isEditing ? data?.headline : "",
-            primary_message: isEditing ? data?.primary_message : "",
-            type: "",
-            age: isEditing ? data?.age : "",
-            gender: isEditing ? data?.gender : "",
-            user_id: "",
-            STI_status:"",
-            image: "",
-            question_answers: [
+            headline: isEditing==="true" ? data?.headline :"",
+            primary_message:isEditing==="true" ? data?.primary_message:"" ,
+            type:isEditing==="true" ? data?.type:"",
+            age:isEditing==="true" ? data?.age?.toString():"",
+            gender:isEditing==="true" ? data?.gender:"",
+            user_id:isEditing==="true" ? data?.user_id:"",
+            STI_status:isEditing==="true" ? data?.STI_status:"",
+            image:isEditing==="true" ? data?.image:"",
+            readTime:isEditing==="true" ? data?.readTime:"",
+            category:initialCategory?.toString(),
+            publishDate:isEditing==="true" ? data?.publishDate:"",
+            question_answers: isEditing && data?.question_answers ? data?.question_answers : [
               {
                 question:
                   "How has your STI diagnosis impacted your daily life?",
@@ -129,41 +125,35 @@ export default function ShareMain() {
                 answer: "",
               },
             ],
-
-            details: [
-              {
-                icon: "",
-                title: "",
-                description: "",
-              },
-            ],
+            details: [],
           }}
           enableReinitialize
-          validationSchema={validationSchema}
           onSubmit={async (values, { resetForm, setSubmitting }) => {
+
+            console.log("values",values)
             let data = {
               ...values,
               primary_message: valueTextEditor,
-              type: option,
-              age: ageOption,
-              gender: genderOption,
             };
-            console.log("data share main", data);
             if (file) {
               data = {
                 ...data,
                 image: file,
               };
             }
-            console.log("data", data);
             const formdata = new FormData();
             formdata.append("headline", data.headline);
             formdata.append("primary_message", data.primary_message);
             formdata.append("type", data.type);
             formdata.append("age", data.age);
             formdata.append("gender", data.gender);
-            formdata.append("STI_status", data.STI_status);            
+            formdata.append("STI_status", data.STI_status);
+            formdata.append("publishDate", data.publishDate);
+            formdata.append("readTime", data.readTime);
             formdata.append("image", data.image);
+
+            console.log("category",data.category)
+            formdata.append("category", data.category);
             formdata.append(
               "question_answers",
               JSON.stringify(values.question_answers)
@@ -216,11 +206,8 @@ export default function ShareMain() {
               } finally {
                 setSubmitting(false);
                 setFile("");
-                setGenderOption("Select");
-                setAgeOption("Select");
                 setHeadline("");
                 resetForm();
-                setOption("Full annonymus");
                 setValueTextEditor("");
                 setFileName("");
                 setfilepath("");
@@ -261,18 +248,14 @@ export default function ShareMain() {
               } finally {
                 setSubmitting(false);
                 setFile("");
-                setGenderOption("Select");
-                setAgeOption("Select");
                 setHeadline("");
                 resetForm();
-                setOption("Full annonymus");
                 setValueTextEditor("");
                 setFileName("");
                 setfilepath("");
                 allarticle();
               }
             }
-            resetForm();
           }}
         >
           {({ errors, touched, handleSubmit, values, handleChange }) => (
@@ -292,11 +275,7 @@ export default function ShareMain() {
                     placeholder="Type here"
                     className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-3"
                   />
-                  {errors.headline && touched.headline && (
-                    <div id="feedback" className="text-[12px] text-red-500">
-                      {errors.headline}
-                    </div>
-                  )}
+               
                   <p className="text-end text-xs font-semibold text-[#414141] mt-1">
                     {headline.length}/{maxChars}
                   </p>
@@ -314,13 +293,10 @@ export default function ShareMain() {
                       });
                     }}
                   />
-                  {errors.primary_message && touched.primary_message && (
-                    <div id="feedback" className="text-[12px] text-red-500">
-                      {errors.primary_message}
-                    </div>
-                  )}
+                
                 </div>
-                <div className="mt-5">
+                    
+               <div className="mt-5">
                   <p className="text-sm font-semibold">STI Status</p>
                   <Field name="STI_status">
                     {({ field, form }) => (
@@ -331,8 +307,8 @@ export default function ShareMain() {
                           form.setFieldValue(field.name, value)
                         }
                       >
-                        <SelectTrigger className="lg:min-w-[300px]">
-                          <SelectValue placeholder="Select" />
+                        <SelectTrigger   className="lg:min-w-[300px]">
+                          <SelectValue  placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
@@ -344,52 +320,158 @@ export default function ShareMain() {
                     )}
                   </Field>
                 </div>
-                <div className="mt-5">
-                  <p className="text-sm font-semibold mb-2">Type</p>
-                  <OptionSelection setOption={setOption} option={option} />
+               
+                 <div className="mt-5">
+                  <p className="text-sm font-semibold">Category</p>
+                  <Field name="category">
+                    {({ field, form }) => (
+                      <Select
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={(value) =>
+                          form.setFieldValue(field.name, value)
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {dataCategory?.categoryData?.map((item, index) => {
+                              return (
+                                <SelectItem key={index} value={item._id}>
+                                  {item.name}
+                                </SelectItem>
+                              );
+                            })}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </Field>
                 </div>
-                <div className="flex flex-col md:flex-row justify-between gap-4 mt-3">
+                 <div className="mt-5">
+                  <p className="text-sm font-semibold mb-2">Type</p>
+                  <Field name="type">
+                    {({ field, form }) => (
+                      <Select
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={(value) =>
+                          form.setFieldValue(field.name, value)
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value={"medical_trial"}>
+                              Medical Trial
+                            </SelectItem>
+                            <SelectItem value={"artical"}>Artical</SelectItem>
+                            <SelectItem value={"personal_story"}>
+                              Personal Story
+                            </SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </Field>
+                </div>
+            
+               <div className="flex flex-col md:flex-row justify-between gap-4 mt-3">
                   <div className="w-full">
                     <p className="text-sm font-semibold">Age</p>
                     <div className="mt-1">
-                      <AgeSelection
-                        ageOption={ageOption}
-                        setAgeOption={setAgeOption}
-                      />
-
-                      {errors.age && touched.age && (
-                        <div
-                          id="feedback"
-                          className="text-[12px]  text-red-500  "
+                      <Field name="age">
+                        {({ field, form }) => {
+                          return <Select
+                          name={field.name}
+                          value={field.value} 
+                          onValueChange={(value) =>
+                            form.setFieldValue(field.name, value)
+                          }
                         >
-                          {errors.age}
-                        </div>
-                      )}
+                          <SelectTrigger >
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent >
+                            <SelectGroup >
+                              {ageOptions.map((age, index) => (
+                                <SelectItem key={index} value={age}>
+                                  {age}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                        }}
+                      </Field>
+
+                    </div>
+                  </div>
+  
+                  <div className="w-full">
+                    <p className="text-sm font-semibold">Gender</p>
+                    <div className="mt-1">
+                
+                      <Field name="gender">
+                        {({ field, form }) => (
+                          <Select
+                            name={field.name}
+                            value={field.value}
+                            onValueChange={(value) =>
+                              form.setFieldValue(field.name, value)
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectItem value={"Male"}>Male</SelectItem>
+                                <SelectItem value={"Female"}>Female</SelectItem>
+                                <SelectItem value={"Other"}>Other</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        )}
+                      </Field>
+
+                    </div>
+                  </div>
+                </div>
+               
+                <div className="flex flex-col md:flex-row justify-between gap-4 mt-3">
+                  <div className="w-full">
+                    <p className="text-sm font-semibold">Published Date</p>
+                    <div className="mt-1">
+                      <DatePickerPopover initialDate={data?.publishDate} />
                     </div>
                   </div>
 
                   <div className="w-full">
-                    <p className="text-sm font-semibold">Gender</p>
+                    <p className="text-sm font-semibold">Read Min</p>
                     <div className="mt-1">
-                      <GenderSelection
-                        genderOption={genderOption}
-                        setGenderOption={setGenderOption}
+                      <Field
+                        type="number"
+                        id="readTime"
+                        value={values.readTime}
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                        name="readTime"
+                        placeholder="Type here"
+                        className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-3"
                       />
-                      {errors.gender && touched.gender && (
-                        <div
-                          id="feedback"
-                          className="text-[12px]  text-red-500  "
-                        >
-                          {errors.gender}
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-5">
                   <p className="text-sm font-semibold">
-                    Upload picture (optional)
+                    Upload picture (optional)  Size(500 x 300)
                   </p>
                   <div className="mt-1">
                     <input
@@ -404,11 +486,11 @@ export default function ShareMain() {
                     >
                       {filepath ? (
                         <Image
-                          src={filepath}
+                          src={filepath ? filepath :placeholderImg}
                           alt=""
-                          width={100}
-                          height={50}
-                          className=" hover:cursor-pointer rounded-full "
+                          width={300}
+                          height={200}
+                          className="rounded object-cover w-[240px] h-[150px] hover:cursor-pointer "
                         />
                       ) : (
                         <>
@@ -445,9 +527,9 @@ export default function ShareMain() {
                 </div>
                 <div className="my-5">
                   <AdditionalDetails />
-                </div>
+                </div> 
               </div>
-              <div className="mt-10 ">
+               <div className="mt-10 ">
                 <Button type="submit">
                   {isEditing === "true" ? (
                     isLoadingUpdate ? (
@@ -455,7 +537,7 @@ export default function ShareMain() {
                         <Loader /> <p> Loading...</p>
                       </div>
                     ) : (
-                      " Post the Story"
+                      " Update the Story"
                     )
                   ) : isLoading ? (
                     <div className="flex gap-x-2 justify-center">

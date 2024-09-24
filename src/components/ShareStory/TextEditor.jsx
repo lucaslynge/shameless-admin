@@ -18,6 +18,8 @@ const Quill = ({ valueText, onSetValueTextEditor }) => {
             [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
             [{ align: "" }, { align: "center" }, { align: "right" }],
             ["image"],
+            [{ 'header': [1, 2, 3, false] }], // Heading options: H1, H2, H3, and normal text
+
           ],
         }}
       />

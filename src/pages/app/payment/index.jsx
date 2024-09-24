@@ -41,11 +41,17 @@ import SearchBox from "@/components/search-box";
   const [query, setQuery] = useState();
   const [filters, setFilters] = useState({
     page: currentPage,
+    
   });
   const { data, isLoading,refetch } = useGetAllPaymentQuery(filters);
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
+    setFilters({
+      ...filters,
+      page:newPage
+
+    })
   };
   return (
     <AppLayout>

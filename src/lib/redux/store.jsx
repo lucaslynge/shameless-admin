@@ -10,6 +10,8 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
 import { contactApi } from "../services/contactApi";
 import { reviewApi } from "../services/reviewApi";
+import { categoryApi } from "../services/categoryApi";
+
 const persistConfig = {
   key: 'root',
   storage,
@@ -30,6 +32,7 @@ const makeStore = () =>
         .concat(communityApi.middleware)
         .concat(contactApi.middleware)
         .concat(reviewApi.middleware)
+        .concat(categoryApi.middleware)
 
   });
 

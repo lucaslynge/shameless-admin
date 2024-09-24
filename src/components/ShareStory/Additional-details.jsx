@@ -32,7 +32,7 @@ export default function AdditionalDetails() {
         <FieldArray
           name="details"
           render={(arrayHelpers) =>
-            values.details.map((item, index) => {
+            values?.details?.map((item, index) => {
               return (
                 <div key={index} className="grid p-4 grid-cols-12">
                   <div className="col-span-10">

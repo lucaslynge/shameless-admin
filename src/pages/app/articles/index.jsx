@@ -37,10 +37,16 @@ import SearchBox from "@/components/search-box";
   });
   const { data, isLoading,refetch } = useGetAllArticleQuery(filters);
 
-  console.log("data",data)
 
-  const onPageChange = (newPage) => {
+  const onPageChange = (newPage) => {  
+    
     setCurrentPage(newPage);
+    setFilters({
+      ...filters,
+      page:newPage
+
+    })
+    
   };
   return (
     
@@ -89,6 +95,7 @@ import SearchBox from "@/components/search-box";
               <TableRow>
                 <TableHead>ID</TableHead>
                 <TableHead>Headline</TableHead>
+                <TableHead>Status</TableHead>
                 <TableHead >Age</TableHead>
                 <TableHead >Gender</TableHead>
                 <TableHead >Type</TableHead>
@@ -99,7 +106,7 @@ import SearchBox from "@/components/search-box";
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan="5" className="w-full">
+                  <TableCell colSpan="8" className="w-full">
                     <div className="flex justify-center mx-auto w-full text-center">
                       <Loader />
                     </div>

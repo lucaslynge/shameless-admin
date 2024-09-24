@@ -39,6 +39,11 @@ function User() {
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
+    setFilters({
+      ...filters,
+      page:newPage
+
+    })
   };
 
   return (
@@ -103,7 +108,7 @@ function User() {
                   </TableCell>
                 </TableRow>
               ) : (
-                data.userData?.map((user, index) => (
+                data?.userData?.map((user, index) => (
                   <CustomerItem refetch={refetch} key={index} customer={user} />
                 ))
               )}

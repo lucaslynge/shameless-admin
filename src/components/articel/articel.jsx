@@ -4,6 +4,7 @@ import { Button } from '../ui/button'
 import { MdDelete, MdEdit } from 'react-icons/md'
 import DeleteArticle from './delete-article'
 import { useRouter } from 'next/router'
+import TexTruncate from '../text-truncate'
 
 export default function ArticelItem({articel,refetch}) {
     const [isOpenDelete, setIsOpenDelete] = React.useState(false)
@@ -12,10 +13,13 @@ export default function ArticelItem({articel,refetch}) {
   return (
        <TableRow  className="bg-accent">
                       <TableCell>
-                        <div className="font-medium">{articel._id}</div>
+                        <div className="font-medium">{TexTruncate({text:articel._id})}</div>
                       </TableCell>
                       <TableCell>
                         <div className="font-medium">{articel.headline}</div>
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        {articel.status}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
                         {articel.age}

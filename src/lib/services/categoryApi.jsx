@@ -2,8 +2,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getToken } from "../utils/helper";
 import { BASE_URL } from "../utils/contant";
-export const reviewApi = createApi({
-  reducerPath: "reviewApi",
+export const categoryApi = createApi({
+  reducerPath: "categoryApi",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
@@ -15,23 +15,23 @@ export const reviewApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    GetAllReviews: build.query({
+    GetAllCategory: build.query({
       query: (filter) => {
         const params=new URLSearchParams(filter).toString()
-       return  { url: `review/allData?${params}` }
+       return  { url: `/category/allCategory?${params}` }
       },
       transformResponse: (response) => response.data
     }),
-    CreateReview: build.mutation({
+    CreateCategory: build.mutation({
       query: (credentials) => ({
-        url: `/review/create`,
+        url: `/category/createCategory`,
         method: "POST",
         body: credentials,
       }),
       transformResponse: (response) => response,
     }),
-    UpdateReview: build.mutation({
-      query: ({ id, body }) => ({ url: `/review/update/${id}`, method: 'PUT', body: body }),
+    UpdateCategory: build.mutation({
+      query: ({ id, body }) => ({ url: `/category/updateCategory/${id}`, method: 'PUT', body: body }),
       transformResponse: (response) => {
         return {
           response: response.data,
@@ -41,8 +41,8 @@ export const reviewApi = createApi({
         }
       }
     }),
-    DeleteReview: build.mutation({
-      query: (id) => ({ url: `/review/delete/${id} `, method: 'DELETE' }),
+    DeleteCategory: build.mutation({
+      query: (id) => ({ url: `/category/deleteCategory/${id} `, method: 'DELETE' }),
       transformResponse: (response) => {
         return {
           response: response.data,
@@ -56,8 +56,8 @@ export const reviewApi = createApi({
 });
 
 export const {
- useCreateReviewMutation,
- useGetAllReviewsQuery,
- useDeleteReviewMutation,
- useUpdateReviewMutation
-} = reviewApi;
+ useCreateCategoryMutation,
+ useGetAllCategoryQuery,
+ useUpdateCategoryMutation,
+ useDeleteCategoryMutation
+} = categoryApi;

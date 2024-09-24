@@ -15,3 +15,4 @@ export const getUser:any = () => {
 export const dateFormated:any=(date:any)=>{
   return dateFormat(date,'dd-mm-yyyy')
 }
+

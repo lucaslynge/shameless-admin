@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import {
   Bars3Icon,
   BellIcon,
@@ -14,11 +14,14 @@ import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import { authlogout } from "@/lib/features/authSlice";
 import { useAuth } from "@/context/AuthContext";
+import EidtUser from "../user/edit-user";
 export default function Header({ userNavigation, setSidebarOpen }) {
   const user=useSelector((state)=>state.auth.user)
+  const [isModalOpen,setIsModalOpen]=useState(false)
   const router=useRouter()
   const {logout}=useAuth()
   const dispatch=useDispatch()
+  console.log("user",user)
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
       <button
@@ -74,7 +77,7 @@ export default function Header({ userNavigation, setSidebarOpen }) {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                {userNavigation.map((item) => (
+                {/* {userNavigation.map((item) => (
                   <Menu.Item key={item.name}>
                     {({ active }) => (
                       <Link
@@ -88,7 +91,23 @@ export default function Header({ userNavigation, setSidebarOpen }) {
                       </Link>
                     )}
                   </Menu.Item>
-                ))}
+                ))} */}
+                     <Menu.Item >
+                    {({ active }) => (
+                      <Button
+                      
+                        onClick={()=>{
+                          setIsModalOpen(true)
+                        }}
+                        className={classNames(
+                          active ? "bg-gray-50" : "",
+                          "block px-3 py-1 text-xs w-full leading-6 text-gray-900"
+                        )}
+                      >
+                        Profile
+                      </Button>
+                    )}
+                  </Menu.Item>
                    <Menu.Item >
                     {({ active }) => (
                       <Button
@@ -100,7 +119,7 @@ export default function Header({ userNavigation, setSidebarOpen }) {
                         }}
                         className={classNames(
                           active ? "bg-gray-50" : "",
-                          "block px-3 py-1 text-xs leading-6 text-gray-900"
+                          "block px-3 py-1 text-xs w-full  leading-6 text-gray-900"
                         )}
                       >
                         Sign Out
@@ -111,6 +130,7 @@ export default function Header({ userNavigation, setSidebarOpen }) {
             </Transition>
           </Menu>
         </div>
+        <EidtUser customer={user} customerId={user?._id}  isOpen={isModalOpen} setIsOpen={setIsModalOpen}/>
       </div>
     </div>
   );

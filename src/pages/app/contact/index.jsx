@@ -36,10 +36,14 @@ function Contact() {
     page: currentPage,
   });
   const { data, isLoading, refetch } = useGetAllContactsQuery(filters);
-  console.log("data", data);
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
+    setFilters({
+      ...filters,
+      page:newPage
+
+    })
   };
   return (
       <AppLayout>

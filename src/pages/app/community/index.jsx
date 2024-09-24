@@ -50,8 +50,12 @@ import SearchBox from "@/components/search-box";
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
+    setFilters({
+      ...filters,
+      page:newPage
+
+    })
   };
-  console.log("data", data);
   return (
       <AppLayout>
         <Card x-chunk="dashboard-05-chunk-3">
