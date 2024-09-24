@@ -65,9 +65,9 @@ export default function ShareMain() {
       setValueTextEditor(data?.primary_message)
       setfilepath(data?.image ? data?.image :placeholderImg)
       setInitialCategory(data?.category?._id)
+    
     }
   },[data])
-
 
   const handleFileClick = () => {
     const fileInput = document.getElementById("fileInput");
@@ -125,7 +125,12 @@ export default function ShareMain() {
                 answer: "",
               },
             ],
-            details: [],
+            details:  isEditing && data?.details ? data?.details.map((detail)=>{
+              return {
+                ...detail,
+                iconPreview:detail.icon
+              }
+            }):[],
           }}
           enableReinitialize
           onSubmit={async (values, { resetForm, setSubmitting }) => {

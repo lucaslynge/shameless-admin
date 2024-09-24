@@ -4,7 +4,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar } from "./ui/calendar";
 
 const DatePickerPopover = ({ initialDate = null }) => {
-  console.log("initialDate",initialDate)
   const { setFieldValue, values } = useFormikContext(); // Access Formik's context to set field value
   const [date, setDate] = useState(initialDate ? new Date(initialDate) : null); // Local state for selected date
 
