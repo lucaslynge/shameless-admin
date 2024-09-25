@@ -377,9 +377,7 @@ export default function ShareMain() {
                              Approved
                             </SelectItem>
                             <SelectItem value={"pending"}>Pending</SelectItem>
-                            <SelectItem value={"rejected"}>
-                              Rejected
-                            </SelectItem>
+                            
                           </SelectGroup>
                         </SelectContent>
                       </Select>
