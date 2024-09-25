@@ -14,10 +14,10 @@ export default function PaymentItem({ payment, refetch }) {
 
   return (
     <TableRow className="bg-accent">
-      <TableCell>
+      <TableCell className="hidden sm:table-cell">
        <TexTruncate text={payment?._id}/>
       </TableCell>
-      <TableCell>
+      <TableCell className="hidden sm:table-cell">
        <TexTruncate text={payment?.transaction_id}/>
       </TableCell>
       <TableCell>
@@ -39,7 +39,7 @@ export default function PaymentItem({ payment, refetch }) {
       <TableCell className="hidden md:table-cell">
         {dateFormat(payment.createdAt, "dd-mm-yyyy")}
       </TableCell>
-      <TableCell className="hidden md:table-cell ">
+      <TableCell>
         <Button
           variant={"secondary"}
           size={"icon"}

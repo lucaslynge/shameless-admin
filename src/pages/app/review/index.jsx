@@ -52,9 +52,9 @@ function Review() {
       <AppLayout>
         <Card x-chunk="dashboard-05-chunk-3">
           <CardHeader className="px-7">
-          <div className="grid grid-cols-2">
-
-            <div className="flex gap-x-4">
+          <div className="grid lg:grid-cols-2 gap-2 col-span-1">
+            <div className="flex  lg:justify-normal justify-between gap-x-4">
+        
               <div className="flex flex-col gap-2">
                 <CardTitle>Reviews</CardTitle>
                 <CardDescription>
@@ -99,11 +99,11 @@ function Review() {
               <TableHeader>
                 <TableRow>
                   <TableHead className="hidden sm:table-cell">ID</TableHead>
-                  <TableHead className="hidden sm:table-cell">Name</TableHead>
+                  <TableHead >Name</TableHead>
                   <TableHead className="hidden sm:table-cell">Ratting</TableHead>
                  
                   <TableHead className="hidden md:table-cell">Date</TableHead>
-                  <TableHead className="hidden md:table-cell">
+                  <TableHead>
                     Actions
                   </TableHead>
                 </TableRow>

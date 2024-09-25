@@ -12,14 +12,14 @@ export default function CummunityItem({community,refetch}) {
 
   return (
     <TableRow  className="bg-accent">
-                      <TableCell>
+                      <TableCell className="hidden sm:table-cell">
                         <div className="hidden text-sm text-muted-foreground md:inline">
                           {community._id}
                         </div>
                         
                       </TableCell>
                       <TableCell>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
+                        <div className=" text-sm text-muted-foreground inline">
                           {community.email}
                         </div>
                         
@@ -38,7 +38,7 @@ export default function CummunityItem({community,refetch}) {
                       <TableCell className="hidden md:table-cell">
                         {dateFormat(community.created,'dd-mm-yyyy')}
                       </TableCell>
-                      <TableCell className="hidden md:table-cell ">
+                      <TableCell>
                         <Button variant={'secondary'} size={'icon'} onClick={()=>setIsOpenEdit(true)}>
                           <MdEdit size={20} />
                         </Button>

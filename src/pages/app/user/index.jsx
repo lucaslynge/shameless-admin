@@ -50,9 +50,9 @@ function User() {
     <AppLayout>
       <Card x-chunk="dashboard-05-chunk-3">
         <CardHeader className="px-7 ">
-          <div className="grid grid-cols-2">
-            <div className="flex gap-x-4">
-              <div className="flex flex-col gap-2">
+          <div className="grid lg:grid-cols-2 gap-2 col-span-1">
+            <div className="flex  lg:justify-normal justify-between gap-x-4">
+              <div className="flex flex-col  gap-2">
                 <CardTitle>Users</CardTitle>
                 <CardDescription>
                   Recent Users from your shamelessPath.

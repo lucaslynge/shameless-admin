@@ -49,9 +49,9 @@ function Contact() {
       <AppLayout>
         <Card x-chunk="dashboard-05-chunk-3">
           <CardHeader className="px-7">
-          <div className="grid grid-cols-2">
-
-            <div className="flex gap-x-4">
+          <div className="grid lg:grid-cols-2 gap-2 col-span-1">
+            <div className="flex  lg:justify-normal justify-between gap-x-4">
+        
               <div className="flex flex-col gap-2">
                 <CardTitle>Contacts</CardTitle>
                 <CardDescription>
@@ -95,7 +95,7 @@ function Contact() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>ID</TableHead>
+                  <TableHead className="hidden sm:table-cell">ID</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead className="hidden sm:table-cell">Name</TableHead>
                   <TableHead className="hidden sm:table-cell">Status</TableHead>
@@ -104,7 +104,7 @@ function Contact() {
                   </TableHead>
                 
                   <TableHead className="hidden md:table-cell">Date</TableHead>
-                  <TableHead className="hidden md:table-cell">
+                  <TableHead>
                     Actions
                   </TableHead>
                 </TableRow>

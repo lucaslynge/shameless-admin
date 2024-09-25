@@ -15,10 +15,12 @@ export default function ReviewItem({ review, refetch,editComponent }) {
           {item._id}
         </div>
       ),
+      className: "hidden md:table-cell",
+
     },
     {
       value: (item) => (
-        <div className="hidden text-sm text-muted-foreground md:inline">
+        <div className=" text-sm text-muted-foreground">
           {item.name}
         </div>
       ),
@@ -29,15 +31,9 @@ export default function ReviewItem({ review, refetch,editComponent }) {
           {item.rating}
         </div>
       ),
+      className: "hidden md:table-cell",
+
     },
-    // {
-    //     value: (item) => (
-    //       <div className="hidden text-sm text-muted-foreground md:inline">
-    //         {item.review}
-    //       </div>
-    //     ),
-    //   },
-     
     
     {
       value: (item) => dateFormat(item.createdAt, "dd-mm-yyyy"),

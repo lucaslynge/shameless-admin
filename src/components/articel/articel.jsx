@@ -12,8 +12,8 @@ export default function ArticelItem({articel,refetch}) {
 
   return (
        <TableRow  className="bg-accent">
-                      <TableCell>
-                        <div className="font-medium">{TexTruncate({text:articel._id})}</div>
+                      <TableCell className="hidden xl:table-cell">
+                        <div className="font-medium ">{TexTruncate({text:articel._id})}</div>
                       </TableCell>
                       <TableCell>
                         <div className="font-medium">{articel.headline}</div>
@@ -31,10 +31,10 @@ export default function ArticelItem({articel,refetch}) {
                         {articel.type}
                       </TableCell>
                      
-                      <TableCell className="hidden md:table-cell">
+                      <TableCell className="hidden sm:table-cell">
                         2023-06-23 
                       </TableCell>
-                      <TableCell className="hidden md:table-cell ">
+                      <TableCell className="">
                         <Button variant={'secondary'} size={'icon'} onClick={()=>{
                                router.push(`/app/articles/add-article?isediting=true&id=${articel._id}`)
 

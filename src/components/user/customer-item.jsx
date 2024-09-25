@@ -5,6 +5,7 @@ import EidtUser from './edit-user'
 import DeleteUser from './delete-user'
 import dateFormat from 'dateformat'
 import { useState } from 'react'
+import TexTruncate from '../text-truncate'
 
 export default function CustomerItem({customer,refetch}) {
     const [isOpenEdit, setIsOpenEdit] = useState(false)
@@ -14,7 +15,7 @@ export default function CustomerItem({customer,refetch}) {
     <TableRow  className="bg-accent">
                       <TableCell>
                         <div className=" text-sm text-muted-foreground md:inline">
-                          {customer._id}
+                        {TexTruncate({text:customer._id})}
                         </div>
                       </TableCell>
                       <TableCell>

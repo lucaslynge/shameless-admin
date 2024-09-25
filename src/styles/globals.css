@@ -19,6 +19,8 @@
 .ql-toolbar.ql-snow + .ql-container.ql-snow {
   border-radius: 6px !important;
   border-top: 1px solid #c8c8c8 !important;
+  padding-bottom: 60px;
+
 }
 .ql-editor {
   height: 200px !important;

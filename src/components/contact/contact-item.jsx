@@ -15,13 +15,16 @@ export default function ContactItem({ contact, refetch }) {
         <TexTruncate text={item?._id}/>
 
       ),
+      className: "hidden md:table-cell",
+
     },
     {
       value: (item) => (
-        <div className="hidden text-sm text-muted-foreground md:inline">
+        <div className=" text-sm text-muted-foreground ">
           {item.email}
         </div>
       ),
+      
     },
     {
       value: (item) => (
@@ -29,6 +32,8 @@ export default function ContactItem({ contact, refetch }) {
           {item.name}
         </div>
       ),
+      className: "hidden md:table-cell",
+
     },
     {
         value: (item) => (
@@ -36,6 +41,8 @@ export default function ContactItem({ contact, refetch }) {
             {item.status}
           </div>
         ),
+        className: "hidden md:table-cell",
+
       },
       {
         value: (item) => (
@@ -43,6 +50,8 @@ export default function ContactItem({ contact, refetch }) {
             {item.subject}
           </div>
         ),
+        className: "hidden md:table-cell",
+
       },
      
     {

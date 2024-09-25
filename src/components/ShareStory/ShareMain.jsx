@@ -44,6 +44,7 @@ export default function ShareMain() {
   const [filepath, setfilepath] = useState("");
   const maxChars = 15;
   const [valueTextEditor, setValueTextEditor] = useState(data?.primary_message);
+  console.log("data",data?.status)
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
     const reader = new FileReader();
@@ -93,6 +94,7 @@ export default function ShareMain() {
             image:isEditing==="true" ? data?.image:"",
             readTime:isEditing==="true" ? data?.readTime:"",
             category:initialCategory?.toString(),
+            status:isEditing==="true" ? data?.status:"",
             publishDate:isEditing==="true" ? data?.publishDate:"",
             question_answers: isEditing && data?.question_answers ? data?.question_answers : [
               {
@@ -156,7 +158,7 @@ export default function ShareMain() {
             formdata.append("publishDate", data.publishDate);
             formdata.append("readTime", data.readTime);
             formdata.append("image", data.image);
-
+            formdata.append("status",data.status);
             console.log("category",data.category)
             formdata.append("category", data.category);
             formdata.append(
@@ -356,6 +358,35 @@ export default function ShareMain() {
                   </Field>
                 </div>
                  <div className="mt-5">
+                  <p className="text-sm font-semibold mb-2">Status</p>
+                  <Field name="status">
+                    {({ field, form }) => (
+                      <Select
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={(value) =>
+                          form.setFieldValue(field.name, value)
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value={"approved"}>
+                             Approved
+                            </SelectItem>
+                            <SelectItem value={"pending"}>Pending</SelectItem>
+                            <SelectItem value={"rejected"}>
+                              Rejected
+                            </SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </Field>
+                </div>
+                <div className="mt-5">
                   <p className="text-sm font-semibold mb-2">Type</p>
                   <Field name="type">
                     {({ field, form }) => (
@@ -384,6 +415,7 @@ export default function ShareMain() {
                     )}
                   </Field>
                 </div>
+            
             
                <div className="flex flex-col md:flex-row justify-between gap-4 mt-3">
                   <div className="w-full">

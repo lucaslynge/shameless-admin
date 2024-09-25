@@ -57,8 +57,9 @@ import SearchBox from "@/components/search-box";
     <AppLayout>
       <Card x-chunk="dashboard-05-chunk-3">
         <CardHeader className="px-7">
-        <div className="grid grid-cols-2">
-          <div className="flex gap-x-4">
+        <div className="grid lg:grid-cols-2 gap-2 col-span-1">
+            <div className="flex  lg:justify-normal justify-between gap-x-4">
+        
             <div className="flex flex-col gap-2">
               <CardTitle>Payment</CardTitle>
               <CardDescription>Recent Payment from your shamelessPath.</CardDescription>
@@ -86,15 +87,15 @@ import SearchBox from "@/components/search-box";
           <Table>
             <TableHeader>
               <TableRow>
-               <TableHead>ID</TableHead>
+               <TableHead className="hidden sm:table-cell">ID</TableHead>
                <TableHead>Transaction ID</TableHead>   
-               <TableHead>Customer ID</TableHead>      
+               <TableHead className="hidden sm:table-cell">Customer ID</TableHead>      
                <TableHead>Email</TableHead>      
                 <TableHead>Amount</TableHead>
                 <TableHead className="hidden sm:table-cell">Subscription</TableHead>
                 <TableHead className="hidden sm:table-cell">Status</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
-                <TableHead className="hidden md:table-cell">Actions</TableHead>
+                <TableHead >Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

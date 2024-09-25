@@ -13,12 +13,12 @@ export default function CatgoryItem({ category, refetch }) {
       value: (item) => (
         item?._id
       ),
+      className: "hidden md:table-cell",
+
     },
     {
       value: (item) => (
-        <div className="hidden text-sm text-muted-foreground md:inline">
-          {item.name}
-        </div>
+          item?.name
       ),
     },
 
