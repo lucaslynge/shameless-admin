@@ -26,6 +26,7 @@ import ContactItem from "@/components/contact/contact-item";
 import AddContact from "@/components/contact/add-contact";
 import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";
+import TableRowSkeleton from "@/components/TableRowSkeleton";
 
 function Contact() {
   const [isOpen, setIsOpen] = useState(false);
@@ -112,10 +113,12 @@ function Contact() {
               <TableBody>
                 {isLoading ? (
                   <TableRow>
-                    <TableCell colSpan="5" className="w-full">
-                      <div className="flex justify-center mx-auto w-full text-center">
+                    <TableCell colSpan="7" className="w-full">
+                      {/* <div className="flex justify-center mx-auto w-full text-center">
                         <Loader />
-                      </div>
+                      </div> */}
+                    <TableRowSkeleton cell={7} rows={4}/>
+
                     </TableCell>
                   </TableRow>
                 ) : (

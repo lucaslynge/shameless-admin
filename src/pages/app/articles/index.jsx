@@ -26,6 +26,7 @@ import { useGetAllArticleQuery } from "@/lib/services/articleApi";
 import { useRouter } from "next/router";
 import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";
+import TableRowSkeleton from "@/components/TableRowSkeleton";
 
  function Articel() {
   const router=useRouter()
@@ -106,9 +107,10 @@ import SearchBox from "@/components/search-box";
               {isLoading ? (
                 <TableRow>
                   <TableCell colSpan="8" className="w-full">
-                    <div className="flex justify-center mx-auto w-full text-center">
+                    {/* <div className="flex justify-center mx-auto w-full text-center">
                       <Loader />
-                    </div>
+                    </div> */}
+                    <TableRowSkeleton cell={7} rows={4}/>
                   </TableCell>
                 </TableRow>
               ) : (

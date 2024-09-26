@@ -27,6 +27,7 @@ import SearchBox from "@/components/search-box";
 import { useGetAllCategoryQuery } from "@/lib/services/categoryApi";
 import CatgoryItem from "@/components/category/category-item";
 import AddCatgory from "@/components/category/add-category";
+import TableRowSkeleton from "@/components/TableRowSkeleton";
 
 function Category() {
   const [isOpen, setIsOpen] = useState(false);
@@ -109,9 +110,11 @@ function Category() {
                 {isLoading ? (
                   <TableRow>
                     <TableCell colSpan="5" className="w-full">
-                      <div className="flex justify-center mx-auto w-full text-center">
+                      {/* <div className="flex justify-center mx-auto w-full text-center">
                         <Loader />
-                      </div>
+                      </div> */}
+                    <TableRowSkeleton cell={7} rows={4}/>
+
                     </TableCell>
                   </TableRow>
                 ) : (

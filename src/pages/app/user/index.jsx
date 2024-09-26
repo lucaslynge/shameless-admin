@@ -25,6 +25,7 @@ import Loader from "@/components/loader";
 import Mypaginations from "@/components/my-paginations";
 import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";
+import TableRowSkeleton from "@/components/TableRowSkeleton";
 
 function User() {
   const [isOpen, setIsOpen] = useState(false);
@@ -102,9 +103,10 @@ function User() {
               {isLoading ? (
                 <TableRow>
                   <TableCell colSpan="5" className="w-full">
-                    <div className="flex justify-center mx-auto w-full text-center">
-                      <Loader />
-                    </div>
+                    {/* <div className="flex justify-center mx-auto w-full text-center"> */}
+                      {/* <Loader /> */}
+                      <TableRowSkeleton cell={7}/>
+                    {/* </div> */}
                   </TableCell>
                 </TableRow>
               ) : (

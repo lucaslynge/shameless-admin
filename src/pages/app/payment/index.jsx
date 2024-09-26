@@ -33,6 +33,7 @@ import { useGetAllPaymentQuery } from "@/lib/services/paymentApi";
 import PaymentItem from "@/components/payment/payment-item";
 import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";
+import TableRowSkeleton from "@/components/TableRowSkeleton";
 
  function Payment() {
   const [isOpen, setIsOpen] = useState(false);
@@ -101,10 +102,12 @@ import SearchBox from "@/components/search-box";
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan="5" className="w-full">
-                    <div className="flex justify-center mx-auto w-full text-center">
+                  <TableCell colSpan="9" className="w-full">
+                    {/* <div className="flex justify-center mx-auto w-full text-center">
                       <Loader />
-                    </div>
+                    </div> */}
+                    <TableRowSkeleton cell={7} rows={4}/>
+
                   </TableCell>
                 </TableRow>
               ) : (

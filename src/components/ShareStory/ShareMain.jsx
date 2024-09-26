@@ -26,14 +26,15 @@ import {
 } from "../ui/select";
 import DatePickerPopover from "../Date-single-picker-input";
 import { useGetAllCategoryQuery } from "@/lib/services/categoryApi";
+import {convertImageUrlToBlob} from "../../lib/utils/helper"
 export default function ShareMain() {
   const [headline, setHeadline] = useState("");
   const [fileName, setFileName] = useState("");
   const [initialCategory,setInitialCategory]=useState("")
   const router = useRouter();
-  const id = router.query.id;
+  const slug = router.query.slug;
   const [file, setFile] = useState(null);
-  const { data, refetch } = useGetByIdArticleQuery(id);
+  const { data, refetch } = useGetByIdArticleQuery(slug);
   const [CreateArticle, { isLoading }] = useCreateArticleMutation();
   const [UpdateArticle, { isLoading: isLoadingUpdate }] =
     useUpdateArticleMutation();
@@ -44,7 +45,6 @@ export default function ShareMain() {
   const [filepath, setfilepath] = useState("");
   const maxChars = 15;
   const [valueTextEditor, setValueTextEditor] = useState(data?.primary_message);
-  console.log("data",data?.status)
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
     const reader = new FileReader();
@@ -76,6 +76,8 @@ export default function ShareMain() {
       fileInput.click();
     }
   };
+
+  console.log("data..........",data)
 
   const ageOptions = Array.from({ length: 48 }, (_, i) => (i + 18).toString());
   return (
@@ -136,8 +138,6 @@ export default function ShareMain() {
           }}
           enableReinitialize
           onSubmit={async (values, { resetForm, setSubmitting }) => {
-
-            console.log("values",values)
             let data = {
               ...values,
               primary_message: valueTextEditor,
@@ -148,6 +148,8 @@ export default function ShareMain() {
                 image: file,
               };
             }
+
+            console.log("values",values)
             const formdata = new FormData();
             formdata.append("headline", data.headline);
             formdata.append("primary_message", data.primary_message);
@@ -172,19 +174,13 @@ export default function ShareMain() {
                 description: detail.description,
               };
             });
+            formdata.append(
+              "details",
+              JSON.stringify(filteredetails)
+            );
 
-            filteredetails.forEach((detail, index) => {
-              console.log("detail", detail);
-              formdata.append(`details[${index}][icon]`, detail.icon);
-              formdata.append(`details[${index}][title]`, detail.title);
-              formdata.append(
-                `details[${index}][description]`,
-                detail.description
-              );
-            });
-
+      
             if (isEditing === "false") {
-              formdata.append("user_id", user._id);
               try {
                 const response = await CreateArticle(formdata).unwrap();
                 if (response.success) {
@@ -224,7 +220,7 @@ export default function ShareMain() {
             if (isEditing === "true") {
               try {
                 const response = await UpdateArticle({
-                  id: id,
+                  id: slug,
                   body: formdata,
                 }).unwrap();
                 if (response.success) {

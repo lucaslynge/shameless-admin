@@ -36,7 +36,7 @@ export default function ArticelItem({articel,refetch}) {
                       </TableCell>
                       <TableCell className="">
                         <Button variant={'secondary'} size={'icon'} onClick={()=>{
-                               router.push(`/app/articles/add-article?isediting=true&id=${articel._id}`)
+                               router.push(`/app/articles/add-article?isediting=true&slug=${articel.slug}`)
 
                         }}>
                           <MdEdit size={20} />

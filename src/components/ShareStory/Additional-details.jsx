@@ -4,10 +4,13 @@ import Image from "next/image";
 import { useState } from "react";
 import Quill from "./TextEditor";
 import { Button } from "../ui/button";
+import { useUploadArticleImageMutation } from "@/lib/services/articleApi";
+import Loader from "../loader";
 
 export default function AdditionalDetails() {
   const { values, setFieldValue, handleChange } = useFormikContext();
   const [valueTextEditor, setValueTextEditor] = useState("");
+  const [UploadArticleImage,{isLoading}]=useUploadArticleImageMutation()
 
   const handleFileChange = (
     event,
@@ -16,10 +19,20 @@ export default function AdditionalDetails() {
     const file = event.currentTarget.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
+      reader.onloadend =async() => {
         // Store the file for Formik and the result for preview
-        setFieldValue(`details[${index}].icon`, file); // Store the file itself
-        setFieldValue(`details[${index}].iconPreview`, reader.result); // Store the preview URL
+        try {
+          const formdata=new FormData()
+          formdata.append("image", file);
+          const response=await UploadArticleImage(formdata).unwrap()
+          setFieldValue(`details[${index}].icon`, response?.data?.image); // Store the file itself
+          setFieldValue(`details[${index}].iconPreview`, reader.result); // Store the preview URL
+
+        } catch (error) {
+          console.log("error upload error",error)
+          
+        }
+        
       };
       reader.readAsDataURL(file);
     }
@@ -53,13 +66,13 @@ export default function AdditionalDetails() {
                               ?.click()
                           }
                         >
-                          {item.iconPreview ? (
+                          {isLoading ? <Loader/> : item.iconPreview ? (
                             <Image
                               src={item.iconPreview} // Use the preview URL here
                               alt=""
                               width={100}
                               height={100}
-                              className="hover:cursor-pointer rounded-full"
+                              className="hover:cursor-pointer rounded-md"
                             />
                           ) : (
                             <>
@@ -86,7 +99,8 @@ export default function AdditionalDetails() {
                                 Upload icon
                               </p>
                             </>
-                          )}
+                          )
+                          }
                         </div>
                       </div>
                     </div>

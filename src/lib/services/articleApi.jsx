@@ -27,8 +27,6 @@ export const articleApi = createApi({
     GetByIdArticle: build.query({
       
       query: (id) => {
-        console.log("id",id)
-        
       return  { url: `artical/reviewById/${id}` }
       
       },
@@ -44,8 +42,17 @@ export const articleApi = createApi({
         }
       }
     }),
+    UploadArticleImage: build.mutation({
+      query: (credentials) => ({ url: `/artical/uploadImage`, method: 'POST', body: credentials }),
+      transformResponse: (response) => {
+        return {
+          data: response.data,
+          success:response.success
+        }
+      }
+    }),
     UpdateArticle: build.mutation({
-      query: ({ id, body }) => ({ url: `/artical/updateReview/${id}`, method: 'PUT', body: body }),
+      query: ({ id, body }) => ({ url: `/artical/updateArticals/${id}`, method: 'PUT', body: body }),
       transformResponse: (response) => {
         return {
           response: response.data,
@@ -75,6 +82,7 @@ export const {
  useCreateArticleMutation,
  useDeleteArticleMutation,
  useUpdateArticleMutation,
- useGetByIdArticleQuery
+ useGetByIdArticleQuery,
+ useUploadArticleImageMutation
 } = articleApi;
 

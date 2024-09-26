@@ -29,6 +29,7 @@ import SearchBox from "@/components/search-box";
 import { useGetAllReviewsQuery } from "@/lib/services/reviewApi";
 import ReviewItem from "@/components/review/review-item";
 import AddReview from "@/components/review/add-review";
+import TableRowSkeleton from "@/components/TableRowSkeleton";
 
 function Review() {
   const [isOpen, setIsOpen] = useState(false);
@@ -112,9 +113,11 @@ function Review() {
                 {isLoading ? (
                   <TableRow>
                     <TableCell colSpan="5" className="w-full">
-                      <div className="flex justify-center mx-auto w-full text-center">
+                      {/* <div className="flex justify-center mx-auto w-full text-center">
                         <Loader />
-                      </div>
+                      </div> */}
+                    <TableRowSkeleton cell={7} rows={4}/>
+
                     </TableCell>
                   </TableRow>
                 ) : (

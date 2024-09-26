@@ -15,4 +15,9 @@ export const getUser:any = () => {
 export const dateFormated:any=(date:any)=>{
   return dateFormat(date,'dd-mm-yyyy')
 }
-
+ 
+export const convertImageUrlToBlob=async(imageUrl:any)=>{
+  const response = await fetch(imageUrl);
+  if (!response.ok) throw new Error('Failed to fetch image');
+  return await response.blob();
+}
