@@ -27,7 +27,7 @@ export default function PaymentItem({ payment, refetch }) {
         <div className="font-medium">{payment?.community_id?.email}</div>
       </TableCell>
       <TableCell>
-        <div className="font-medium">{payment.amount}</div>
+        <div className="font-medium">${payment.amount}</div>
       </TableCell>
       <TableCell className="hidden sm:table-cell">
         {payment.subscription_type}
