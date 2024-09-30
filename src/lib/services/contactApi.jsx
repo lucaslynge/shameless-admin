@@ -1,4 +1,3 @@
-"use client";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../utils/contant";
 import { getToken } from "../utils/helper";

@@ -8,10 +8,8 @@ import { paymentApi } from '../services/paymentApi';
 import { contactApi } from '../services/contactApi';
 import { reviewApi } from '../services/reviewApi';
 import { categoryApi } from '../services/categoryApi';
-
+import { promoCodeApi } from '../services/promoCodeApi';
 import authReducer from './authSlice';
-
-
 
 const rootReducer = combineReducers({
   counter: counterReducer,
@@ -22,7 +20,9 @@ const rootReducer = combineReducers({
   [paymentApi.reducerPath]:paymentApi.reducer,
   [contactApi.reducerPath]:contactApi.reducer,
   [reviewApi.reducerPath]:reviewApi.reducer,
-  [categoryApi.reducerPath]:categoryApi.reducer
+  [categoryApi.reducerPath]:categoryApi.reducer,
+  [promoCodeApi.reducerPath]:promoCodeApi.reducer,
+
 
 
 });

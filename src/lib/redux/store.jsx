@@ -11,6 +11,7 @@ import storage from 'redux-persist/lib/storage';
 import { contactApi } from "../services/contactApi";
 import { reviewApi } from "../services/reviewApi";
 import { categoryApi } from "../services/categoryApi";
+import { promoCodeApi } from "../services/promoCodeApi";
 
 const persistConfig = {
   key: 'root',
@@ -33,6 +34,7 @@ const makeStore = () =>
         .concat(contactApi.middleware)
         .concat(reviewApi.middleware)
         .concat(categoryApi.middleware)
+        .concat(promoCodeApi.middleware)
 
   });
 

@@ -1,4 +1,4 @@
-"use client";
+
 import React, { use, useState } from "react";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 import FormInput from "../form-input";
