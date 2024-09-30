@@ -101,15 +101,16 @@ function PromoCode() {
                   <TableHead className="hidden sm:table-cell">ID</TableHead>
                   <TableHead>Name </TableHead>
                   <TableHead className="hidden sm:table-cell">Duration</TableHead>
-                  <TableHead className="hidden sm:table-cell">Customer</TableHead>
-                
+                  <TableHead className="hidden sm:table-cell">customer</TableHead>
+                  <TableHead className="hidden sm:table-cell">coupon</TableHead>
+              
                   <TableHead className="hidden sm:table-cell">Amount</TableHead>
                   <TableHead className="hidden sm:table-cell">Status</TableHead>
                   
                   <TableHead className="hidden sm:table-cell">Expire Date</TableHead>
-                  <TableHead className="hidden sm:table-cell">
+                  {/* <TableHead className="hidden sm:table-cell">
                     Product Id
-                  </TableHead>
+                  </TableHead> */}
                   <TableHead className="hidden md:table-cell">Date</TableHead>
                   <TableHead>
                     Actions

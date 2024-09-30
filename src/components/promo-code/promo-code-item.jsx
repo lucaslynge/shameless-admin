@@ -39,10 +39,20 @@ export default function PromoCodeItem({ promo, refetch }) {
       className: "hidden md:table-cell",
 
     },
+   
     {
       value: (item) => (
         <div className="hidden text-sm text-muted-foreground md:inline">
           {item.customer}
+        </div>
+      ),
+      className: "hidden md:table-cell",
+
+    },
+    {
+      value: (item) => (
+        <div className="hidden text-sm text-muted-foreground md:inline">
+          {item.coupon.id}
         </div>
       ),
       className: "hidden md:table-cell",
@@ -76,15 +86,15 @@ export default function PromoCodeItem({ promo, refetch }) {
         className: "hidden md:table-cell",
 
       },
-      {
-        value: (item) => (
-          <div className="hidden text-sm text-muted-foreground md:inline">
-            {item.product_id}
-          </div>
-        ),
-        className: "hidden md:table-cell",
+      // {
+      //   value: (item) => (
+      //     <div className="hidden text-sm text-muted-foreground md:inline">
+      //       {item.product_id}
+      //     </div>
+      //   ),
+      //   className: "hidden md:table-cell",
 
-      },
+      // },
      
     {
       value: (item) => dateFormat(item.coupon.created, "dd-mm-yyyy"),
