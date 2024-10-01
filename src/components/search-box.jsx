@@ -107,7 +107,7 @@ export default function SearchBox({
         onKeyDown={handleKeyPress}
         onFocus={() => handleFocus()}
         ref={inputRef}
-        className="w-full rounded-full border-none focus:border-none  focus:outline-none py-3 "
+        className="w-full rounded-full !focus-visible:outline-none border-none   py-3 "
       />
       {query && (
         <button
