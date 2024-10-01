@@ -219,6 +219,19 @@ export default function PromoForm({
                 </div>
               </>
             )}
+            
+            {!isedit && isDuration === "repeating" && (
+              <div className="grid grid-cols-1 w-full gap-1">
+                <Label>Duration in month</Label>
+                <Field
+                  id="duration_in_months"
+                  component={FormInput}
+                  name="duration_in_months"
+                  placeholder="Duration in months"
+                  type="number"
+                />
+              </div>
+            )}
              {!isedit && (
                 <div className="grid w-full grid-cols-1 gap-4">
                   <div className="w-full">
@@ -235,18 +248,6 @@ export default function PromoForm({
               
                 </div>
               )}
-            {!isedit && isDuration === "repeating" && (
-              <div className="grid grid-cols-1 w-full gap-1">
-                <Label>Duration in month</Label>
-                <Field
-                  id="duration_in_months"
-                  component={FormInput}
-                  name="duration_in_months"
-                  placeholder="Duration in months"
-                  type="number"
-                />
-              </div>
-            )}
             {isedit && (
               <div className="grid grid-cols-1 w-full gap-4">
                 <div id="status-input w-full">

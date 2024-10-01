@@ -1,3 +1,4 @@
+import Logo from "@/components/logo";
 import { classNames } from "@/utils/generics";
 import { Dialog, Transition } from "@headlessui/react";
 import { Cog6ToothIcon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -65,11 +66,7 @@ export default function MobileSidebar({
               {/* Sidebar component, swap this element with another sidebar if you like */}
               <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
                 <div className="flex h-16 shrink-0 items-center">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                    alt="Your Company"
-                  />
+                  <Logo/>
                 </div>
                 <nav className="flex flex-1 flex-col">
                   <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -101,7 +98,7 @@ export default function MobileSidebar({
                         ))}
                       </ul>
                     </li>
-                    <li className="mt-auto">
+                    {/* <li className="mt-auto">
                       <a
                         href="#"
                         className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
@@ -112,7 +109,7 @@ export default function MobileSidebar({
                         />
                         Settings
                       </a>
-                    </li>
+                    </li> */}
                   </ul>
                 </nav>
               </div>
