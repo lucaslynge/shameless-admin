@@ -56,7 +56,9 @@ export default function PromoForm({
       duration: "",
       expires_at: "",
       duration_in_months: 1,
-      number_of_customers:""
+      number_of_customers:"",
+      promoCodeId: [],
+
     };
   }
   return (
@@ -69,7 +71,8 @@ export default function PromoForm({
             percent_off: values?.percent_off,
             duration: values?.duration,
             expires_at: values?.expires_at,
-            number_of_customers:values.number_of_customers
+            number_of_customers:values.number_of_customers,
+            promoCodeId:values.promoCodeId
           };
 
           if (isDuration === "repeating") {
@@ -114,18 +117,19 @@ export default function PromoForm({
                 id: promocode._id,
                 body: data,
               }).unwrap();
+              
               console.log("response", response);
               if (response.success) {
-                resetForm();
-                refetch();
-                setIsOpen(false);
-                toast.success(response.message, {
+                toast.success("Promo Code Created Successfuly", {
                   position: "top-center",
                   autoClose: 3000,
                   hideProgressBar: true,
-                  transition: Slide,
                   type: "success",
                 });
+                resetForm();
+                refetch();
+                setIsOpen(false);
+              
               }
             } catch (error) {
               // toast.error(error.message)
@@ -282,7 +286,18 @@ export default function PromoForm({
 {!isedit && (<div className="grid grid-cols-2 w-full items-center gap-4">
                <div id="plan-input">
                   <Label>Plan</Label>
-                  <Field name="product_id">
+                  <div role="group"  className="flex flex-col" aria-labelledby="checkbox-group">
+                  <label className="flex items-center gap-2">
+                    <Field type="checkbox" name="promoCodeId" className="rounded  focus:accent-red-500	" value="prod_QrJNQeQayTsIvi" />
+                    Monthly
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <Field type="checkbox" name="promoCodeId" className="rounded" value="prod_QrJQDFFgszlvwP" />
+                    Life Time
+                  </label>
+            
+                </div>
+                  {/* <Field name="promoCodeId">
                     {({ field, form }) => (
                       <Select
                         name={field.name}
@@ -297,12 +312,12 @@ export default function PromoForm({
                         <SelectContent>
                           <SelectGroup>
                             <SelectItem
-                              value={"price_1PzakzCtRRuu0btz8D7XGWR0"}
+                              value={"prod_QrJNQeQayTsIvi"}
                             >
                               Monthly
                             </SelectItem>
                             <SelectItem
-                              value={"price_1PzanICtRRuu0btzdQF2mwDx"}
+                              value={"prod_QrJQDFFgszlvwP"}
                             >
                               Life Time
                             </SelectItem>
@@ -315,7 +330,7 @@ export default function PromoForm({
                     <div id="feedback" className="text-[12px]  text-red-500	">
                       {errors.product_id}
                     </div>
-                  )}
+                  )} */}
                 </div> 
                 <div id="date-input">
                   <Label>Expire Date</Label>

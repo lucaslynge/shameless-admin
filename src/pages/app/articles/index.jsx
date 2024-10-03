@@ -36,7 +36,7 @@ import TableRowSkeleton from "@/components/TableRowSkeleton";
   const [filters, setFilters] = useState({
     page: currentPage,
   });
-  const { data, isLoading,refetch } = useGetAllArticleQuery(filters);
+  const { data, isLoading,refetch,isFetching } = useGetAllArticleQuery(filters);
 
 
   const onPageChange = (newPage) => {  

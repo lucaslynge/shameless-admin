@@ -34,7 +34,7 @@ export default function ShareMain() {
   const router = useRouter();
   const slug = router.query.slug;
   const [file, setFile] = useState(null);
-  const { data, refetch } = useGetByIdArticleQuery(slug);
+  const { data } = useGetByIdArticleQuery(slug);
   const [CreateArticle, { isLoading }] = useCreateArticleMutation();
   const [UpdateArticle, { isLoading: isLoadingUpdate }] =
     useUpdateArticleMutation();
@@ -77,8 +77,6 @@ export default function ShareMain() {
     }
   };
 
-  console.log("data..........",data)
-
   const ageOptions = Array.from({ length: 48 }, (_, i) => (i + 18).toString());
   return (
     <div className="w-[90%] md:w-[75%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%] mx-auto bg-white rounded-md px-7 mb-5">
@@ -98,6 +96,7 @@ export default function ShareMain() {
             category:initialCategory?.toString(),
             status:isEditing==="true" ? data?.status:"",
             publishDate:isEditing==="true" ? data?.publishDate:"",
+            slug:isEditing==="true" ? data?.slug:"",
             question_answers: isEditing && data?.question_answers ? data?.question_answers : [
               {
                 question:
@@ -148,8 +147,6 @@ export default function ShareMain() {
                 image: file,
               };
             }
-
-            console.log("values",values)
             const formdata = new FormData();
             formdata.append("headline", data.headline);
             formdata.append("primary_message", data.primary_message);
@@ -167,6 +164,7 @@ export default function ShareMain() {
               "question_answers",
               JSON.stringify(values.question_answers)
             );
+            formdata.append("slug",data.slug)
             const filteredetails = values.details.map((detail) => {
               return {
                 icon: detail.icon,
@@ -177,9 +175,7 @@ export default function ShareMain() {
             formdata.append(
               "details",
               JSON.stringify(filteredetails)
-            );
-
-      
+            );      
             if (isEditing === "false") {
               try {
                 const response = await CreateArticle(formdata).unwrap();
@@ -225,6 +221,7 @@ export default function ShareMain() {
                 }).unwrap();
                 if (response.success) {
                   console.log("response", response);
+                  allarticle();
                   resetForm();
                   toast.success(response.message, {
                     position: "top-center",
@@ -233,9 +230,8 @@ export default function ShareMain() {
                     transition: Slide,
                     type: "success",
                   });
-                  refetch();
-                  allarticle();
                   router.push("/app/articles");
+
                 }
               } catch (error) {
                 if (error.status == 404) {
@@ -259,6 +255,7 @@ export default function ShareMain() {
                 allarticle();
               }
             }
+
           }}
         >
           {({ errors, touched, handleSubmit, values, handleChange }) => (
@@ -322,6 +319,21 @@ export default function ShareMain() {
                       </Select>
                     )}
                   </Field>
+                </div>
+               
+                <div className="mt-5">
+                  <p className="text-sm font-semibold">Slug</p>
+                  <Field
+                        type="text"
+                        id="slug"
+                        value={values.slug}
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                        name="slug"
+                        placeholder="Type here"
+                        className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-3"
+                      />
                 </div>
                
                  <div className="mt-5">

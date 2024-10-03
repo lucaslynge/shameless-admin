@@ -13,6 +13,7 @@ export const reviewApi = createApi({
       return headers;
     },
   }),
+  refetchOnFocus:true,
   endpoints: (build) => ({
     GetAllReviews: build.query({
       query: (filter) => {
