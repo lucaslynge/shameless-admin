@@ -37,7 +37,6 @@ export default function ShareMain() {
   const [CreateArticle, { isLoading }] = useCreateArticleMutation();
   const [UpdateArticle, { isLoading: isLoadingUpdate }] =
     useUpdateArticleMutation();
-  const { refetch: allarticle } = useGetAllArticleQuery();
   const user = useSelector((state) => state.auth.user);
   const isEditing = router.query.isediting;
   const { data: dataCategory } = useGetAllCategoryQuery();
@@ -188,7 +187,6 @@ export default function ShareMain() {
                     transition: Slide,
                     type: "success",
                   });
-                  allarticle();
                   router.push("/app/articles");
                 }
               } catch (error) {
@@ -209,7 +207,6 @@ export default function ShareMain() {
                 setValueTextEditor("");
                 setFileName("");
                 setfilepath("");
-                allarticle();
               }
             }
             if (isEditing === "true") {
@@ -220,7 +217,6 @@ export default function ShareMain() {
                 }).unwrap();
                 if (response.success) {
                   console.log("response", response);
-                  allarticle();
                   articleRefetch()
                   resetForm();
                   toast.success(response.message, {
@@ -252,7 +248,6 @@ export default function ShareMain() {
                 setValueTextEditor("");
                 setFileName("");
                 setfilepath("");
-                allarticle();
               }
             }
 

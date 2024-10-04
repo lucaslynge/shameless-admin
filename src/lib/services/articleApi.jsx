@@ -41,7 +41,8 @@ export const articleApi = createApi({
           message:response.message,
           success:response.success
         }
-      }
+      },
+      invalidatesTags: ['Articles'], // This ensures the cache is invalidated
     }),
     UploadArticleImage: build.mutation({
       query: (credentials) => ({ url: `/artical/uploadImage`, method: 'POST', body: credentials }),
