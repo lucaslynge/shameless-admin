@@ -8,8 +8,8 @@ import { Slide, toast } from "react-toastify";
 import {
   useCreateArticleMutation,
   useGetAllArticleQuery,
-  useGetByIdArticleQuery,
   useUpdateArticleMutation,
+  useGetBySlugArticleQuery
 } from "@/lib/services/articleApi";
 import { Button } from "../ui/button";
 import { useSelector } from "react-redux";
@@ -26,7 +26,6 @@ import {
 } from "../ui/select";
 import DatePickerPopover from "../Date-single-picker-input";
 import { useGetAllCategoryQuery } from "@/lib/services/categoryApi";
-import {convertImageUrlToBlob} from "../../lib/utils/helper"
 export default function ShareMain() {
   const [headline, setHeadline] = useState("");
   const [fileName, setFileName] = useState("");
@@ -34,7 +33,7 @@ export default function ShareMain() {
   const router = useRouter();
   const slug = router.query.slug;
   const [file, setFile] = useState(null);
-  const { data } = useGetByIdArticleQuery(slug);
+  const { data,refetch:articleRefetch } = useGetBySlugArticleQuery(slug);
   const [CreateArticle, { isLoading }] = useCreateArticleMutation();
   const [UpdateArticle, { isLoading: isLoadingUpdate }] =
     useUpdateArticleMutation();
@@ -222,6 +221,7 @@ export default function ShareMain() {
                 if (response.success) {
                   console.log("response", response);
                   allarticle();
+                  articleRefetch()
                   resetForm();
                   toast.success(response.message, {
                     position: "top-center",

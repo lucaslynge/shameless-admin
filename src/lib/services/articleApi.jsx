@@ -11,22 +11,24 @@ export const articleApi = createApi({
         headers.set('x-auth-token', token);
       }
       return headers;
-    }
-
+    },
   }),
+  
   refetchOnFocus:true,
+  tagTypes: ['Articles'],
   endpoints: (build) => ({
     GetAllArticle: build.query({
       query: (filter) => {
         const params=new URLSearchParams(filter).toString()
        return  { url: `artical/reviewAllData?${params}` }
       },
+      providesTags: ['Articles'],
       transformResponse: (response) => response.data
     }),
-    GetByIdArticle: build.query({
+    GetBySlugArticle: build.query({
       
-      query: (id) => {
-      return  { url: `artical/reviewById/${id}` }
+      query: (slug) => {
+      return  { url: `artical/reviewById/${slug}` }
       
       },
       transformResponse: (response) => response.data
@@ -43,6 +45,7 @@ export const articleApi = createApi({
     }),
     UploadArticleImage: build.mutation({
       query: (credentials) => ({ url: `/artical/uploadImage`, method: 'POST', body: credentials }),
+      invalidatesTags: ['Articles'], // This ensures the cache is invalidated
       transformResponse: (response) => {
         return {
           data: response.data,
@@ -59,7 +62,9 @@ export const articleApi = createApi({
           message:response.message
 
         }
-      }
+      },
+      invalidatesTags: ['Articles'], // This ensures the cache is invalidated
+
     }),
     DeleteArticle: build.mutation({
       query: (id) => ({ url: `/artical/reviewDelete/${id} `, method: 'DELETE' }),
@@ -81,7 +86,7 @@ export const {
  useCreateArticleMutation,
  useDeleteArticleMutation,
  useUpdateArticleMutation,
- useGetByIdArticleQuery,
+ useGetBySlugArticleQuery,
  useUploadArticleImageMutation
 } = articleApi;
 

@@ -9,6 +9,7 @@ import TexTruncate from '../text-truncate'
 export default function ArticelItem({articel,refetch}) {
     const [isOpenDelete, setIsOpenDelete] = React.useState(false)
     const router=useRouter()
+    console.log("slug....",articel.slug)
   return (
        <TableRow  className="bg-accent">
                       <TableCell className="hidden xl:table-cell">
