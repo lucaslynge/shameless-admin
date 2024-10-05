@@ -14,6 +14,7 @@ import {
 import { Button } from "../ui/button";
 import { useSelector } from "react-redux";
 import { Router, useRouter } from "next/router";
+import * as Yup from "yup";
 import Loader from "../loader";
 import AdditionalDetails from "./Additional-details";
 import {
@@ -26,7 +27,24 @@ import {
 } from "../ui/select";
 import DatePickerPopover from "../Date-single-picker-input";
 import { useGetAllCategoryQuery } from "@/lib/services/categoryApi";
+const validationSchema = Yup.object().shape({
+  category: Yup.string().required("Catgory is required"),
+  headline: Yup.string().required("headline is required"),
+  type:Yup.string().required("type is required"),
+  gender:Yup.string().required("gender is required"),
+  age:Yup.string().required("age is required"),
+  slug:Yup.string().required("slug is required"),
+  status:Yup.string().required("status is required"),
+  readTime:Yup.string().required("readTime is required"),
+
+
+
+
+
+
+});
 export default function ShareMain() {
+
   const [headline, setHeadline] = useState("");
   const [fileName, setFileName] = useState("");
   const [initialCategory,setInitialCategory]=useState("")
@@ -156,7 +174,6 @@ export default function ShareMain() {
             formdata.append("readTime", data.readTime);
             formdata.append("image", data.image);
             formdata.append("status",data.status);
-            console.log("category",data.category)
             formdata.append("category", data.category);
             formdata.append(
               "question_answers",
@@ -252,6 +269,7 @@ export default function ShareMain() {
             }
 
           }}
+          validationSchema={validationSchema}
         >
           {({ errors, touched, handleSubmit, values, handleChange }) => (
             <Form onSubmit={handleSubmit} id="share_story">
@@ -270,6 +288,11 @@ export default function ShareMain() {
                     placeholder="Type here"
                     className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-3"
                   />
+                    {errors.headline && touched.headline && (
+                  <div id="feedback" className="text-[12px]  text-red-500	">
+                    {errors.headline}
+                  </div>
+                )}
                
                   <p className="text-end text-xs font-semibold text-[#414141] mt-1">
                     {headline.length}/{maxChars}
@@ -329,6 +352,11 @@ export default function ShareMain() {
                         placeholder="Type here"
                         className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-3"
                       />
+                       {errors.slug && touched.slug && (
+                  <div id="feedback" className="text-[12px]  text-red-500	">
+                    {errors.slug}
+                  </div>
+                )}
                 </div>
                
                  <div className="mt-5">
@@ -359,6 +387,11 @@ export default function ShareMain() {
                       </Select>
                     )}
                   </Field>
+                  {errors.category && touched.category && (
+                  <div id="feedback" className="text-[12px]  text-red-500	">
+                    {errors.category}
+                  </div>
+                )}
                 </div>
                  <div className="mt-5">
                   <p className="text-sm font-semibold mb-2">Status</p>
@@ -386,6 +419,11 @@ export default function ShareMain() {
                       </Select>
                     )}
                   </Field>
+                  {errors.status && touched.status && (
+                  <div id="feedback" className="text-[12px]  text-red-500	">
+                    {errors.status}
+                  </div>
+                )}
                 </div>
                 <div className="mt-5">
                   <p className="text-sm font-semibold mb-2">Type</p>
@@ -415,6 +453,11 @@ export default function ShareMain() {
                       </Select>
                     )}
                   </Field>
+                  {errors.type && touched.type && (
+                  <div id="feedback" className="text-[12px]  text-red-500	">
+                    {errors.type}
+                  </div>
+                )}
                 </div>
             
             
@@ -476,6 +519,11 @@ export default function ShareMain() {
                           </Select>
                         )}
                       </Field>
+                      {errors.gender && touched.gender && (
+                  <div id="feedback" className="text-[12px]  text-red-500	">
+                    {errors.gender}
+                  </div>
+                )}
 
                     </div>
                   </div>
@@ -503,6 +551,11 @@ export default function ShareMain() {
                         placeholder="Type here"
                         className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-3"
                       />
+                       {errors.readTime && touched.readTime && (
+                  <div id="feedback" className="text-[12px]  text-red-500	">
+                    {errors.readTime}
+                  </div>
+                )}
                     </div>
                   </div>
                 </div>
