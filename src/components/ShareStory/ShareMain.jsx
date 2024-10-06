@@ -152,7 +152,7 @@ export default function ShareMain() {
             }):[],
           }}
           enableReinitialize
-          onSubmit={async (values, { resetForm, setSubmitting }) => {
+          onSubmit={async (values, { resetForm, setSubmitting,isValidating }) => {
             let data = {
               ...values,
               primary_message: valueTextEditor,
@@ -190,7 +190,7 @@ export default function ShareMain() {
             formdata.append(
               "details",
               JSON.stringify(filteredetails)
-            );      
+            );   
             if (isEditing === "false") {
               try {
                 const response = await CreateArticle(formdata).unwrap();
@@ -275,7 +275,7 @@ export default function ShareMain() {
             <Form onSubmit={handleSubmit} id="share_story">
               <div className="mt-8">
                 <div>
-                  <p className="text-sm font-semibold">Headline</p>
+                  <label for="headline" className="text-sm font-semibold">Headline*</label>
                   <Field
                     type="text"
                     id="headline"
@@ -314,33 +314,9 @@ export default function ShareMain() {
                 
                 </div>
                     
-               <div className="mt-5">
-                  <p className="text-sm font-semibold">STI Status</p>
-                  <Field name="STI_status">
-                    {({ field, form }) => (
-                      <Select
-                        name={field.name}
-                        value={field.value}
-                        onValueChange={(value) =>
-                          form.setFieldValue(field.name, value)
-                        }
-                      >
-                        <SelectTrigger   className="lg:min-w-[300px]">
-                          <SelectValue  placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value={"HIV"}>HIV</SelectItem>
-                            <SelectItem value={"STI"}>STI</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    )}
-                  </Field>
-                </div>
-               
+          
                 <div className="mt-5">
-                  <p className="text-sm font-semibold">Slug</p>
+                  <label for="slug" className="text-sm font-semibold">Slug*</label>
                   <Field
                         type="text"
                         id="slug"
@@ -359,75 +335,13 @@ export default function ShareMain() {
                 )}
                 </div>
                
-                 <div className="mt-5">
-                  <p className="text-sm font-semibold">Category</p>
-                  <Field name="category">
-                    {({ field, form }) => (
-                      <Select
-                        name={field.name}
-                        value={field.value}
-                        onValueChange={(value) =>
-                          form.setFieldValue(field.name, value)
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            {dataCategory?.categoryData?.map((item, index) => {
-                              return (
-                                <SelectItem key={index} value={item._id}>
-                                  {item.name}
-                                </SelectItem>
-                              );
-                            })}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    )}
-                  </Field>
-                  {errors.category && touched.category && (
-                  <div id="feedback" className="text-[12px]  text-red-500	">
-                    {errors.category}
-                  </div>
-                )}
-                </div>
-                 <div className="mt-5">
-                  <p className="text-sm font-semibold mb-2">Status</p>
-                  <Field name="status">
-                    {({ field, form }) => (
-                      <Select
-                        name={field.name}
-                        value={field.value}
-                        onValueChange={(value) =>
-                          form.setFieldValue(field.name, value)
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value={"approved"}>
-                             Approved
-                            </SelectItem>
-                            <SelectItem value={"pending"}>Pending</SelectItem>
-                            
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    )}
-                  </Field>
-                  {errors.status && touched.status && (
-                  <div id="feedback" className="text-[12px]  text-red-500	">
-                    {errors.status}
-                  </div>
-                )}
-                </div>
+               
                 <div className="mt-5">
-                  <p className="text-sm font-semibold mb-2">Type</p>
-                  <Field name="type">
+                  <label for="type" className="text-sm font-semibold mb-2">Type*</label>
+                  <Field
+                   name="type"
+                   id="type"
+                  >
                     {({ field, form }) => (
                       <Select
                         name={field.name}
@@ -461,8 +375,8 @@ export default function ShareMain() {
                 </div>
             
             
-               <div className="flex flex-col md:flex-row justify-between gap-4 mt-3">
-                  <div className="w-full">
+               <div className="grid grid-cols-12  justify-between gap-4 mt-3">
+                  <div className="col-span-4">
                     <p className="text-sm font-semibold">Age</p>
                     <div className="mt-1">
                       <Field name="age">
@@ -493,11 +407,14 @@ export default function ShareMain() {
                     </div>
                   </div>
   
-                  <div className="w-full">
-                    <p className="text-sm font-semibold">Gender</p>
+                  <div className="col-span-4">
+                    <label id="gender" className="text-sm font-semibold">Gender*</label>
                     <div className="mt-1">
                 
-                      <Field name="gender">
+                      <Field 
+                      id="gender"
+                      name="gender"
+                      >
                         {({ field, form }) => (
                           <Select
                             name={field.name}
@@ -527,6 +444,34 @@ export default function ShareMain() {
 
                     </div>
                   </div>
+                  <div className="col-span-4">
+                  <p className="text-sm font-semibold">STI Status</p>
+                  <div className="mt-1">
+
+                  <Field name="STI_status">
+                    {({ field, form }) => (
+                      <Select
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={(value) =>
+                          form.setFieldValue(field.name, value)
+                        }
+                      >
+                        <SelectTrigger >
+                          <SelectValue  placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value={"HIV"}>HIV</SelectItem>
+                            <SelectItem value={"STI"}>STI</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </Field>
+                  </div>
+                </div>
+               
                 </div>
                
                 <div className="flex flex-col md:flex-row justify-between gap-4 mt-3">
@@ -538,7 +483,7 @@ export default function ShareMain() {
                   </div>
 
                   <div className="w-full">
-                    <p className="text-sm font-semibold">Read Min</p>
+                    <label for="readTime" className="text-sm font-semibold">Read Min*</label>
                     <div className="mt-1">
                       <Field
                         type="number"
@@ -560,6 +505,72 @@ export default function ShareMain() {
                   </div>
                 </div>
 
+                <div className="mt-5">
+                  <label for="category" className="text-sm font-semibold">Category*</label>
+                  <Field  id="category" name="category">
+                    {({ field, form }) => (
+                      <Select
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={(value) =>
+                          form.setFieldValue(field.name, value)
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {dataCategory?.categoryData?.map((item, index) => {
+                              return (
+                                <SelectItem key={index} value={item._id}>
+                                  {item.name}
+                                </SelectItem>
+                              );
+                            })}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </Field>
+                  {errors.category && touched.category && (
+                  <div id="feedback" className="text-[12px]  text-red-500	">
+                    {errors.category}
+                  </div>
+                )}
+                </div>
+                <div className="mt-5">
+                  <label for="status" className="text-sm font-semibold mb-2">Status*</label>
+                  <Field id="status" name="status">
+                    {({ field, form }) => (
+                      <Select
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={(value) =>
+                          form.setFieldValue(field.name, value)
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value={"approved"}>
+                             Approved
+                            </SelectItem>
+                            <SelectItem value={"pending"}>Pending</SelectItem>
+                            
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </Field>
+                  {errors.status && touched.status && (
+                  <div id="feedback" className="text-[12px]  text-red-500	">
+                    {errors.status}
+                  </div>
+                )}
+                </div>
                 <div className="mt-5">
                   <p className="text-sm font-semibold">
                     Upload picture (optional)  Size(500 x 300)
