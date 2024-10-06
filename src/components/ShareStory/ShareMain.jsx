@@ -271,7 +271,7 @@ export default function ShareMain() {
           }}
           validationSchema={validationSchema}
         >
-          {({ errors, touched, handleSubmit, values, handleChange }) => (
+          {({ errors, touched, handleSubmit, values, handleChange,isSubmitting, isValid   }) => (
             <Form onSubmit={handleSubmit} id="share_story">
               <div className="mt-8">
                 <div>
@@ -632,7 +632,7 @@ export default function ShareMain() {
                 </div> 
               </div>
                <div className="mt-10 ">
-                <Button type="submit">
+                <Button type="submit"  disabled={!isValid || isSubmitting}>
                   {isEditing === "true" ? (
                     isLoadingUpdate ? (
                       <div className="flex gap-x-2 justify-center">
