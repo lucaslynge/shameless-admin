@@ -118,7 +118,7 @@ function PromoCode() {
                 <TableRow>
                   <TableHead className="hidden md:table-cell">ID</TableHead>
                   <TableHead>Promo Code </TableHead>
-                  <TableHead className="hidden sm:table-cell">Duration</TableHead>
+                  {/* <TableHead className="hidden sm:table-cell">Duration</TableHead> */}
                   <TableHead className="hidden sm:table-cell">Amount</TableHead>
                   <TableHead className="hidden sm:table-cell">Status</TableHead>
                   

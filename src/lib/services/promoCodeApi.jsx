@@ -13,7 +13,6 @@ export const promoCodeApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['PromoCode'],
 
   refetchOnFocus:true,
   endpoints: (build) => ({
@@ -23,7 +22,6 @@ export const promoCodeApi = createApi({
         return { url: `/promoCode/allPromoCode?limit=10&${params}` };
       },
       transformResponse: (response) => response.data,
-      providesTags: ['PromoCode'],
 
     }),
     CreatePromoCode: build.mutation({
@@ -33,7 +31,6 @@ export const promoCodeApi = createApi({
         body: credentials,
       }),
       transformResponse: (response) => response,
-      invalidatesTags: ['PromoCode'], // This ensures the cache is invalidated
 
     }),
     UpdatePromoCode: build.mutation({
@@ -49,7 +46,6 @@ export const promoCodeApi = createApi({
           message: response.message,
         };
       },
-      invalidatesTags: ['PromoCode'], // This ensures the cache is invalidated
 
     }),
     DeletePromoCode: build.mutation({
@@ -64,7 +60,6 @@ export const promoCodeApi = createApi({
           message: response.message,
         };
       },
-      invalidatesTags: ['PromoCode'], // This ensures the cache is invalidated
 
     }),
   }),

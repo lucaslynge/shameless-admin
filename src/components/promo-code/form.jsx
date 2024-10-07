@@ -69,7 +69,7 @@ export default function PromoForm({
           let data = {
             name: values?.name,
             percent_off: values?.percent_off,
-            duration: values?.duration,
+            // duration: values?.duration,
             expires_at: values?.expires_at,
             number_of_customers:values.number_of_customers,
             promoCodeId:values.promoCodeId
@@ -78,7 +78,7 @@ export default function PromoForm({
           if (isDuration === "repeating") {
             data = {
               ...data,
-              duration_in_months: values?.duration_in_months,
+              // duration_in_months: values?.duration_in_months,
             };
           }
           if (!isedit) {
@@ -183,7 +183,7 @@ export default function PromoForm({
                     )}
                   </div>
                 </div>
-                <div className="grid grid-cols-1 w-full gap-4">
+                {/* <div className="grid grid-cols-1 w-full gap-4">
                   <div id="duration-input w-full">
                     <Label>Duration</Label>
                     <Field name="duration" className="w-full">
@@ -220,11 +220,11 @@ export default function PromoForm({
                       </div>
                     )}
                   </div>
-                </div>
+                </div> */}
               </>
             )}
             
-            {!isedit && isDuration === "repeating" && (
+            {/* {!isedit && isDuration === "repeating" && (
               <div className="grid grid-cols-1 w-full gap-1">
                 <Label>Duration in month</Label>
                 <Field
@@ -235,7 +235,7 @@ export default function PromoForm({
                   type="number"
                 />
               </div>
-            )}
+            )} */}
              {!isedit && (
                 <div className="grid w-full grid-cols-1 gap-4">
                   <div className="w-full">
@@ -339,7 +339,7 @@ export default function PromoForm({
                     name="expires_at"
                   />
                 
-                  <p className="text-xs font-light">Enter future date</p>
+                  {/* <p className="text-xs font-light">Enter future date</p> */}
                 </div>
               </div>)}
 

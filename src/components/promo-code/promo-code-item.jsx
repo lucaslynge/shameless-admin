@@ -35,7 +35,7 @@ export default function PromoCodeItem({ promo, refetch }) {
           {item.coupon.duration}
         </div>
       ),
-      className: "hidden sm:table-cell",
+      className: "hidden",
 
     },
     {
