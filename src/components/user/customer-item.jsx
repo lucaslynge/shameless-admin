@@ -13,7 +13,7 @@ export default function CustomerItem({ customer, refetch }) {
 
   return (
     <TableRow className="bg-accent">
-      <TableCell>
+      <TableCell className="hidden sm:table-cell">
         <div className=" text-sm text-muted-foreground md:inline">
           {TexTruncate({ text: customer._id })}
         </div>
@@ -24,8 +24,8 @@ export default function CustomerItem({ customer, refetch }) {
         </div>
       </TableCell>
 
-      <TableCell className=" sm:table-cell">{customer.role}</TableCell>
-      <TableCell className=" md:table-cell">
+      <TableCell className="hidden sm:table-cell">{customer.role}</TableCell>
+      <TableCell className="hidden md:table-cell">
         {dateFormat(customer?.createdAt, "dd-mm-yyyy")}
       </TableCell>
       <TableCell className=" md:table-cell ">

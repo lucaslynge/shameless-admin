@@ -14,14 +14,14 @@ export default function PaymentItem({ payment, refetch }) {
 
   return (
     <TableRow className="bg-accent">
-      <TableCell className="hidden sm:table-cell">
+      <TableCell className="hidden xl:table-cell">
        <TexTruncate text={payment?._id}/>
       </TableCell>
-      <TableCell className="hidden sm:table-cell">
+      <TableCell className="hidden xl:table-cell">
        <TexTruncate text={payment?.transaction_id}/>
       </TableCell>
-      <TableCell>
-       <TexTruncate text={payment?.customer_id}/>
+      <TableCell className="hidden xl:table-cell">    
+           <TexTruncate text={payment?.customer_id}/>
       </TableCell>
       <TableCell>
         <div className="font-medium">{payment?.community_id?.email}</div>
@@ -32,7 +32,7 @@ export default function PaymentItem({ payment, refetch }) {
       <TableCell className="hidden sm:table-cell">
         {payment.subscription_type}
       </TableCell>
-      <TableCell className="hidden sm:table-cell">
+      <TableCell className="hidden lg:table-cell">
         {payment.payment_status}
       </TableCell>
 

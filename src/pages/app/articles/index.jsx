@@ -75,11 +75,12 @@ import TableRowSkeleton from "@/components/TableRowSkeleton";
           <SearchBox
             onSearch={onSearch}
             query={query}
+            placeholder="Search by articles..."
             searchArray={["item 1", "item 2", "item 3"]}
             setQuery={(searchQuery) => {
               setQuery(searchQuery);
               setFilters({
-                search: searchQuery,
+                headline: searchQuery,
               });
               if (searchQuery === "") {
                 setFilters({
@@ -94,10 +95,10 @@ import TableRowSkeleton from "@/components/TableRowSkeleton";
             <TableHeader>
               <TableRow>
                 <TableHead className="hidden xl:table-cell">ID</TableHead>
-                <TableHead className="lg:w-[200px] xl:w-auto">Headline</TableHead>
+                <TableHead className="md:w-[200px] sm:w-[100px] w-[150px] ">Headline</TableHead>
                 <TableHead className="hidden sm:table-cell">Status</TableHead>
-                <TableHead className="hidden sm:table-cell" >Age</TableHead>
-                <TableHead className="hidden sm:table-cell">Gender</TableHead>
+                <TableHead className="hidden xl:table-cell" >Age</TableHead>
+                <TableHead className="hidden xl:table-cell">Gender</TableHead>
                 <TableHead className="hidden sm:table-cell">Type</TableHead>
                 <TableHead className="hidden sm:table-cell">Date</TableHead>
                 <TableHead >Actions</TableHead>

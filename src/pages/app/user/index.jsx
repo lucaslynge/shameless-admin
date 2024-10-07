@@ -73,11 +73,12 @@ function User() {
             <SearchBox
               onSearch={onSearch}
               query={query}
+              placeholder="Search by email..."
               searchArray={["item 1", "item 2", "item 3"]}
               setQuery={(searchQuery) => {
                 setQuery(searchQuery);
                 setFilters({
-                  search: searchQuery,
+                  email: searchQuery,
                 });
                 if (searchQuery === "") {
                   setFilters({
@@ -92,10 +93,10 @@ function User() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
+                <TableHead className="hidden sm:table-cell">ID</TableHead>
                 <TableHead>Email</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Date</TableHead>
+                <TableHead className="hidden sm:table-cell">Role</TableHead>
+                <TableHead className="hidden sm:table-cell">Date</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>

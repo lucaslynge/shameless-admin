@@ -18,10 +18,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import AppLayout from "@/layouts/AppLayout";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Mypaginations from "@/components/my-paginations";
-import { useGetAllContactsQuery } from "@/lib/services/contactApi";
-import AddContact from "@/components/contact/add-contact";
 import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";
 import TableRowSkeleton from "@/components/TableRowSkeleton";
@@ -34,10 +32,23 @@ function PromoCode() {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, onSearch] = useState();
   const [query, setQuery] = useState();
+  const [dataPromoCode,setDataPromoCode]=useState([])
   const [filters, setFilters] = useState({
     page: currentPage,
   });
-  const { data, isLoading, refetch } = useGetAllPromoCodeQuery(filters);
+  const { data, isLoading, refetch,isSuccess } = useGetAllPromoCodeQuery(filters);
+  const [filteredPromoCodes, setFilteredPromoCodes] = useState([]);
+
+  useEffect(() => {
+    if (query) {
+      const filtered = dataPromoCode.filter((promo) =>
+        promo.code.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredPromoCodes(filtered);
+    } else {  
+      setFilteredPromoCodes(dataPromoCode);
+    }
+  }, [query, dataPromoCode]);
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -47,7 +58,12 @@ function PromoCode() {
 
     })
   };
-  console.log("data",data)
+  
+  useEffect(()=>{
+    if(isSuccess){
+      setDataPromoCode(data?.data)
+    }
+  },[isSuccess])
   return (
       <AppLayout>
         <Card x-chunk="dashboard-05-chunk-3">
@@ -80,11 +96,13 @@ function PromoCode() {
             <SearchBox
             onSearch={onSearch}
             query={query}
+            placeholder="Search by code..."
             searchArray={["item 1", "item 2", "item 3"]}
             setQuery={(searchQuery) => {
               setQuery(searchQuery);
+
               setFilters({
-                search: searchQuery,
+                code: searchQuery,
               });
               if (searchQuery === "") {
                 setFilters({
@@ -98,19 +116,13 @@ function PromoCode() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="hidden sm:table-cell">ID</TableHead>
-                  <TableHead>Name </TableHead>
+                  <TableHead className="hidden md:table-cell">ID</TableHead>
+                  <TableHead>Promo Code </TableHead>
                   <TableHead className="hidden sm:table-cell">Duration</TableHead>
-                  <TableHead className="hidden sm:table-cell">customer</TableHead>
-                  <TableHead className="hidden sm:table-cell">coupon</TableHead>
-              
                   <TableHead className="hidden sm:table-cell">Amount</TableHead>
                   <TableHead className="hidden sm:table-cell">Status</TableHead>
                   
-                  <TableHead className="hidden sm:table-cell">Expire Date</TableHead>
-                  {/* <TableHead className="hidden sm:table-cell">
-                    Product Id
-                  </TableHead> */}
+                  <TableHead className="hidden xl:table-cell">Expire Date</TableHead>
                   <TableHead className="hidden md:table-cell">Date</TableHead>
                   <TableHead>
                     Actions
@@ -125,7 +137,7 @@ function PromoCode() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  data?.data?.map((item, index) => {
+                  filteredPromoCodes?.map((item, index) => {
                     const updateitem={...item,_id:item.id}
                    return  <PromoCodeItem refetch={refetch} key={index} promo={updateitem} />
                   }

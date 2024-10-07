@@ -29,61 +29,43 @@ export default function PromoCodeItem({ promo, refetch }) {
       
     },
    
-    
     {
       value: (item) => (
-        <div className="hidden text-sm text-muted-foreground md:inline">
-          {item.coupon.percent_off}
-        </div>
-      ),
-      className: "hidden md:table-cell",
-
-    },
-   
-    {
-      value: (item) => (
-        <div className="hidden text-sm text-muted-foreground md:inline">
-          {item.customer}
-        </div>
-      ),
-      className: "hidden md:table-cell",
-
-    },
-    {
-      value: (item) => (
-        <div className="hidden text-sm text-muted-foreground md:inline">
-          {item.coupon.id}
-        </div>
-      ),
-      className: "hidden md:table-cell",
-
-    },
-    {
-      value: (item) => (
-        <div className="hidden text-sm text-muted-foreground md:inline">
+        <div className=" text-sm text-muted-foreground md:inline">
           {item.coupon.duration}
         </div>
       ),
-      className: "hidden md:table-cell",
+      className: "hidden sm:table-cell",
 
     },
     {
       value: (item) => (
-        <div className="hidden text-sm text-muted-foreground md:inline">
+        <div className=" text-sm text-muted-foreground md:inline">
+          {item.coupon.percent_off}
+        </div>
+      ),
+      className: "hidden sm:table-cell",
+
+    },
+   
+    
+    {
+      value: (item) => (
+        <div className=" text-sm text-muted-foreground md:inline">
           {item.active ? "Active":"InActive"}
           { console.log("item.status",item.status)}
         </div>
       ),
-      className: "hidden md:table-cell",
+      className: "hidden sm:table-cell",
 
     },
     {
         value: (item) => (
-          <div className="hidden text-sm text-muted-foreground md:inline">
+          <div className=" text-sm text-muted-foreground md:inline">
             {dateFormated(item.expires_at)}
           </div>
         ),
-        className: "hidden md:table-cell",
+        className: "hidden xl:table-cell",
 
       },
       // {

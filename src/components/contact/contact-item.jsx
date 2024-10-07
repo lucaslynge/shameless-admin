@@ -41,7 +41,7 @@ export default function ContactItem({ contact, refetch }) {
             {item.status}
           </div>
         ),
-        className: "hidden md:table-cell",
+        className: "hidden lg:table-cell",
 
       },
       {
@@ -50,7 +50,7 @@ export default function ContactItem({ contact, refetch }) {
             {item.subject}
           </div>
         ),
-        className: "hidden md:table-cell",
+        className: "hidden lg:table-cell",
 
       },
      

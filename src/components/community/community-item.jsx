@@ -12,8 +12,8 @@ export default function CummunityItem({community,refetch}) {
 
   return (
     <TableRow  className="bg-accent">
-                      <TableCell className="hidden sm:table-cell">
-                        <div className="hidden text-sm text-muted-foreground md:inline">
+                      <TableCell className="hidden xl:table-cell">
+                        <div className="hidden text-sm text-muted-foreground xl:inline">
                           {community._id}
                         </div>
                         
@@ -27,7 +27,7 @@ export default function CummunityItem({community,refetch}) {
                       <TableCell className="hidden sm:table-cell">
                         {community?.payment_id?.subscription_type }
                       </TableCell>
-                      <TableCell className="hidden sm:table-cell">
+                      <TableCell className="hidden md:table-cell">
                         {community.is_paid ? 'Yes':'No'}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
@@ -35,7 +35,7 @@ export default function CummunityItem({community,refetch}) {
                       </TableCell>
                   
                   
-                      <TableCell className="hidden md:table-cell">
+                      <TableCell className="hidden xl:table-cell">
                         {dateFormat(community.created,'dd-mm-yyyy')}
                       </TableCell>
                       <TableCell>

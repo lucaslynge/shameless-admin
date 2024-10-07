@@ -9,8 +9,7 @@ import TexTruncate from '../text-truncate'
 export default function ArticelItem({articel,refetch}) {
     const [isOpenDelete, setIsOpenDelete] = React.useState(false)
     const router=useRouter()
-    console.log("slug....",articel.slug)
-  return (
+   return (
        <TableRow  className="bg-accent">
                       <TableCell className="hidden xl:table-cell">
                         <div className="font-medium ">{TexTruncate({text:articel._id})}</div>
@@ -21,10 +20,10 @@ export default function ArticelItem({articel,refetch}) {
                       <TableCell className="hidden sm:table-cell">
                         {articel.status}
                       </TableCell>
-                      <TableCell className="hidden sm:table-cell">
+                      <TableCell className="hidden xl:table-cell">
                         {articel.age}
                       </TableCell>
-                      <TableCell className="hidden sm:table-cell">
+                      <TableCell className="hidden xl:table-cell">
                         {articel.gender}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">

@@ -79,11 +79,12 @@ function Category() {
             <SearchBox
             onSearch={onSearch}
             query={query}
+            placeholder="Search by name..."
             searchArray={["item 1", "item 2", "item 3"]}
             setQuery={(searchQuery) => {
               setQuery(searchQuery);
               setFilters({
-                search: searchQuery,
+                name: searchQuery,
               });
               if (searchQuery === "") {
                 setFilters({

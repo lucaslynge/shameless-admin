@@ -18,7 +18,7 @@ export const promoCodeApi = createApi({
     GetAllPromoCode: build.query({
       query: (filter) => {
         const params = new URLSearchParams(filter).toString();
-        return { url: `/promoCode/allPromoCode?limit=10` };
+        return { url: `/promoCode/allPromoCode?limit=10&${params}` };
       },
       transformResponse: (response) => response.data,
     }),

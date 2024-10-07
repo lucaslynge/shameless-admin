@@ -78,11 +78,12 @@ function Contact() {
             <SearchBox
             onSearch={onSearch}
             query={query}
+            placeholder="Search by email..."
             searchArray={["item 1", "item 2", "item 3"]}
             setQuery={(searchQuery) => {
               setQuery(searchQuery);
               setFilters({
-                search: searchQuery,
+                email: searchQuery,
               });
               if (searchQuery === "") {
                 setFilters({
@@ -96,11 +97,11 @@ function Contact() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="hidden sm:table-cell">ID</TableHead>
+                  <TableHead className="hidden md:table-cell">ID</TableHead>
                   <TableHead>Email</TableHead>
-                  <TableHead className="hidden sm:table-cell">Name</TableHead>
-                  <TableHead className="hidden sm:table-cell">Status</TableHead>
-                  <TableHead className="hidden sm:table-cell">
+                  <TableHead className="hidden lg:table-cell">Name</TableHead>
+                  <TableHead className="hidden lg:table-cell">Status</TableHead>
+                  <TableHead className="hidden md:table-cell">
                     Subject
                   </TableHead>
                 

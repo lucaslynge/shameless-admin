@@ -81,11 +81,12 @@ function Review() {
             <SearchBox
             onSearch={onSearch}
             query={query}
+            placeholder="Search by name..."
             searchArray={["item 1", "item 2", "item 3"]}
             setQuery={(searchQuery) => {
               setQuery(searchQuery);
               setFilters({
-                search: searchQuery,
+                name: searchQuery,
               });
               if (searchQuery === "") {
                 setFilters({
@@ -99,9 +100,9 @@ function Review() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="hidden sm:table-cell">ID</TableHead>
+                  <TableHead className="hidden md:table-cell">ID</TableHead>
                   <TableHead >Name</TableHead>
-                  <TableHead className="hidden sm:table-cell">Ratting</TableHead>
+                  <TableHead className="hidden md:table-cell">Ratting</TableHead>
                  
                   <TableHead className="hidden md:table-cell">Date</TableHead>
                   <TableHead>

@@ -30,17 +30,9 @@ import { useGetAllCategoryQuery } from "@/lib/services/categoryApi";
 const validationSchema = Yup.object().shape({
   category: Yup.string().required("Catgory is required"),
   headline: Yup.string().required("headline is required"),
-  type:Yup.string().required("type is required"),
-  gender:Yup.string().required("gender is required"),
-  age:Yup.string().required("age is required"),
   slug:Yup.string().required("slug is required"),
   status:Yup.string().required("status is required"),
   readTime:Yup.string().required("readTime is required"),
-
-
-
-
-
 
 });
 export default function ShareMain() {
@@ -52,6 +44,7 @@ export default function ShareMain() {
   const slug = router.query.slug;
   const [file, setFile] = useState(null);
   const { data,refetch:articleRefetch } = useGetBySlugArticleQuery(slug);
+  const [isShowTypeFileds,setIsShowTypeFileds]=useState(false)
   const [CreateArticle, { isLoading }] = useCreateArticleMutation();
   const [UpdateArticle, { isLoading: isLoadingUpdate }] =
     useUpdateArticleMutation();
@@ -59,6 +52,7 @@ export default function ShareMain() {
   const isEditing = router.query.isediting;
   const { data: dataCategory } = useGetAllCategoryQuery();
   const [filepath, setfilepath] = useState("");
+  const [IsType,setIsType]=useState(false)
   const maxChars = 15;
   const [valueTextEditor, setValueTextEditor] = useState(data?.primary_message);
   const handleFileChange = (event) => {
@@ -76,7 +70,6 @@ export default function ShareMain() {
       };
     }
   };
-
   useEffect(()=>{
     if(isEditing){
       setValueTextEditor(data?.primary_message)
@@ -85,6 +78,12 @@ export default function ShareMain() {
     
     }
   },[data])
+
+  useEffect(()=>{
+   setTimeout(()=>{
+    setIsShowTypeFileds(true)
+   },1000)
+  },[])
 
   const handleFileClick = () => {
     const fileInput = document.getElementById("fileInput");
@@ -103,8 +102,8 @@ export default function ShareMain() {
             headline: isEditing==="true" ? data?.headline :"",
             primary_message:isEditing==="true" ? data?.primary_message:"" ,
             type:isEditing==="true" ? data?.type:"",
-            age:isEditing==="true" ? data?.age?.toString():"",
-            gender:isEditing==="true" ? data?.gender:"",
+            age:isEditing==="true" ? data?.age?.toString():18,
+            gender:isEditing==="true" ? data?.gender:"Male",
             user_id:isEditing==="true" ? data?.user_id:"",
             STI_status:isEditing==="true" ? data?.STI_status:"",
             image:isEditing==="true" ? data?.image:"",
@@ -167,7 +166,7 @@ export default function ShareMain() {
             formdata.append("headline", data.headline);
             formdata.append("primary_message", data.primary_message);
             formdata.append("type", data.type);
-            formdata.append("age", data.age);
+            formdata.append("age", data.age ? data.age:"");
             formdata.append("gender", data.gender);
             formdata.append("STI_status", data.STI_status);
             formdata.append("publishDate", data.publishDate);
@@ -207,7 +206,6 @@ export default function ShareMain() {
                   router.push("/app/articles");
                 }
               } catch (error) {
-                if (error.status == 404) {
                   toast.error(error.data.message, {
                     position: "top-center",
                     autoClose: 3000,
@@ -215,7 +213,7 @@ export default function ShareMain() {
                     transition: Slide,
                     type: "error",
                   });
-                }
+                
               } finally {
                 setSubmitting(false);
                 setFile("");
@@ -346,9 +344,14 @@ export default function ShareMain() {
                       <Select
                         name={field.name}
                         value={field.value}
-                        onValueChange={(value) =>
-                          form.setFieldValue(field.name, value)
-                        }
+                        onValueChange={(value) =>{
+                          form.setFieldValue(field.name, value);
+                          if(value==="personal_story"){
+                            setIsType('personal_story');
+                          }else{
+                            setIsType(null);
+                          }
+                         }}
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select" />
@@ -375,7 +378,7 @@ export default function ShareMain() {
                 </div>
             
             
-               <div className="grid grid-cols-12  justify-between gap-4 mt-3">
+               { (IsType === "personal_story" || data?.type === "personal_story" ) && isShowTypeFileds && ( <div className="grid grid-cols-12  justify-between gap-4 mt-3">
                   <div className="col-span-4">
                     <p className="text-sm font-semibold">Age</p>
                     <div className="mt-1">
@@ -408,7 +411,7 @@ export default function ShareMain() {
                   </div>
   
                   <div className="col-span-4">
-                    <label id="gender" className="text-sm font-semibold">Gender*</label>
+                    <label id="gender" className="text-sm font-semibold">Gender</label>
                     <div className="mt-1">
                 
                       <Field 
@@ -436,11 +439,7 @@ export default function ShareMain() {
                           </Select>
                         )}
                       </Field>
-                      {errors.gender && touched.gender && (
-                  <div id="feedback" className="text-[12px]  text-red-500	">
-                    {errors.gender}
-                  </div>
-                )}
+                      
 
                     </div>
                   </div>
@@ -472,7 +471,7 @@ export default function ShareMain() {
                   </div>
                 </div>
                
-                </div>
+                </div>)}
                
                 <div className="flex flex-col md:flex-row justify-between gap-4 mt-3">
                   <div className="w-full">
@@ -484,17 +483,19 @@ export default function ShareMain() {
 
                   <div className="w-full">
                     <label for="readTime" className="text-sm font-semibold">Read Min*</label>
-                    <div className="mt-1">
+                    <div >
                       <Field
                         type="number"
                         id="readTime"
+                        min={0}
+                      
                         value={values.readTime}
                         onChange={(e) => {
                           handleChange(e);
                         }}
                         name="readTime"
                         placeholder="Type here"
-                        className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-3"
+                        className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] px-4 py-3"
                       />
                        {errors.readTime && touched.readTime && (
                   <div id="feedback" className="text-[12px]  text-red-500	">
@@ -632,7 +633,7 @@ export default function ShareMain() {
                 </div> 
               </div>
                <div className="mt-10 ">
-                <Button type="submit"  disabled={!isValid || isSubmitting}>
+                <Button type="submit"  disabled={(!isValid || isSubmitting) && isEditing === "false" }>
                   {isEditing === "true" ? (
                     isLoadingUpdate ? (
                       <div className="flex gap-x-2 justify-center">
