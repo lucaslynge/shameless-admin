@@ -13,6 +13,8 @@ export const promoCodeApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['PromoCode'],
+
   refetchOnFocus:true,
   endpoints: (build) => ({
     GetAllPromoCode: build.query({
@@ -21,6 +23,8 @@ export const promoCodeApi = createApi({
         return { url: `/promoCode/allPromoCode?limit=10&${params}` };
       },
       transformResponse: (response) => response.data,
+      providesTags: ['PromoCode'],
+
     }),
     CreatePromoCode: build.mutation({
       query: (credentials) => ({
@@ -29,6 +33,8 @@ export const promoCodeApi = createApi({
         body: credentials,
       }),
       transformResponse: (response) => response,
+      invalidatesTags: ['PromoCode'], // This ensures the cache is invalidated
+
     }),
     UpdatePromoCode: build.mutation({
       query: ({ id, body }) => ({
@@ -43,6 +49,8 @@ export const promoCodeApi = createApi({
           message: response.message,
         };
       },
+      invalidatesTags: ['PromoCode'], // This ensures the cache is invalidated
+
     }),
     DeletePromoCode: build.mutation({
       query: (id) => ({
@@ -56,6 +64,8 @@ export const promoCodeApi = createApi({
           message: response.message,
         };
       },
+      invalidatesTags: ['PromoCode'], // This ensures the cache is invalidated
+
     }),
   }),
 });

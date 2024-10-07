@@ -475,7 +475,7 @@ export default function ShareMain() {
                
                 <div className="flex flex-col md:flex-row justify-between gap-4 mt-3">
                   <div className="w-full">
-                    <p className="text-sm font-semibold">Published Date</p>
+                    <p className="text-sm font-semibold">Published Date*</p>
                     <div className="mt-1">
                       <DatePickerPopover initialDate={data?.publishDate} />
                     </div>

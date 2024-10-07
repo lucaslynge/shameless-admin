@@ -13,6 +13,7 @@ export const reviewApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Reviews'],
   refetchOnFocus:true,
   endpoints: (build) => ({
     GetAllReviews: build.query({
@@ -20,6 +21,7 @@ export const reviewApi = createApi({
         const params=new URLSearchParams(filter).toString()
        return  { url: `review/allData?${params}` }
       },
+      providesTags: ['Reviews'],
       transformResponse: (response) => response.data
     }),
     CreateReview: build.mutation({
@@ -28,6 +30,8 @@ export const reviewApi = createApi({
         method: "POST",
         body: credentials,
       }),
+      invalidatesTags: ['Reviews'], // This ensures the cache is invalidated
+
       transformResponse: (response) => response,
     }),
     UpdateReview: build.mutation({
@@ -39,7 +43,9 @@ export const reviewApi = createApi({
           message:response.message
 
         }
-      }
+      },
+      invalidatesTags: ['Reviews'], // This ensures the cache is invalidated
+
     }),
     DeleteReview: build.mutation({
       query: (id) => ({ url: `/review/delete/${id} `, method: 'DELETE' }),
@@ -49,7 +55,9 @@ export const reviewApi = createApi({
           status: response.success,
           message:response.message
         }
-      }
+      },
+      invalidatesTags: ['Reviews'], // This ensures the cache is invalidated
+
     }),
    
   }),

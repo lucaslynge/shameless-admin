@@ -16,13 +16,16 @@ export const paymentApi = createApi({
 
   }),
   refetchOnFocus:true,
-  
+  tagTypes: ['Payment'],
+
   endpoints: (build) => ({
     GetAllPayment: build.query({
       query: (filter) => {
         const params=new URLSearchParams(filter).toString()
        return  { url: `payment/allData?${params}` }
       },
+      providesTags: ['Payment'],
+
       transformResponse: (response) => response.data
     }),
     CreatePayment: build.mutation({
@@ -33,7 +36,9 @@ export const paymentApi = createApi({
           status: response.success,
           message:response.message
         }
-      }
+      },
+      invalidatesTags: ['Payment'], // This ensures the cache is invalidated
+
     }),
     UpdatePayment: build.mutation({
       query: ({ id, body }) => ({ url: `/payment/updateByAdminPayment/${id}`, method: 'PUT', body: body }),
@@ -44,7 +49,9 @@ export const paymentApi = createApi({
           message:response.message
 
         }
-      }
+      },
+      invalidatesTags: ['Payment'], // This ensures the cache is invalidated
+
     }),
     DeletePayment: build.mutation({
       query: (id) => ({ url: `/payment/paymentDelete/${id} `, method: 'DELETE' }),
@@ -54,7 +61,9 @@ export const paymentApi = createApi({
           status: response.success,
           message:response.message
         }
-      }
+      },
+      invalidatesTags: ['Payment'], // This ensures the cache is invalidated
+
     }),
 
 

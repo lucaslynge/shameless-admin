@@ -14,12 +14,15 @@ export const contactApi = createApi({
     }
 
   }),
+  tagTypes: ['Contact'],
+
   endpoints: (build) => ({
     GetAllContacts: build.query({
       query: (filter) => {
         const params=new URLSearchParams(filter).toString()
        return  { url: `contactUs/allData?${params}` }
       },
+      providesTags: ['Contact'],
       transformResponse: (response) => response.data
     }),
     GetByIdContact: build.query({
@@ -36,15 +39,21 @@ export const contactApi = createApi({
           success: response.success,
           message:response.message
         }
-      }
+      },
+      invalidatesTags: ['Contact'], // This ensures the cache is invalidated
+
     }),
     SendMessage: build.mutation({
         query: (credentials) => ({ url: `/contactUs/send`, method: 'POST',body:credentials }),
-        transformResponse: (response) => response
+        transformResponse: (response) => response,
+        invalidatesTags: ['Contact'], // This ensures the cache is invalidated
+
       }),
       UpdateMessage: build.mutation({
         query: ({id,body}) => ({ url: `/contactUs/contactUpdate/${id}`, method: 'PUT',body:body }),
-        transformResponse: (response) => response
+        transformResponse: (response) => response,
+        invalidatesTags: ['Contact'], // This ensures the cache is invalidated
+
       }),
 
 

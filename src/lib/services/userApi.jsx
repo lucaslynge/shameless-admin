@@ -14,12 +14,16 @@ export const userApi = createApi({
     }
 
   }),
+  tagTypes: ['User'],
+
   endpoints: (build) => ({
     GetAllUsers: build.query({
       query: (filter) => {
         const params=new URLSearchParams(filter).toString()
         return { url: `/user/allData?${params}` }
       },
+      providesTags: ['User'], // This ensures the cache is invalidated
+
       transformResponse: (response) => response.data
     }),
     CreateUser: build.mutation({
@@ -30,7 +34,9 @@ export const userApi = createApi({
           status: response.success,
           message:response.message
         }
-      }
+      },
+      invalidatesTags: ['User'], // This ensures the cache is invalidated
+
     }),
     LoginAdminUser: build.mutation({
       query: (credentials) => ({ url: `/user/adminLogin`, method: 'POST', body: credentials }),
@@ -40,7 +46,7 @@ export const userApi = createApi({
           token: response.token,
           success:response.success
         }
-      }
+      },
     }),
     UpdateUser: build.mutation({
       query: ({ id, body }) => ({ url: `/user/updateUser/${id}`, method: 'PUT', body: body }),
@@ -51,7 +57,9 @@ export const userApi = createApi({
           message:response.message
 
         }
-      }
+      },
+      invalidatesTags: ['User'], // This ensures the cache is invalidated
+
     }),
     DeleteUser: build.mutation({
       query: (id) => ({ url: `/user/userDelete/${id} `, method: 'DELETE' }),
@@ -61,7 +69,9 @@ export const userApi = createApi({
           status: response.success,
           message:response.message
         }
-      }
+      },
+      invalidatesTags: ['User'], // This ensures the cache is invalidated
+
     }),
 
 

@@ -1,18 +1,37 @@
 import { Field, Form, Formik } from 'formik';
-import React from 'react'
+import React, { useState } from 'react'
 import HoverRating from '../ratting';
 import { Textarea } from '../ui/textarea';
 import FormInput from "../form-input";
-
 import { Button } from '../ui/button';
 import { useCreateReviewMutation, useUpdateReviewMutation } from '@/lib/services/reviewApi';
 import { Slide, toast } from 'react-toastify';
 import Loader from '../loader';
+import { Box, Rating } from '@mui/material';
+import { StarIcon } from 'lucide-react';
+
+const labels = {
+  0.5: 'Useless',
+  1: 'Useless+',
+  1.5: 'Poor',
+  2: 'Poor+',
+  2.5: 'Ok',
+  3: 'Ok+',
+  3.5: 'Good',
+  4: 'Good+',
+  4.5: 'Excellent',
+  5: 'Excellent+',
+};
+
+function getLabelText(value) {
+  return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
+}
 
 export default function WriteComment({refetchReviews,review,isedit,setIsOpen}) {
   const [CreateReview, { isLoading }] = useCreateReviewMutation();
   const [UpdateReview, { isLoading:isLoadingUpdate }] = useUpdateReviewMutation();
-
+  const [hover, setHover] = useState(-1);
+  const [value, setValue] = useState( review?.rating);  
 
   return (
   
@@ -87,22 +106,19 @@ export default function WriteComment({refetchReviews,review,isedit,setIsOpen}) {
             }
       }
       }}
+      enableReinitialize
     >
       {(props) => (
         <Form onSubmit={props.handleSubmit}>
           <div className="grid grid-cols-1 my-4 gap-x-10 gap-y-5">
             <div>
-              <label
-                htmlFor={`email`}
-                className="block mb-2 text-[#003939] text-sm font-bold "
-              >
-                Ratting
-              </label>
-              <Field name="rating">
-                {({ field, form }) => (
-                  <HoverRating field={field} preValue={field.value}  />
-                )}
-              </Field>
+           
+              {/* <Field name="rating">
+                {({ field, form }) => {
+                 return  <HoverRating field={field} preValue={field.value}  />
+                }}
+              </Field> */}
+               
             </div>
             <div>
             <label
@@ -133,7 +149,17 @@ export default function WriteComment({refetchReviews,review,isedit,setIsOpen}) {
               />
             </div>
           </div>
-
+          <label
+                htmlFor={`email`}
+                className="block mb-2 text-[#003939] text-sm font-bold "
+              >
+                Ratting
+              </label>
+            <Field name="rating">
+                {({ field, form }) => {
+                 return  <HoverRating field={field} preValue={field.value}  />
+                }}
+              </Field>
           <div className="flex flex-wrap mt-10 justify-center gap-4">
           {!isedit &&
             <Button 

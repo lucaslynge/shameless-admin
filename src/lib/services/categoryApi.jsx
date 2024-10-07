@@ -13,12 +13,14 @@ export const categoryApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Category'],
   endpoints: (build) => ({
     GetAllCategory: build.query({
       query: (filter) => {
         const params=new URLSearchParams(filter).toString()
        return  { url: `/category/allCategory?${params}` }
       },
+      providesTags: ['Category'],
       transformResponse: (response) => response.data
     }),
     CreateCategory: build.mutation({
@@ -28,6 +30,8 @@ export const categoryApi = createApi({
         body: credentials,
       }),
       transformResponse: (response) => response,
+      invalidatesTags: ['Category'], // This ensures the cache is invalidated
+
     }),
     UpdateCategory: build.mutation({
       query: ({ id, body }) => ({ url: `/category/updateCategory/${id}`, method: 'PUT', body: body }),
@@ -38,7 +42,9 @@ export const categoryApi = createApi({
           message:response.message
 
         }
-      }
+      },
+      invalidatesTags: ['Category'], // This ensures the cache is invalidated
+
     }),
     DeleteCategory: build.mutation({
       query: (id) => ({ url: `/category/deleteCategory/${id} `, method: 'DELETE' }),
@@ -48,7 +54,9 @@ export const categoryApi = createApi({
           status: response.success,
           message:response.message
         }
-      }
+      },
+      invalidatesTags: ['Category'], // This ensures the cache is invalidated
+
     }),
    
   }),

@@ -14,12 +14,15 @@ export const communityApi = createApi({
     }
 
   }),
+  tagTypes: ['Community'],
+
   endpoints: (build) => ({
     GetAllCommunity: build.query({
       query: (filter) => {
         const params=new URLSearchParams(filter).toString()
        return  { url: `community/allCommunity?${params}` }
       },
+      providesTags: ['Community'],
       transformResponse: (response) => response.data
     }),
     CreateCommunity: build.mutation({
@@ -30,7 +33,9 @@ export const communityApi = createApi({
           status: response.success,
           message:response.message
         }
-      }
+      },
+      invalidatesTags: ['Community'], // This ensures the cache is invalidated
+
     }),
     UpdateCommunity: build.mutation({
       query: ({ id, body }) => ({ url: `/community/communityUpdate/${id}`, method: 'PUT', body: body }),
@@ -41,7 +46,9 @@ export const communityApi = createApi({
           message:response.message
 
         }
-      }
+      },
+      invalidatesTags: ['Community'], // This ensures the cache is invalidated
+
     }),
     DeleteCommunity: build.mutation({
       query: (id) => ({ url: `/community/communityDelete/${id} `, method: 'DELETE' }),
@@ -51,7 +58,9 @@ export const communityApi = createApi({
           status: response.success,
           message:response.message
         }
-      }
+      },
+      invalidatesTags: ['Community'], // This ensures the cache is invalidated
+
     }),
 
 
