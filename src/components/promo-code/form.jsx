@@ -86,7 +86,6 @@ export default function PromoForm({
               const response = await CreatePromoCode(data).unwrap();
               if (response.success) {
                 resetForm();
-                refetch();
                 setIsOpen(false);
 
                 toast.success(response.message, {
@@ -104,6 +103,8 @@ export default function PromoForm({
             } finally {
               setSubmitting(false);
               resetForm();
+              refetch();
+
             }
             return;
           }

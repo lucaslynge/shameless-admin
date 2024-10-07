@@ -18,7 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import AppLayout from "@/layouts/AppLayout";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Mypaginations from "@/components/my-paginations";
 import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";
@@ -32,11 +32,13 @@ function PromoCode() {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, onSearch] = useState();
   const [query, setQuery] = useState();
-  const [dataPromoCode,setDataPromoCode]=useState([])
+  const [starting_after,setstarting_after]=useState(null)
+  const [dataPromoCode, setDataPromoCode] = useState([]);
   const [filters, setFilters] = useState({
     page: currentPage,
   });
-  const { data, isLoading, refetch,isSuccess } = useGetAllPromoCodeQuery(filters);
+  const { data, isLoading, refetch, isSuccess, isFetching } =
+    useGetAllPromoCodeQuery(filters);
   const [filteredPromoCodes, setFilteredPromoCodes] = useState([]);
 
   useEffect(() => {
@@ -45,7 +47,7 @@ function PromoCode() {
         promo.code.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredPromoCodes(filtered);
-    } else {  
+    } else {
       setFilteredPromoCodes(dataPromoCode);
     }
   }, [query, dataPromoCode]);
@@ -54,23 +56,21 @@ function PromoCode() {
     setCurrentPage(newPage);
     setFilters({
       ...filters,
-      page:newPage
-
-    })
+      page: newPage,
+    });
   };
-  
-  useEffect(()=>{
-    if(isSuccess){
-      setDataPromoCode(data?.data)
+
+  useEffect(() => {
+    if (isSuccess) {
+      setDataPromoCode(data?.data);
     }
-  },[isSuccess])
+  }, [isSuccess, isFetching]);
   return (
-      <AppLayout>
-        <Card x-chunk="dashboard-05-chunk-3">
-          <CardHeader className="px-7">
+    <AppLayout>
+      <Card x-chunk="dashboard-05-chunk-3">
+        <CardHeader className="px-7">
           <div className="grid lg:grid-cols-2 gap-2 col-span-1">
             <div className="flex  lg:justify-normal justify-between gap-x-4">
-        
               <div className="flex flex-col gap-2">
                 <CardTitle>Promo Code</CardTitle>
                 <CardDescription>
@@ -94,68 +94,99 @@ function PromoCode() {
               </div>
             </div>
             <SearchBox
-            onSearch={onSearch}
-            query={query}
-            placeholder="Search by code..."
-            searchArray={["item 1", "item 2", "item 3"]}
-            setQuery={(searchQuery) => {
-              setQuery(searchQuery);
+              onSearch={onSearch}
+              query={query}
+              placeholder="Search by code..."
+              searchArray={["item 1", "item 2", "item 3"]}
+              setQuery={(searchQuery) => {
+                setQuery(searchQuery);
 
-              setFilters({
-                code: searchQuery,
-              });
-              if (searchQuery === "") {
                 setFilters({
-                  page: currentPage,
+                  code: searchQuery,
                 });
-              }
-            }}/>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
+                if (searchQuery === "") {
+                  setFilters({
+                    page: currentPage,
+                  });
+                }
+              }}
+            />
+          </div>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="hidden md:table-cell">ID</TableHead>
+                <TableHead>Promo Code </TableHead>
+                {/* <TableHead className="hidden sm:table-cell">Duration</TableHead> */}
+                <TableHead className="hidden sm:table-cell">Amount</TableHead>
+                <TableHead className="hidden sm:table-cell">Status</TableHead>
+
+                <TableHead className="hidden xl:table-cell">
+                  Expire Date
+                </TableHead>
+                <TableHead className="hidden md:table-cell">Date</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading ? (
                 <TableRow>
-                  <TableHead className="hidden md:table-cell">ID</TableHead>
-                  <TableHead>Promo Code </TableHead>
-                  {/* <TableHead className="hidden sm:table-cell">Duration</TableHead> */}
-                  <TableHead className="hidden sm:table-cell">Amount</TableHead>
-                  <TableHead className="hidden sm:table-cell">Status</TableHead>
-                  
-                  <TableHead className="hidden xl:table-cell">Expire Date</TableHead>
-                  <TableHead className="hidden md:table-cell">Date</TableHead>
-                  <TableHead>
-                    Actions
-                  </TableHead>
+                  <TableCell colSpan="8" className="w-full">
+                    <TableRowSkeleton cell={6} rows={4} />
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {isLoading ? (
-                  <TableRow>
-                    <TableCell colSpan="8" className="w-full">
-                    <TableRowSkeleton cell={6} rows={4}/>
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  filteredPromoCodes?.map((item, index) => {
-                    const updateitem={...item,_id:item.id}
-                   return  <PromoCodeItem refetch={refetch} key={index} promo={updateitem} />
-                  }
-                  )
-                )}
-              </TableBody>
-            </Table>
-            <div className="flex mt-5 justify-center">
-              <Mypaginations
+              ) : (
+                filteredPromoCodes?.map((item, index) => {
+                  const updateitem = { ...item, _id: item.id };
+                  return (
+                    <PromoCodeItem
+                      refetch={refetch}
+                      key={index}
+                      promo={updateitem}
+                    />
+                  );
+                })
+              )}
+            </TableBody>
+          </Table>
+          <div className="flex mt-5 justify-center">
+            {/* <Mypaginations
                 count={data?.pageCount}
                 page={currentPage}
                 onChange={onPageChange}
-              />
-            </div>
-          </CardContent>
-        </Card>
-      </AppLayout>
+              /> */}
+            <Button
+             
+              variant="outlined"
+              onClick={() => {
+                setFilters({
+                  starting_after:filteredPromoCodes[0].id,
+                  page: currentPage,
+
+                })
+              }}
+            >
+              Previous
+            </Button>
+            <Button
+            
+            onClick={() => {
+              setFilters({
+                starting_after:filteredPromoCodes[9].id,
+                page: currentPage,
+
+              })
+            }}
+            >
+              Next
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </AppLayout>
   );
 }
 
-export default withAuth(PromoCode)
+export default withAuth(PromoCode);
