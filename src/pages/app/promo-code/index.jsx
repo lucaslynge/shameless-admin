@@ -162,7 +162,7 @@ function PromoCode() {
               variant="outlined"
               onClick={() => {
                 setFilters({
-                  starting_after:filteredPromoCodes[0].id,
+                  ending_before:filteredPromoCodes[0]?.id,
                   page: currentPage,
 
                 })
@@ -174,7 +174,7 @@ function PromoCode() {
             
             onClick={() => {
               setFilters({
-                starting_after:filteredPromoCodes[9].id,
+                starting_after:filteredPromoCodes[9]?.id,
                 page: currentPage,
 
               })
