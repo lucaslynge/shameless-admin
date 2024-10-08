@@ -64,7 +64,7 @@ function PromoCode() {
     if (isSuccess) {
       setDataPromoCode(data?.data);
     }
-  }, [isSuccess, isFetching]);
+  }, [isSuccess, isFetching,filters]);
   return (
     <AppLayout>
       <Card x-chunk="dashboard-05-chunk-3">
