@@ -26,7 +26,7 @@ export default function EidtUser({ customer, isOpen, setIsOpen, customerId }) {
       <DialogContent>
         <Formik
           initialValues={{
-            role: customer?.role,
+            // role: customer?.role,
             email: customer?.email,
             password: customer?.password,
           }}
@@ -65,15 +65,16 @@ export default function EidtUser({ customer, isOpen, setIsOpen, customerId }) {
               className="flex flex-col justify-center py-2 items-center "
             >
               <div className="w-full flex flex-col gap-y-5 gap-1">
-              <label className="text-sm font-semibold">Role</label>
-                <div>
+              {/* <label className="text-sm font-semibold">Role</label> */}
+                {/* <div>
                   <Field
                     component={Input}
                     type="text"
                     name="role"
                     placeholder="Role"
                   />
-                </div>
+                </div> */}
+                
                 <label className="text-sm font-semibold">Email address</label>
                 <Field
                   component={Input}
