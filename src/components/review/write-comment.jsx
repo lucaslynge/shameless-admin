@@ -142,11 +142,11 @@ export default function WriteComment({refetchReviews,review,isedit,setIsOpen}) {
               <Textarea
                 rows={5}
                 name="review"
-                maxlength={300}
+                maxlength={250}
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
                 value={props.values.review}
-                placeholder="Write a summary in 300 character or less"
+                placeholder="Write a summary in 250 character or less"
               />
             </div>
           </div>
