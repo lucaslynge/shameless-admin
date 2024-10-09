@@ -274,7 +274,7 @@ export default function ShareMain() {
           }}
           validationSchema={validationSchema}
         >
-          {({ errors, touched, handleSubmit, values, handleChange,isSubmitting, isValid   }) => (
+          {({ errors, touched, handleSubmit, values, handleChange,isSubmitting,handleBlur,isValid   }) => (
             <Form onSubmit={handleSubmit} id="share_story">
               <div className="mt-8">
                 <div>
@@ -316,27 +316,27 @@ export default function ShareMain() {
                   />
                 
                 </div>
-                <div>
+                <div className="mt-5">
               <label
                 htmlFor={`review`}
-                className="block mb-2 text-[#003939] text-sm font-bold "
-              >
+                className="text-sm font-semibold"              >
                 Featuring Text
               </label>
               <Textarea
                 rows={5}
                 name="featuring_text"
-                maxlength={250}
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.review}
+                maxlength={100}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.featuring_text}
                 placeholder="Write a summary in 100 character or less"
               />
             </div>
                     
           
                 <div className="mt-5">
-                  <label for="slug" className="text-sm font-semibold">Slug*</label>
+                  <label for="slug" className="text-sm font-semibold">
+                    Slug*</label>
                   <Field
                         type="text"
                         id="slug"
