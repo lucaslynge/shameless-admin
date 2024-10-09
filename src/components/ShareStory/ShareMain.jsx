@@ -27,6 +27,7 @@ import {
 } from "../ui/select";
 import DatePickerPopover from "../Date-single-picker-input";
 import { useGetAllCategoryQuery } from "@/lib/services/categoryApi";
+import { Textarea } from "../ui/textarea";
 const validationSchema = Yup.object().shape({
   category: Yup.string().required("Catgory is required"),
   headline: Yup.string().required("headline is required"),
@@ -112,6 +113,8 @@ export default function ShareMain() {
             status:isEditing==="true" ? data?.status:"",
             publishDate:isEditing==="true" ? data?.publishDate:"",
             slug:isEditing==="true" ? data?.slug:"",
+            featuring_text:isEditing==="true" ? data?.featuring_text:"",
+            front_page:isEditing==="true" ? data?.front_page:"",
             question_answers: isEditing && data?.question_answers ? data?.question_answers : [
               {
                 question:
@@ -174,6 +177,8 @@ export default function ShareMain() {
             formdata.append("image", data.image);
             formdata.append("status",data.status);
             formdata.append("category", data.category);
+            formdata.append("featuring_text", data.featuring_text);
+            formdata.append("front_page", data.front_page);            
             formdata.append(
               "question_answers",
               JSON.stringify(values.question_answers)
@@ -311,6 +316,23 @@ export default function ShareMain() {
                   />
                 
                 </div>
+                <div>
+              <label
+                htmlFor={`review`}
+                className="block mb-2 text-[#003939] text-sm font-bold "
+              >
+                Featuring Text
+              </label>
+              <Textarea
+                rows={5}
+                name="featuring_text"
+                maxlength={250}
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.review}
+                placeholder="Write a summary in 100 character or less"
+              />
+            </div>
                     
           
                 <div className="mt-5">
@@ -364,6 +386,42 @@ export default function ShareMain() {
                             <SelectItem value={"artical"}>Artical</SelectItem>
                             <SelectItem value={"personal_story"}>
                               Personal Story
+                            </SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </Field>
+                  {errors.type && touched.type && (
+                  <div id="feedback" className="text-[12px]  text-red-500	">
+                    {errors.type}
+                  </div>
+                )}
+                </div>
+                <div className="mt-5">
+                  <label for="type" className="text-sm font-semibold mb-2">Front Page</label>
+                  <Field
+                   name="front_page"
+                   id="front_page"
+                  >
+                    {({ field, form }) => (
+                      <Select
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={(value) =>{
+                          form.setFieldValue(field.name, value);
+                         }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value={true}>
+                              Yes
+                            </SelectItem>
+                            <SelectItem value={false}>
+                              No
                             </SelectItem>
                           </SelectGroup>
                         </SelectContent>
