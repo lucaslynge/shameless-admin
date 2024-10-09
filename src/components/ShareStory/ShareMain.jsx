@@ -28,6 +28,8 @@ import {
 import DatePickerPopover from "../Date-single-picker-input";
 import { useGetAllCategoryQuery } from "@/lib/services/categoryApi";
 import { Textarea } from "../ui/textarea";
+import { Switch } from "../ui/switch";
+import { Label } from "../ui/label";
 const validationSchema = Yup.object().shape({
   category: Yup.string().required("Catgory is required"),
   headline: Yup.string().required("headline is required"),
@@ -398,41 +400,22 @@ export default function ShareMain() {
                   </div>
                 )}
                 </div>
-                <div className="mt-5">
-                  <label for="type" className="text-sm font-semibold mb-2">Front Page</label>
-                  <Field
-                   name="front_page"
-                   id="front_page"
-                  >
+                <div className="my-5">                
+                  <Field name="front_page" id="front_page">
                     {({ field, form }) => (
-                      <Select
-                        name={field.name}
-                        value={field.value}
-                        onValueChange={(value) =>{
-                          form.setFieldValue(field.name, value);
-                         }}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value={true}>
-                              Yes
-                            </SelectItem>
-                            <SelectItem value={false}>
-                              No
-                            </SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
+                      <div className="flex items-center space-x-2">
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={(value) =>
+                            form.setFieldValue(field.name, value)
+                          }
+                          id="airplane-mode"
+                        />
+                        <Label htmlFor="airplane-mode">Show on Front Page</Label>
+                      </div>
                     )}
                   </Field>
-                  {errors.type && touched.type && (
-                  <div id="feedback" className="text-[12px]  text-red-500	">
-                    {errors.type}
-                  </div>
-                )}
+                  
                 </div>
             
             
