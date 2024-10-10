@@ -37,10 +37,11 @@ export default function PromoForm({
   const [isDuration, setIsDuration] = useState(null);
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
-    percent_off: Yup.string().required("Percent off is required"),
-    duration: Yup.string().required("Duration  is required"),
-    product_id: Yup.string().required("Plan  is required"),
     expires_at: Yup.string().required("Expire Date is required"),
+    percent_off: Yup.string().required("Percent off is required"),
+    promoCodeId:Yup.array().min(1, "Minimum one plan is required").required("Minimum One Plan is required"),
+    
+
   });
   console.log("promocode", promocode);
   //initialValues
@@ -53,9 +54,7 @@ export default function PromoForm({
     initialValues = {
       name: "",
       percent_off: "",
-      duration: "",
       expires_at: "",
-      duration_in_months: 1,
       number_of_customers:"",
       promoCodeId: [],
 
@@ -64,7 +63,9 @@ export default function PromoForm({
   return (
     <div>
       <Formik
+      
         initialValues={initialValues}
+        
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           let data = {
             name: values?.name,
@@ -87,7 +88,6 @@ export default function PromoForm({
               if (response.success) {
                 resetForm();
                 setIsOpen(false);
-
                 toast.success(response.message, {
                   position: "top-center",
                   autoClose: 3000,
@@ -97,8 +97,14 @@ export default function PromoForm({
                 });
               }
             } catch (error) {
-              // toast.error(error.message)
-              console.log("err", error);
+              console.log("error",error)
+              toast.success(error.data.error, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+                transition: Slide,
+                type: "error",
+              });
               resetForm();
             } finally {
               setSubmitting(false);
@@ -142,6 +148,7 @@ export default function PromoForm({
             }
           }
         }}
+        validationSchema={validationSchema}
       >
         {({ errors, touched, handleSubmit }) => (
           <Form
@@ -248,7 +255,7 @@ export default function PromoForm({
                       placeholder="Number Of Customers"
                       name="number_of_customers"
                     />
-                  
+                
                   </div>
               
                 </div>
@@ -298,6 +305,12 @@ export default function PromoForm({
                   </label>
             
                 </div>
+                {errors.promoCodeId && (
+                      <div id="feedback" className="text-[12px]  text-red-500	">
+                        {errors.promoCodeId}
+                      </div>
+                    )}
+                
                   {/* <Field name="promoCodeId">
                     {({ field, form }) => (
                       <Select
@@ -339,6 +352,11 @@ export default function PromoForm({
                     initialDate={promocode?.expires_at}
                     name="expires_at"
                   />
+                    {errors.expires_at && (
+                      <div id="feedback" className="text-[12px]  text-red-500	">
+                        {errors.expires_at}
+                      </div>
+                    )}
                 
                   {/* <p className="text-xs font-light">Enter future date</p> */}
                 </div>

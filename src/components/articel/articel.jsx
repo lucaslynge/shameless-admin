@@ -5,6 +5,7 @@ import { MdDelete, MdEdit } from 'react-icons/md'
 import DeleteArticle from './delete-article'
 import { useRouter } from 'next/router'
 import TexTruncate from '../text-truncate'
+import { dateFormated } from '@/lib/utils/helper'
 
 export default function ArticelItem({articel,refetch}) {
     const [isOpenDelete, setIsOpenDelete] = React.useState(false)
@@ -31,7 +32,7 @@ export default function ArticelItem({articel,refetch}) {
                       </TableCell>
                      
                       <TableCell className="hidden sm:table-cell">
-                        2023-06-23 
+                      {dateFormated(articel.publishDate)}
                       </TableCell>
                       <TableCell className="">
                         <Button variant={'secondary'} size={'icon'} onClick={()=>{

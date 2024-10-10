@@ -30,6 +30,7 @@ import { useGetAllCategoryQuery } from "@/lib/services/categoryApi";
 import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
+import { generateSlug } from "@/lib/utils/helper";
 const validationSchema = Yup.object().shape({
   category: Yup.string().required("Catgory is required"),
   headline: Yup.string().required("headline is required"),
@@ -185,7 +186,9 @@ export default function ShareMain() {
               "question_answers",
               JSON.stringify(values.question_answers)
             );
-            formdata.append("slug",data.slug)
+
+            const slugfiy=generateSlug(data.slug)
+            formdata.append("slug",slugfiy)
             const filteredetails = values.details.map((detail) => {
               return {
                 icon: detail.icon,
