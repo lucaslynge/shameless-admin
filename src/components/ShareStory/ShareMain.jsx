@@ -31,10 +31,19 @@ import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
 import { generateSlug } from "@/lib/utils/helper";
+import slugify from 'slugify';
+
 const validationSchema = Yup.object().shape({
   category: Yup.string().required("Catgory is required"),
   headline: Yup.string().required("headline is required"),
-  slug:Yup.string().required("slug is required"),
+  slug: Yup.string()
+  .required('Slug is required')
+  .test('is-slug', 'Slug is not valid', function (value) {
+    const { title } = this.parent;
+    // Slugify the title or value
+    const slug = slugify(title || value || '', { lower: true, strict: true });
+    return value === slug;
+  }),
   status:Yup.string().required("status is required"),
   readTime:Yup.string().required("readTime is required"),
 
@@ -349,6 +358,8 @@ export default function ShareMain() {
                         onChange={(e) => {
                           handleChange(e);
                         }}
+
+
                         name="slug"
                         placeholder="Type here"
                         className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-3"
