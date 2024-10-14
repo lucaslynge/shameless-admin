@@ -386,7 +386,10 @@ export default function ShareMain() {
                           form.setFieldValue(field.name, value);
                           if(value==="personal_story"){
                             setIsType('personal_story');
-                          }else{
+                          } else if(value==="artical"){
+                            setIsType('artical');
+                          }
+                          else{
                             setIsType(null);
                           }
                          }}
@@ -433,7 +436,7 @@ export default function ShareMain() {
                 </div>
             
             
-               { (IsType === "personal_story" || data?.type === "personal_story" ) && isShowTypeFileds && ( <div className="grid grid-cols-12  justify-between gap-4 mt-3">
+               { (IsType === "personal_story" || IsType === "artical" || data?.type === "personal_story" || data?.type === "artical" ) && isShowTypeFileds && ( <div className="grid grid-cols-12  justify-between gap-4 mt-3">
                   <div className="col-span-4">
                     <p className="text-sm font-semibold">Age</p>
                     <div className="mt-1">
@@ -516,8 +519,12 @@ export default function ShareMain() {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
+                            <SelectItem value={"Herpes (HSV)"}>Herpes (HSV)</SelectItem>
                             <SelectItem value={"HIV"}>HIV</SelectItem>
-                            <SelectItem value={"STI"}>STI</SelectItem>
+                            <SelectItem value={"HPV"}>HPV</SelectItem>
+                            <SelectItem value={"Hepatitis B & C"}>Hepatitis B & C</SelectItem>
+                            <SelectItem value={"Hepatitis B & C(CMV)"}>Hepatitis B & C</SelectItem>
+                            <SelectItem value={"Molluscum"}>Molluscum</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
