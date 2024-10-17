@@ -46,6 +46,7 @@ const validationSchema = Yup.object().shape({
   }),
   status:Yup.string().required("status is required"),
   readTime:Yup.string().required("readTime is required"),
+  publishDate:Yup.string().required("publishdate is required")
 
 });
 export default function ShareMain() {
@@ -540,6 +541,11 @@ export default function ShareMain() {
                     <p className="text-sm font-semibold">Published Date*</p>
                     <div className="mt-1">
                       <DatePickerPopover initialDate={data?.publishDate} />
+                      {errors.publishDate && touched.publishDate && (
+                  <div id="feedback" className="text-[12px]  text-red-500	">
+                    {errors.publishDate}
+                  </div>
+                )}
                     </div>
                   </div>
 
