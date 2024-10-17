@@ -10,10 +10,13 @@ import { reviewApi } from '../services/reviewApi';
 import { categoryApi } from '../services/categoryApi';
 import { promoCodeApi } from '../services/promoCodeApi';
 import authReducer from './authSlice';
+import pageReducer from './pagesSlice';
+
 
 const rootReducer = combineReducers({
   counter: counterReducer,
   auth: authReducer,
+  page:pageReducer,
   [userApi.reducerPath]:userApi.reducer,
   [articleApi.reducerPath]:articleApi.reducer,
   [communityApi.reducerPath]:communityApi.reducer,

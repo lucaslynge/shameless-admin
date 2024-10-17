@@ -18,7 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import AppLayout from "@/layouts/AppLayout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "@/components/loader";
 import Mypaginations from "@/components/my-paginations";
 import ArticelItem from "@/components/articel/articel";
@@ -27,28 +27,35 @@ import { useRouter } from "next/router";
 import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";
 import TableRowSkeleton from "@/components/TableRowSkeleton";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentArticlePage } from "@/lib/features/authSlice";
+
 
  function Articel() {
   const router=useRouter()
-  const [currentPage, setCurrentPage] = useState(1);
+  const currentPageStored=useSelector((state)=>state?.auth?.articles_current_page)
+  const [currentPage, setCurrentPage] = useState(currentPageStored);
   const [search, onSearch] = useState();
+  const dispatch=useDispatch()
+
   const [query, setQuery] = useState();
   const [filters, setFilters] = useState({
     page: currentPage,
   });
   const { data, isLoading,refetch,isFetching } = useGetAllArticleQuery(filters);
 
-
   const onPageChange = (newPage) => {  
-    
     setCurrentPage(newPage);
     setFilters({
       ...filters,
       page:newPage
 
     })
+    dispatch(setCurrentArticlePage(newPage))
+
     
   };
+
   return (
     
     <AppLayout>

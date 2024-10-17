@@ -5,7 +5,10 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState: { 
     user: null,
-    token:null 
+    token:null,
+    articles_current_page:1
+
+    
   },
   
   reducers: {
@@ -20,8 +23,12 @@ export const authSlice = createSlice({
       state.token = null;
 
     },
+    setCurrentArticlePage: (state,action) => {
+      state.articles_current_page=action.payload
+    },
+ 
   },
 });
 
-export const {  authuser,addtoken,authlogout } = authSlice.actions;
+export const {  authuser,addtoken,authlogout,setCurrentArticlePage } = authSlice.actions;
 export default authSlice.reducer;
