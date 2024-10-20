@@ -460,6 +460,9 @@ export default function ShareMain() {
                                   {age}
                                 </SelectItem>
                               ))}
+                               <SelectItem value={null}>
+                                  None
+                                </SelectItem>
                             </SelectGroup>
                           </SelectContent>
                         </Select>
@@ -493,6 +496,8 @@ export default function ShareMain() {
                                 <SelectItem value={"Male"}>Male</SelectItem>
                                 <SelectItem value={"Female"}>Female</SelectItem>
                                 <SelectItem value={"Other"}>Other</SelectItem>
+                                <SelectItem value={null}>None</SelectItem>
+
                               </SelectGroup>
                             </SelectContent>
                           </Select>
@@ -526,6 +531,8 @@ export default function ShareMain() {
                             <SelectItem value={"Hepatitis B & C"}>Hepatitis B & C</SelectItem>
                             <SelectItem value={"Hepatitis B & C(CMV)"}>Hepatitis B & C</SelectItem>
                             <SelectItem value={"Molluscum"}>Molluscum</SelectItem>
+                            <SelectItem value={null}>None</SelectItem>
+
                           </SelectGroup>
                         </SelectContent>
                       </Select>
