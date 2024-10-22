@@ -334,17 +334,17 @@ export default function ShareMain() {
                 <div className="mt-5">
               <label
                 htmlFor={`review`}
-                className="text-sm font-semibold"              >
+                className="text-sm font-semibold">
                 Featuring Text
               </label>
               <Textarea
                 rows={5}
                 name="featuring_text"
-                maxlength={100}
+                maxlength={160}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.featuring_text}
-                placeholder="Write a summary in 100 character or less"
+                placeholder="Write a summary in 160 character or less"
               />
             </div>
                     
