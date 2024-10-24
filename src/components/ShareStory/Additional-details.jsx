@@ -6,6 +6,7 @@ import Quill from "./TextEditor";
 import { Button } from "../ui/button";
 import { useUploadArticleImageMutation } from "@/lib/services/articleApi";
 import Loader from "../loader";
+import { TagsInput } from "react-tag-input-component";
 
 export default function AdditionalDetails() {
   const { values, setFieldValue, handleChange } = useFormikContext();
@@ -128,6 +129,23 @@ export default function AdditionalDetails() {
                         });
                       }}
                     />
+                    <div className="my-4">
+                      <TagsInput
+                        classNames={{
+                          tag: "text-sm",
+                          input: "focus:!outline-none focus:[box-shadow:none] !transition-none !border-none !text-sm"
+                        }}
+                        value={values.details[index]?.keywords?? [""]}
+                        onChange={value => handleChange({
+                          target: {
+                            name: `details[${index}].keywords`,
+                            value
+                          }
+                        })}
+                        name="keywords"
+                        placeHolder="Enter keywords"
+                      />
+                    </div>
                   </div>
                   <div className="col-span-2 flex justify-end">
                     <button
@@ -148,7 +166,7 @@ export default function AdditionalDetails() {
         onClick={() =>
           setFieldValue("details", [
             ...values.details,
-            { icon: "", iconPreview: "", title: "", description: "" },
+            { icon: "", iconPreview: "", title: "", description: "", keywords: [] },
           ])
         }
         className="flex float-right p-4 items-center bg-black"
