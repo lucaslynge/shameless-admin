@@ -127,7 +127,7 @@ export default function ShareMain() {
             publishDate:isEditing==="true" ? data?.publishDate:"",
             slug:isEditing==="true" ? data?.slug:"",
             featuring_text:isEditing==="true" ? data?.featuring_text:"",
-            front_page:isEditing==="true" ? data?.front_page:"",
+            front_page:isEditing==="true" ? data?.front_page: false,
             question_answers: isEditing && data?.question_answers ? data?.question_answers : [
               {
                 question:
@@ -293,7 +293,7 @@ export default function ShareMain() {
             <Form onSubmit={handleSubmit} id="share_story">
               <div className="mt-8">
                 <div>
-                  <label for="headline" className="text-sm font-semibold">Headline*</label>
+                  <label htmlFor="headline" className="text-sm font-semibold">Headline*</label>
                   <Field
                     type="text"
                     id="headline"
@@ -340,7 +340,7 @@ export default function ShareMain() {
               <Textarea
                 rows={5}
                 name="featuring_text"
-                maxlength={160}
+                maxLength={160}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.featuring_text}
@@ -350,7 +350,7 @@ export default function ShareMain() {
                     
           
                 <div className="mt-5">
-                  <label for="slug" className="text-sm font-semibold">
+                  <label htmlFor="slug" className="text-sm font-semibold">
                     Slug*</label>
                   <Field
                         type="text"
@@ -374,7 +374,7 @@ export default function ShareMain() {
                
                
                 <div className="mt-5">
-                  <label for="type" className="text-sm font-semibold mb-2">Type*</label>
+                  <label htmlFor="type" className="text-sm font-semibold mb-2">Type*</label>
                   <Field
                    name="type"
                    id="type"
@@ -557,7 +557,7 @@ export default function ShareMain() {
                   </div>
 
                   <div className="w-full">
-                    <label for="readTime" className="text-sm font-semibold">Read Min*</label>
+                    <label htmlFor="readTime" className="text-sm font-semibold">Read Min*</label>
                     <div >
                       <Field
                         type="number"
@@ -582,7 +582,7 @@ export default function ShareMain() {
                 </div>
 
                 <div className="mt-5">
-                  <label for="category" className="text-sm font-semibold">Category*</label>
+                  <label htmlFor="category" className="text-sm font-semibold">Category*</label>
                   <Field  id="category" name="category">
                     {({ field, form }) => (
                       <Select
@@ -616,7 +616,7 @@ export default function ShareMain() {
                 )}
                 </div>
                 <div className="mt-5">
-                  <label for="status" className="text-sm font-semibold mb-2">Status*</label>
+                  <label htmlFor="status" className="text-sm font-semibold mb-2">Status*</label>
                   <Field id="status" name="status">
                     {({ field, form }) => (
                       <Select

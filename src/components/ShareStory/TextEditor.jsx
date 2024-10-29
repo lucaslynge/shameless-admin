@@ -8,6 +8,7 @@ const Quill = ({ valueText, onSetValueTextEditor }) => {
   return (
     <div className="quill-container">
       <ReactQuill
+        className={"quill-custom"}
         theme="snow"
         value={valueText}
         onChange={(value) => onSetValueTextEditor(value)}
@@ -19,7 +20,7 @@ const Quill = ({ valueText, onSetValueTextEditor }) => {
             [{ align: "" }, { align: "center" }, { align: "right" }],
             ["image"],
             [{ 'header': [1, 2, 3, false] }], // Heading options: H1, H2, H3, and normal text
-
+            [{ 'size': ['14px', '16px', '18px'] }],
           ],
         }}
       />
