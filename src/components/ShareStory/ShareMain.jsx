@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";;
 import { ShareAccordion } from "./ShareAccordion";
 import Quill from "./TextEditor";
-import { Field, Form, Formik, useFormikContext } from "formik";
+import { Field, Form, Formik } from "formik";
 import Image from "next/image";
 import placeholderImg from "../../../public/assest/placeholder_img.png"
 import { Slide, toast } from "react-toastify";
 import {
   useCreateArticleMutation,
-  useGetAllArticleQuery,
   useUpdateArticleMutation,
   useGetBySlugArticleQuery
 } from "@/lib/services/articleApi";
 import { Button } from "../ui/button";
-import { useSelector } from "react-redux";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import * as Yup from "yup";
 import Loader from "../loader";
 import AdditionalDetails from "./Additional-details";
@@ -52,7 +50,6 @@ const validationSchema = Yup.object().shape({
 export default function ShareMain() {
 
   const [headline, setHeadline] = useState("");
-  const [fileName, setFileName] = useState("");
   const [initialCategory,setInitialCategory]=useState("")
   const router = useRouter();
   const slug = router.query.slug;
@@ -62,7 +59,6 @@ export default function ShareMain() {
   const [CreateArticle, { isLoading }] = useCreateArticleMutation();
   const [UpdateArticle, { isLoading: isLoadingUpdate }] =
     useUpdateArticleMutation();
-  const user = useSelector((state) => state.auth.user);
   const isEditing = router.query.isediting;
   const { data: dataCategory } = useGetAllCategoryQuery();
   const [filepath, setfilepath] = useState("");
@@ -74,7 +70,6 @@ export default function ShareMain() {
     const reader = new FileReader();
     if (file) {
       setFile(file);
-      setFileName(file.name);
     }
 
     if (file) {
@@ -204,6 +199,7 @@ export default function ShareMain() {
                 icon: detail.icon,
                 title: detail.title,
                 description: detail.description,
+                keywords: detail.keywords
               };
             });
             formdata.append(
@@ -240,7 +236,6 @@ export default function ShareMain() {
                 setHeadline("");
                 resetForm();
                 setValueTextEditor("");
-                setFileName("");
                 setfilepath("");
               }
             }
@@ -281,7 +276,6 @@ export default function ShareMain() {
                 setHeadline("");
                 resetForm();
                 setValueTextEditor("");
-                setFileName("");
                 setfilepath("");
               }
             }
