@@ -12,6 +12,7 @@ import { contactApi } from "../services/contactApi";
 import { reviewApi } from "../services/reviewApi";
 import { categoryApi } from "../services/categoryApi";
 import { promoCodeApi } from "../services/promoCodeApi";
+import { tokenApi } from "../services/tokenApi";
 
 const persistConfig = {
   key: 'root',
@@ -35,6 +36,7 @@ const makeStore = () =>
         .concat(reviewApi.middleware)
         .concat(categoryApi.middleware)
         .concat(promoCodeApi.middleware)
+        .concat(tokenApi.middleware)
 
   });
 
