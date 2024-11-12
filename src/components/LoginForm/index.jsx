@@ -17,7 +17,7 @@ export default function LoginForm() {
     useLoginAdminUserMutation();
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .email("invalid_email")
+      .email("Invalid email")
       .matches(/\./, "Please match the requested format")
       .required("Email is required"),
     password: Yup.string()

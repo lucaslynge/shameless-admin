@@ -24,7 +24,7 @@ export default function ContactForm({refetch,isedit,setIsOpen,contact={
   console.log('selectedOption', selectedOption)
   const validationSchema = Yup.object().shape({
       email: Yup.string()
-      .email("invalid_email")
+      .email("Invalid email")
       .required("Email is required"),
       name: Yup.string()
       .required("Name is required"),
