@@ -14,7 +14,7 @@ export const promoCodeApi = createApi({
     },
   }),
 
-  refetchOnFocus:true,
+  refetchOnFocus: true,
   endpoints: (build) => ({
     GetAllPromoCode: build.query({
       query: (filter) => {
@@ -22,7 +22,6 @@ export const promoCodeApi = createApi({
         return { url: `/promoCode/allPromoCode?limit=10&${params}` };
       },
       transformResponse: (response) => response.data,
-
     }),
     CreatePromoCode: build.mutation({
       query: (credentials) => ({
@@ -31,7 +30,6 @@ export const promoCodeApi = createApi({
         body: credentials,
       }),
       transformResponse: (response) => response,
-
     }),
     UpdatePromoCode: build.mutation({
       query: ({ id, body }) => ({
@@ -46,7 +44,6 @@ export const promoCodeApi = createApi({
           message: response.message,
         };
       },
-
     }),
     DeletePromoCode: build.mutation({
       query: (id) => ({
@@ -60,7 +57,6 @@ export const promoCodeApi = createApi({
           message: response.message,
         };
       },
-
     }),
   }),
 });

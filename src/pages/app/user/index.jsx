@@ -42,9 +42,8 @@ function User() {
     setCurrentPage(newPage);
     setFilters({
       ...filters,
-      page:newPage
-
-    })
+      page: newPage,
+    });
   };
 
   return (
@@ -104,10 +103,7 @@ function User() {
               {isLoading ? (
                 <TableRow>
                   <TableCell colSpan="5" className="w-full">
-                    {/* <div className="flex justify-center mx-auto w-full text-center"> */}
-                      {/* <Loader /> */}
-                      <TableRowSkeleton cell={7}/>
-                    {/* </div> */}
+                    <TableRowSkeleton cell={7} />
                   </TableCell>
                 </TableRow>
               ) : (

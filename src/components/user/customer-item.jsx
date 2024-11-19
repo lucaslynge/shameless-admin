@@ -6,8 +6,10 @@ import DeleteUser from "./delete-user";
 import dateFormat from "dateformat";
 import { useState } from "react";
 import TexTruncate from "../text-truncate";
+import { useSelector } from "react-redux";
 
 export default function CustomerItem({ customer, refetch }) {
+  const { user } = useSelector((store) => store.auth);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
 
@@ -43,15 +45,17 @@ export default function CustomerItem({ customer, refetch }) {
           setIsOpen={setIsOpenEdit}
         />
 
-        <Button
-          variant={"destructive"}
-          size={"icon"}
-          onClick={async () => {
-            setIsOpenDelete(true);
-          }}
-        >
-          {<MdDelete size={20} />}
-        </Button>
+        {user.email !== customer.email && (
+          <Button
+            variant={"destructive"}
+            size={"icon"}
+            onClick={async () => {
+              setIsOpenDelete(true);
+            }}
+          >
+            {<MdDelete size={20} />}
+          </Button>
+        )}
         <DeleteUser
           refetch={refetch}
           customer={customer}

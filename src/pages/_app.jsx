@@ -19,7 +19,7 @@ export default function App({
       <ReduxProvider>
         <AuthProvider>
           <Component {...pageProps} />
-          </AuthProvider>
+        </AuthProvider>
         <ProgressBar
           height="4px"
           color="#001c46"

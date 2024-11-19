@@ -29,13 +29,11 @@ import { useGetAllPromoCodeQuery } from "@/lib/services/promoCodeApi";
 
 function PromoCode() {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
   const [search, onSearch] = useState();
   const [query, setQuery] = useState();
-  const [starting_after,setstarting_after]=useState(null)
   const [dataPromoCode, setDataPromoCode] = useState([]);
   const [filters, setFilters] = useState({
-    page: currentPage,
+    page: 1,
   });
   const { data, isLoading, refetch, isSuccess, isFetching } =
     useGetAllPromoCodeQuery(filters);
@@ -52,19 +50,11 @@ function PromoCode() {
     }
   }, [query, dataPromoCode]);
 
-  const onPageChange = (newPage) => {
-    setCurrentPage(newPage);
-    setFilters({
-      ...filters,
-      page: newPage,
-    });
-  };
-
   useEffect(() => {
     if (isSuccess) {
       setDataPromoCode(data?.data);
     }
-  }, [isSuccess, isFetching,filters]);
+  }, [isSuccess, isFetching, filters]);
   return (
     <AppLayout>
       <Card x-chunk="dashboard-05-chunk-3">
@@ -106,7 +96,7 @@ function PromoCode() {
                 });
                 if (searchQuery === "") {
                   setFilters({
-                    page: currentPage,
+                    page: 1,
                   });
                 }
               }}
@@ -152,33 +142,24 @@ function PromoCode() {
             </TableBody>
           </Table>
           <div className="flex mt-5 justify-center">
-            {/* <Mypaginations
-                count={data?.pageCount}
-                page={currentPage}
-                onChange={onPageChange}
-              /> */}
             <Button
-             
               variant="outlined"
               onClick={() => {
                 setFilters({
-                  ending_before:filteredPromoCodes[0]?.id,
-                  page: currentPage,
-
-                })
+                  ending_before: filteredPromoCodes[0]?.id,
+                  page: 1,
+                });
               }}
             >
               Previous
             </Button>
             <Button
-            
-            onClick={() => {
-              setFilters({
-                starting_after:filteredPromoCodes[9]?.id,
-                page: currentPage,
-
-              })
-            }}
+              onClick={() => {
+                setFilters({
+                  starting_after: filteredPromoCodes[9]?.id,
+                  page: 1,
+                });
+              }}
             >
               Next
             </Button>

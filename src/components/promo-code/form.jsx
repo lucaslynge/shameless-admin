@@ -1,8 +1,7 @@
-import React, { use, useState } from "react";
-import { Formik, Field, Form, FormikHelpers } from "formik";
+import React, { useState } from "react";
+import { Formik, Field, Form } from "formik";
 import FormInput from "../form-input";
 import * as Yup from "yup";
-import { useUpdateMessageMutation } from "../../lib/services/contactApi";
 import Loader from "../loader";
 import { Slide, toast } from "react-toastify";
 import { Button } from "../ui/button";
@@ -39,9 +38,9 @@ export default function PromoForm({
     name: Yup.string().required("Name is required"),
     expires_at: Yup.string().required("Expire Date is required"),
     percent_off: Yup.string().required("Percent off is required"),
-    promoCodeId:Yup.array().min(1, "Minimum one plan is required").required("Minimum One Plan is required"),
-    
-
+    promoCodeId: Yup.array()
+      .min(1, "Minimum one plan is required")
+      .required("Minimum One Plan is required"),
   });
   console.log("promocode", promocode);
   //initialValues
@@ -55,31 +54,26 @@ export default function PromoForm({
       name: "",
       percent_off: "",
       expires_at: "",
-      number_of_customers:"",
+      number_of_customers: "",
       promoCodeId: [],
-
     };
   }
   return (
     <div>
       <Formik
-      
         initialValues={initialValues}
-        
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           let data = {
             name: values?.name,
             percent_off: values?.percent_off,
-            // duration: values?.duration,
             expires_at: values?.expires_at,
-            number_of_customers:values.number_of_customers,
-            promoCodeId:values.promoCodeId
+            number_of_customers: values.number_of_customers,
+            promoCodeId: values.promoCodeId,
           };
 
           if (isDuration === "repeating") {
             data = {
               ...data,
-              // duration_in_months: values?.duration_in_months,
             };
           }
           if (!isedit) {
@@ -97,7 +91,7 @@ export default function PromoForm({
                 });
               }
             } catch (error) {
-              console.log("error",error)
+              console.log("error", error);
               toast.success(error.data.error, {
                 position: "top-center",
                 autoClose: 3000,
@@ -110,7 +104,6 @@ export default function PromoForm({
               setSubmitting(false);
               resetForm();
               refetch();
-
             }
             return;
           }
@@ -124,7 +117,7 @@ export default function PromoForm({
                 id: promocode._id,
                 body: data,
               }).unwrap();
-              
+
               console.log("response", response);
               if (response.success) {
                 toast.success("Promo Code Created Successfuly", {
@@ -136,7 +129,6 @@ export default function PromoForm({
                 resetForm();
                 refetch();
                 setIsOpen(false);
-              
               }
             } catch (error) {
               // toast.error(error.message)
@@ -191,75 +183,23 @@ export default function PromoForm({
                     )}
                   </div>
                 </div>
-                {/* <div className="grid grid-cols-1 w-full gap-4">
-                  <div id="duration-input w-full">
-                    <Label>Duration</Label>
-                    <Field name="duration" className="w-full">
-                      {({ field, form }) => (
-                        <Select
-                          name={field.name}
-                          value={field.value}
-                          onValueChange={(value) => {
-                            form.setFieldValue(field.name, value);
-                            setIsDuration(value);
-                          }}
-                        >
-                          <SelectTrigger className=" py-[22px]">
-                            <SelectValue
-                              className=""
-                              placeholder="Select Duration"
-                            />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectItem value={"once"}>Once</SelectItem>
-                              <SelectItem value={"repeating"}>
-                                Repeating
-                              </SelectItem>
-                              <SelectItem value={"forever"}>Forever</SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      )}
-                    </Field>
-                    {errors.duration && (
-                      <div id="feedback" className="text-[12px]  text-red-500	">
-                        {errors.duration}
-                      </div>
-                    )}
-                  </div>
-                </div> */}
               </>
             )}
-            
-            {/* {!isedit && isDuration === "repeating" && (
-              <div className="grid grid-cols-1 w-full gap-1">
-                <Label>Duration in month</Label>
-                <Field
-                  id="duration_in_months"
-                  component={FormInput}
-                  name="duration_in_months"
-                  placeholder="Duration in months"
-                  type="number"
-                />
-              </div>
-            )} */}
-             {!isedit && (
-                <div className="grid w-full grid-cols-1 gap-4">
-                  <div className="w-full">
-                    <Label>Number of Customer</Label>
-                    <Field
-                      id="number_of_customers"
-                      component={FormInput}
-                      type="number"
-                      placeholder="Number Of Customers"
-                      name="number_of_customers"
-                    />
-                
-                  </div>
-              
+
+            {!isedit && (
+              <div className="grid w-full grid-cols-1 gap-4">
+                <div className="w-full">
+                  <Label>Number of Customer</Label>
+                  <Field
+                    id="number_of_customers"
+                    component={FormInput}
+                    type="number"
+                    placeholder="Number Of Customers"
+                    name="number_of_customers"
+                  />
                 </div>
-              )}
+              </div>
+            )}
             {isedit && (
               <div className="grid grid-cols-1 w-full gap-4">
                 <div id="status-input w-full">
@@ -285,84 +225,60 @@ export default function PromoForm({
                       </Select>
                     )}
                   </Field>
-                  
                 </div>
               </div>
             )}
 
-           
-{!isedit && (<div className="grid grid-cols-2 w-full items-center gap-4">
-               <div id="plan-input">
+            {!isedit && (
+              <div className="grid grid-cols-2 w-full items-center gap-4">
+                <div id="plan-input">
                   <Label>Plan</Label>
-                  <div role="group"  className="flex flex-col" aria-labelledby="checkbox-group">
-                  <label className="flex items-center gap-2">
-                    <Field type="checkbox" name="promoCodeId" className="rounded  focus:accent-red-500	" value="prod_QrJNQeQayTsIvi" />
-                    Monthly
-                  </label>
-                  <label className="flex items-center gap-2">
-                    <Field type="checkbox" name="promoCodeId" className="rounded" value="prod_QrJQDFFgszlvwP" />
-                    Life Time
-                  </label>
-            
-                </div>
-                {errors.promoCodeId && (
-                      <div id="feedback" className="text-[12px]  text-red-500	">
-                        {errors.promoCodeId}
-                      </div>
-                    )}
-                
-                  {/* <Field name="promoCodeId">
-                    {({ field, form }) => (
-                      <Select
-                        name={field.name}
-                        value={field.value}
-                        onValueChange={(value) =>
-                          form.setFieldValue(field.name, value)
-                        }
-                      >
-                        <SelectTrigger className="min-w-full py-[22px]">
-                          <SelectValue placeholder="Select Plan" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem
-                              value={"prod_QrJNQeQayTsIvi"}
-                            >
-                              Monthly
-                            </SelectItem>
-                            <SelectItem
-                              value={"prod_QrJQDFFgszlvwP"}
-                            >
-                              Life Time
-                            </SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    )}
-                  </Field>
-                  {errors.product_id && (
+                  <div
+                    role="group"
+                    className="flex flex-col"
+                    aria-labelledby="checkbox-group"
+                  >
+                    <label className="flex items-center gap-2">
+                      <Field
+                        type="checkbox"
+                        name="promoCodeId"
+                        className="rounded  focus:accent-red-500	"
+                        value="prod_QrJNQeQayTsIvi"
+                      />
+                      Monthly
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <Field
+                        type="checkbox"
+                        name="promoCodeId"
+                        className="rounded"
+                        value="prod_QrJQDFFgszlvwP"
+                      />
+                      Life Time
+                    </label>
+                  </div>
+                  {errors.promoCodeId && (
                     <div id="feedback" className="text-[12px]  text-red-500	">
-                      {errors.product_id}
+                      {errors.promoCodeId}
                     </div>
-                  )} */}
-                </div> 
+                  )}
+                </div>
                 <div id="date-input">
                   <Label>Expire Date</Label>
                   <DatePickerPopover
                     initialDate={promocode?.expires_at}
                     name="expires_at"
                   />
-                    {errors.expires_at && (
-                      <div id="feedback" className="text-[12px]  text-red-500	">
-                        {errors.expires_at}
-                      </div>
-                    )}
-                
+                  {errors.expires_at && (
+                    <div id="feedback" className="text-[12px]  text-red-500	">
+                      {errors.expires_at}
+                    </div>
+                  )}
+
                   {/* <p className="text-xs font-light">Enter future date</p> */}
                 </div>
-              </div>)}
-
-           
+              </div>
+            )}
 
             {!isedit && (
               <Button

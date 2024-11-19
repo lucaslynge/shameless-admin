@@ -1,34 +1,31 @@
 // redux/slices/counterSlice.js
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const authSlice = createSlice({
-  name: 'auth',
-  initialState: { 
+  name: "auth",
+  initialState: {
     user: null,
-    token:null,
-    articles_current_page:1
-
-    
+    token: null,
+    articles_current_page: 1,
   },
-  
+
   reducers: {
-    authuser: (state,action) => {
+    authuser: (state, action) => {
       state.user = action.payload;
     },
-    addtoken: (state,action) => {
+    addtoken: (state, action) => {
       state.token = action.payload;
     },
     authlogout: (state) => {
       state.user = null;
       state.token = null;
-
     },
-    setCurrentArticlePage: (state,action) => {
-      state.articles_current_page=action.payload
+    setCurrentArticlePage: (state, action) => {
+      state.articles_current_page = action.payload;
     },
- 
   },
 });
 
-export const {  authuser,addtoken,authlogout,setCurrentArticlePage } = authSlice.actions;
+export const { authuser, addtoken, authlogout, setCurrentArticlePage } =
+  authSlice.actions;
 export default authSlice.reducer;
