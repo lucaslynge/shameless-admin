@@ -21,7 +21,6 @@ export default function ContactForm({refetch,isedit,setIsOpen,contact={
   const [SendMessage, { isLoading }] = useSendMessageMutation()
   const [UpdateMessage, { isLoading:isLoadingUpdate }] = useUpdateMessageMutation()
 
-  console.log('selectedOption', selectedOption)
   const validationSchema = Yup.object().shape({
       email: Yup.string()
       .email("Invalid email")
@@ -48,7 +47,7 @@ export default function ContactForm({refetch,isedit,setIsOpen,contact={
             if(!isedit){
                 try {
                     const response = await SendMessage(values).unwrap()
-                    console.log("response", response)
+    
                     if(response.success){
                       resetForm()
                       refetch()
