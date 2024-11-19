@@ -42,8 +42,7 @@ export default function PromoForm({
       .min(1, "Minimum one plan is required")
       .required("Minimum One Plan is required"),
   });
-  console.log("promocode", promocode);
-  //initialValues
+
   let initialValues;
   if (isedit) {
     initialValues = {
@@ -243,7 +242,7 @@ export default function PromoForm({
                         type="checkbox"
                         name="promoCodeId"
                         className="rounded  focus:accent-red-500	"
-                        value="prod_QrJNQeQayTsIvi"
+                        value="prod_Qwc6Edo9LCw2tA"
                       />
                       Monthly
                     </label>
@@ -252,7 +251,7 @@ export default function PromoForm({
                         type="checkbox"
                         name="promoCodeId"
                         className="rounded"
-                        value="prod_QrJQDFFgszlvwP"
+                        value="prod_Qwc7MGsgVhIIZ4"
                       />
                       Life Time
                     </label>
