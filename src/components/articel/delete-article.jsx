@@ -5,16 +5,23 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import Loader from "../loader";
 import { Slide, toast } from "react-toastify";
-import { useDeleteUserMutation, useGetAllUsersQuery } from "@/lib/services/userApi";
-import { useDeleteArticleMutation, useGetAllArticleQuery } from "@/lib/services/articleApi";
-export default function DeleteArticle({ isOpen, setIsOpen,articelId,refetch }) {
-  const [DeleteArticle,{isLoading}]=useDeleteArticleMutation()
-  const { refetch: refetchArticle } = useGetAllArticleQuery()
+import {
+  useDeleteArticleMutation,
+  useGetAllArticleQuery,
+} from "@/lib/services/articleApi";
+
+export default function DeleteArticle({
+  isOpen,
+  setIsOpen,
+  articelId,
+  refetch,
+}) {
+  const [DeleteArticle, { isLoading }] = useDeleteArticleMutation();
+  const { refetch: refetchArticle } = useGetAllArticleQuery();
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -27,44 +34,41 @@ export default function DeleteArticle({ isOpen, setIsOpen,articelId,refetch }) {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button 
-          type="button"
-          variant="destructive"
-          onClick={async() =>{
-       
-            try {
-              const response = await DeleteArticle(articelId).unwrap();
-              toast.success(response.message, {
-                position: "bottom-right",
-                autoClose: 3000,
-                hideProgressBar: true,
-                transition: Slide,
-                type: "warning",
-              });
-              refetchArticle()
-              setIsOpen(false)
-            } catch (error) {
-              toast.error(error.data.message, {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: true,
-                transition: Slide,
-                type: "error",
-              });
-            } finally {
-              refetch()
-            }
-
-          }}
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={async () => {
+              try {
+                const response = await DeleteArticle(articelId).unwrap();
+                toast.success(response.message, {
+                  position: "bottom-right",
+                  autoClose: 3000,
+                  hideProgressBar: true,
+                  transition: Slide,
+                  type: "warning",
+                });
+                refetchArticle();
+                setIsOpen(false);
+              } catch (error) {
+                toast.error(error.data.message, {
+                  position: "top-center",
+                  autoClose: 3000,
+                  hideProgressBar: true,
+                  transition: Slide,
+                  type: "error",
+                });
+              } finally {
+                refetch();
+              }
+            }}
           >
-         
-          {isLoading ? (
-                  <div className="text-center flex gap-2 justify-center mx-auto">
-                     <Loader color="#00132f" /> <span>Loading...</span>
-                  </div>
-                ) : (
-                  "Confirm"
-                )}
+            {isLoading ? (
+              <div className="text-center flex gap-2 justify-center mx-auto">
+                <Loader color="#00132f" /> <span>Loading...</span>
+              </div>
+            ) : (
+              "Confirm"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>
