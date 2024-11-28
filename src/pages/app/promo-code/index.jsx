@@ -51,10 +51,11 @@ function PromoCode() {
   }, [query, dataPromoCode]);
 
   useEffect(() => {
-    if (isSuccess) {
-      setDataPromoCode(data?.data);
+    if (isSuccess && data?.data) {
+      setDataPromoCode(data.data.filter((promocode) => promocode.active));
     }
   }, [isSuccess, isFetching, filters]);
+
   return (
     <AppLayout>
       <Card x-chunk="dashboard-05-chunk-3">

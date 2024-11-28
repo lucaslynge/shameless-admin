@@ -19,6 +19,7 @@ import {
   useCreatePromoCodeMutation,
   useUpdatePromoCodeMutation,
 } from "@/lib/services/promoCodeApi";
+import { config } from "@/config";
 
 export default function PromoForm({
   refetch,
@@ -242,7 +243,7 @@ export default function PromoForm({
                         type="checkbox"
                         name="promoCodeId"
                         className="rounded  focus:accent-red-500	"
-                        value="prod_Qwc6Edo9LCw2tA"
+                        value={config.stripe.products.monthly}
                       />
                       Monthly
                     </label>
@@ -251,7 +252,7 @@ export default function PromoForm({
                         type="checkbox"
                         name="promoCodeId"
                         className="rounded"
-                        value="prod_Qwc7MGsgVhIIZ4"
+                        value={config.stripe.products.lifetime}
                       />
                       Life Time
                     </label>
