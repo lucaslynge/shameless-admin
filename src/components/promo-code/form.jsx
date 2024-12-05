@@ -145,7 +145,7 @@ export default function PromoForm({
         {({ errors, touched, handleSubmit }) => (
           <Form
             onSubmit={handleSubmit}
-            className="flex flex-col justify-center gap-5 items-center bg-white rounded-xl px-5 py-4 md:px-2 md:py-2 mt-10"
+            className="flex flex-col justify-center gap-5 items-center bg-white rounded-xl px-5 py-4 md:px-2 md:py-2"
           >
             {!isedit && (
               <>

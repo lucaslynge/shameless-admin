@@ -113,7 +113,7 @@ function Articel() {
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableRowSkeleton cell={7} rows={4} />
+                  <TableRowSkeleton cell={5} rows={4} />
                 </TableRow>
               ) : (
                 data?.artical?.map((articel, index) => (

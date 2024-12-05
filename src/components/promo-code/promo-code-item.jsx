@@ -1,101 +1,63 @@
-import dateFormat from "dateformat";
-import GenericTableItem from "../GenericTableItem";
-import { useDeleteContactMutation } from "@/lib/services/contactApi";
 import TexTruncate from "../text-truncate";
-import AddPromoCode from "./add-promo-code";
-import ViewContact from "./view-contact";
-import { useDeletePromoCodeMutation } from "@/lib/services/promoCodeApi";
-import { dateFormated } from "@/lib/utils/helper";
+import { TableCell, TableRow } from "@mui/material";
+import { MdDelete, MdEdit } from "react-icons/md";
+import { Button } from "../ui/button";
+import { useState } from "react";
+import { DeletePromoCodeDialog } from "./delete";
+import { EditPromoCodeDialog } from "./edit";
 
-export default function PromoCodeItem({ promo, refetch }) {
-  const onDelete=useDeletePromoCodeMutation()
-
-
-  const columns = [
-    {
-      value: (item) => (
-        <TexTruncate text={item?.id}/>
-
-      ),
-      className: "hidden md:table-cell",
-
-    },
-    {
-      value: (item) => (
-        <div className=" text-sm text-muted-foreground ">
-          {item.code}
-        </div>
-      ),
-      
-    },
-   
-    {
-      value: (item) => (
-        <div className=" text-sm text-muted-foreground md:inline">
-          {item.coupon.duration}
-        </div>
-      ),
-      className: "hidden",
-
-    },
-    {
-      value: (item) => (
-        <div className=" text-sm text-muted-foreground md:inline">
-          {item.coupon.percent_off}
-        </div>
-      ),
-      className: "hidden sm:table-cell",
-
-    },
-   
-    
-    {
-      value: (item) => (
-        <div className=" text-sm text-muted-foreground md:inline">
-          {item.active ? "Active":"InActive"}
-          { console.log("item.status",item.status)}
-        </div>
-      ),
-      className: "hidden sm:table-cell",
-
-    },
-    {
-        value: (item) => (
-          <div className=" text-sm text-muted-foreground md:inline">
-            {dateFormated(item.expires_at)}
-          </div>
-        ),
-        className: "hidden xl:table-cell",
-
-      },
-      // {
-      //   value: (item) => (
-      //     <div className="hidden text-sm text-muted-foreground md:inline">
-      //       {item.product_id}
-      //     </div>
-      //   ),
-      //   className: "hidden md:table-cell",
-
-      // },
-     
-    {
-      value: (item) => dateFormat(item.coupon.created, "dd-mm-yyyy"),
-      className: "hidden md:table-cell",
-    },
-  ];
+export default function PromoCodeItem({ promo }) {
+  const [showDeletePromocodeDialog, setShowDeletePromocodeDialog] =
+    useState(false);
+  const [showEditPromocodeDialog, setShowEditPromocodeDialog] = useState(false);
 
   return (
-    <GenericTableItem
-      item={promo}
-      refetch={refetch}
-      columns={columns}
-      onDelete={onDelete}
-      EditComponent={AddPromoCode}
-      ViewComponent={ViewContact}
-      entityName="promocode"
-      isshowView={false}
-      isshowDelete={false}
-      
-    />
+    <TableRow className="bg-accent">
+      <TableCell className="hidden sm:table-cell">
+        <div className=" text-sm text-muted-foreground md:inline">
+          {TexTruncate({ text: promo._id })}
+        </div>
+      </TableCell>
+      <TableCell>
+        <div className=" text-sm text-muted-foreground md:inline">
+          {promo.code}
+        </div>
+      </TableCell>
+
+      <TableCell className="hidden sm:table-cell">
+        {promo.coupon.percent_off}
+      </TableCell>
+      <TableCell className="hidden md:table-cell">
+        {`${new Date(promo.expires_at * 1000).toLocaleDateString("en-GB")}`}
+      </TableCell>
+      <TableCell className="md:table-cell ">
+        {/* <Button
+          variant="secondary"
+          size="icon"
+          onClick={() => setShowEditPromocodeDialog(true)}
+        >
+          <MdEdit size={20} />
+        </Button> */}
+
+        <Button
+          variant="destructive"
+          size="icon"
+          onClick={() => setShowDeletePromocodeDialog(true)}
+        >
+          {<MdDelete size={20} />}
+        </Button>
+        <DeletePromoCodeDialog
+          isOpen={showDeletePromocodeDialog}
+          onOpenChange={setShowDeletePromocodeDialog}
+          promoCode={promo}
+        />
+        <EditPromoCodeDialog
+          isOpen={showEditPromocodeDialog}
+          onOpenChange={setShowEditPromocodeDialog}
+          promoCode={promo}
+          setIsOpen={setShowEditPromocodeDialog}
+        />
+      </TableCell>
+    </TableRow>
   );
 }

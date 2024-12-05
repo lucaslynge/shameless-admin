@@ -1,4 +1,3 @@
-import CustomerItem from "@/components/user/customer-item";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,50 +10,51 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import AppLayout from "@/layouts/AppLayout";
 import { useState, useEffect } from "react";
-import Mypaginations from "@/components/my-paginations";
 import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";
 import TableRowSkeleton from "@/components/TableRowSkeleton";
 import PromoCodeItem from "@/components/promo-code/promo-code-item";
 import AddPromoCode from "@/components/promo-code/add-promo-code";
 import { useGetAllPromoCodeQuery } from "@/lib/services/promoCodeApi";
+import { useSelector } from "react-redux";
 
 function PromoCode() {
+  const { promoCodes } = useSelector((store) => store.promoCodes);
   const [isOpen, setIsOpen] = useState(false);
-  const [search, onSearch] = useState();
+  const [_, onSearch] = useState();
   const [query, setQuery] = useState();
-  const [dataPromoCode, setDataPromoCode] = useState([]);
   const [filters, setFilters] = useState({
     page: 1,
   });
-  const { data, isLoading, refetch, isSuccess, isFetching } =
-    useGetAllPromoCodeQuery(filters);
+  const { isLoading, refetch } = useGetAllPromoCodeQuery(filters);
   const [filteredPromoCodes, setFilteredPromoCodes] = useState([]);
+
+  const renderPromoCodes = () => {
+    const mappedPromoCodes = filteredPromoCodes?.map((item) => {
+      const updateitem = { ...item, _id: item.id };
+
+      return <PromoCodeItem key={updateitem._id} promo={updateitem} />;
+    });
+
+    return mappedPromoCodes;
+  };
 
   useEffect(() => {
     if (query) {
-      const filtered = dataPromoCode.filter((promo) =>
+      const filtered = promoCodes.filter((promo) =>
         promo.code.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredPromoCodes(filtered);
     } else {
-      setFilteredPromoCodes(dataPromoCode);
+      setFilteredPromoCodes(promoCodes);
     }
-  }, [query, dataPromoCode]);
-
-  useEffect(() => {
-    if (isSuccess && data?.data) {
-      setDataPromoCode(data.data.filter((promocode) => promocode.active));
-    }
-  }, [isSuccess, isFetching, filters]);
+  }, [query, promoCodes]);
 
   return (
     <AppLayout>
@@ -110,35 +110,22 @@ function PromoCode() {
               <TableRow>
                 <TableHead className="hidden md:table-cell">ID</TableHead>
                 <TableHead>Promo Code </TableHead>
-                {/* <TableHead className="hidden sm:table-cell">Duration</TableHead> */}
-                <TableHead className="hidden sm:table-cell">Amount</TableHead>
-                <TableHead className="hidden sm:table-cell">Status</TableHead>
-
+                <TableHead className="hidden sm:table-cell">
+                  Percent Off
+                </TableHead>
                 <TableHead className="hidden xl:table-cell">
                   Expire Date
                 </TableHead>
-                <TableHead className="hidden md:table-cell">Date</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan="8" className="w-full">
-                    <TableRowSkeleton cell={6} rows={4} />
-                  </TableCell>
+                  <TableRowSkeleton cell={6} rows={4} />
                 </TableRow>
               ) : (
-                filteredPromoCodes?.map((item, index) => {
-                  const updateitem = { ...item, _id: item.id };
-                  return (
-                    <PromoCodeItem
-                      refetch={refetch}
-                      key={index}
-                      promo={updateitem}
-                    />
-                  );
-                })
+                renderPromoCodes()
               )}
             </TableBody>
           </Table>

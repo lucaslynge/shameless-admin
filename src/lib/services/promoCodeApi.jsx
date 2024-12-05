@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getToken } from "../utils/helper";
 import { BASE_URL } from "../utils/contant";
+import { setPromoCodes } from "../features/promoCodesSlice";
 export const promoCodeApi = createApi({
   reducerPath: "promoCodeApi",
   baseQuery: fetchBaseQuery({
@@ -14,7 +15,6 @@ export const promoCodeApi = createApi({
     },
   }),
 
-  refetchOnFocus: true,
   endpoints: (build) => ({
     GetAllPromoCode: build.query({
       query: (filter) => {
@@ -22,6 +22,17 @@ export const promoCodeApi = createApi({
         return { url: `/promoCode/allPromoCode?limit=10&${params}` };
       },
       transformResponse: (response) => response.data,
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          const activePromocodes = data.data.filter(
+            (promoCode) => promoCode.active
+          );
+          dispatch(setPromoCodes(activePromocodes));
+        } catch (error) {
+          console.error("Failed to fetch promo codes:", error);
+        }
+      },
     }),
     CreatePromoCode: build.mutation({
       query: (credentials) => ({
@@ -64,6 +75,7 @@ export const promoCodeApi = createApi({
 export const {
   useCreatePromoCodeMutation,
   useGetAllPromoCodeQuery,
+  useLazyGetAllPromoCodeQuery,
   useUpdatePromoCodeMutation,
   useDeletePromoCodeMutation,
 } = promoCodeApi;

@@ -1,7 +1,7 @@
 import { ReduxProvider } from "@/lib/redux/redux-provider";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
-import { ToastContainer } from "react-toastify";
+import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PagesProgressBar as ProgressBar } from "next-nprogress-bar";
 import { AuthProvider } from "@/context/AuthContext";
@@ -26,7 +26,12 @@ export default function App({
           options={{ showSpinner: false }}
           shallowRouting
         />
-        <ToastContainer />
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar
+          transition={Slide}
+        />
       </ReduxProvider>
     </main>
   );
