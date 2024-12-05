@@ -3,7 +3,7 @@ import { Field, useFormikContext } from "formik";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar } from "./ui/calendar";
 
-const DatePickerPopover = ({ initialDate = null,name="publishDate" }) => {
+const DatePickerPopover = ({ initialDate = null, name = "publishDate" }) => {
   const { setFieldValue, values } = useFormikContext(); // Access Formik's context to set field value
   const [date, setDate] = useState(initialDate ? new Date(initialDate) : null); // Local state for selected date
 
@@ -15,7 +15,7 @@ const DatePickerPopover = ({ initialDate = null,name="publishDate" }) => {
         setDate(parsedDate);
       }
     }
-  }, [values.publishDate,initialDate]);
+  }, [values.publishDate, initialDate]);
 
   return (
     <Field name={name}>
@@ -24,9 +24,11 @@ const DatePickerPopover = ({ initialDate = null,name="publishDate" }) => {
           <PopoverTrigger className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141]  px-4 py-3 cursor-pointer">
             {date ? (
               // Render date as a readable string, otherwise use field value
-              date instanceof Date && !isNaN(date)
-                ? date.toLocaleDateString()
-                : field.value // Ensure field value is a string, not a Date object
+              date instanceof Date && !isNaN(date) ? (
+                date.toLocaleDateString()
+              ) : (
+                field.value
+              ) // Ensure field value is a string, not a Date object
             ) : (
               <span>Pick a date</span>
             )}

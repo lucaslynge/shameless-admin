@@ -23,11 +23,8 @@ export const tokenApi = createApi({
         body: {},
       }),
       transformResponse: (response) => response,
-
     }),
   }),
 });
 
-export const {
-  useValidateMutation
-} = tokenApi;
+export const { useValidateMutation } = tokenApi;

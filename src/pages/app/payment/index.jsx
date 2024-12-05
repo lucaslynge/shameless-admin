@@ -35,100 +35,103 @@ import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";
 import TableRowSkeleton from "@/components/TableRowSkeleton";
 
- function Payment() {
+function Payment() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, onSearch] = useState();
   const [query, setQuery] = useState();
   const [filters, setFilters] = useState({
     page: currentPage,
-    
   });
-  const { data, isLoading,refetch } = useGetAllPaymentQuery(filters);
+  const { data, isLoading, refetch } = useGetAllPaymentQuery(filters);
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
     setFilters({
       ...filters,
-      page:newPage
-
-    })
+      page: newPage,
+    });
   };
   return (
     <AppLayout>
       <Card x-chunk="dashboard-05-chunk-3">
         <CardHeader className="px-7">
-        <div className="grid lg:grid-cols-2 gap-2 col-span-1">
+          <div className="grid lg:grid-cols-2 gap-2 col-span-1">
             <div className="flex  lg:justify-normal justify-between gap-x-4">
-        
-            <div className="flex flex-col gap-2">
-              <CardTitle>Payment</CardTitle>
-              <CardDescription>Recent Payment from your shamelessPath.</CardDescription>
+              <div className="flex flex-col gap-2">
+                <CardTitle>Payment</CardTitle>
+                <CardDescription>
+                  Recent Payment from your shamelessPath.
+                </CardDescription>
+              </div>
             </div>
-          
-          </div>
-          <SearchBox
-            onSearch={onSearch}
-            query={query}
-            placeholder="Search by email"
-            searchArray={["item 1", "item 2", "item 3"]}
-            setQuery={(searchQuery) => {
-              setQuery(searchQuery);
-              setFilters({
-                email: searchQuery,
-              });
-              if (searchQuery === "") {
+            <SearchBox
+              onSearch={onSearch}
+              query={query}
+              placeholder="Search by email"
+              searchArray={["item 1", "item 2", "item 3"]}
+              setQuery={(searchQuery) => {
+                setQuery(searchQuery);
                 setFilters({
-                  page: currentPage,
+                  email: searchQuery,
                 });
-              }
-            }}/>
-            </div>
+                if (searchQuery === "") {
+                  setFilters({
+                    page: currentPage,
+                  });
+                }
+              }}
+            />
+          </div>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-               <TableHead className="hidden xl:table-cell">ID</TableHead>
-               <TableHead className="hidden xl:table-cell">Transaction ID</TableHead>   
-               <TableHead className="hidden xl:table-cell">Customer ID</TableHead>      
-               <TableHead>Email</TableHead>      
+                <TableHead className="hidden xl:table-cell">ID</TableHead>
+                <TableHead className="hidden xl:table-cell">
+                  Transaction ID
+                </TableHead>
+                <TableHead className="hidden xl:table-cell">
+                  Customer ID
+                </TableHead>
+                <TableHead>Email</TableHead>
                 <TableHead>Amount</TableHead>
-                <TableHead className="hidden sm:table-cell">Subscription</TableHead>
+                <TableHead className="hidden sm:table-cell">
+                  Subscription
+                </TableHead>
                 <TableHead className="hidden lg:table-cell">Status</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
-                <TableHead >Actions</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan="9" className="w-full">
-                    {/* <div className="flex justify-center mx-auto w-full text-center">
-                      <Loader />
-                    </div> */}
-                    <TableRowSkeleton cell={7} rows={4}/>
-
-                  </TableCell>
+                  <TableRowSkeleton cell={7} rows={4} />
                 </TableRow>
               ) : (
-                 data?.payment?.map((payment, index) => (
-                  <PaymentItem refetch={refetch} key={index} payment={payment} />
+                data?.payment?.map((payment, index) => (
+                  <PaymentItem
+                    refetch={refetch}
+                    key={index}
+                    payment={payment}
+                  />
                 ))
               )}
             </TableBody>
           </Table>
           <div className="flex mt-5 justify-center">
-                    <Mypaginations
-                      count={data?.pageCount}
-                      page={currentPage}
-                      onChange={onPageChange}
-                    />
-                  </div>
+            <Mypaginations
+              count={data?.pageCount}
+              page={currentPage}
+              onChange={onPageChange}
+            />
+          </div>
         </CardContent>
       </Card>
     </AppLayout>
   );
 }
 
-export default withAuth(Payment)
+export default withAuth(Payment);

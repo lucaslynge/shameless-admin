@@ -6,8 +6,8 @@ import { userApi } from "../services/userApi";
 import { articleApi } from "../services/articleApi";
 import { paymentApi } from "../services/paymentApi";
 import { communityApi } from "../services/communityApi";
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage';
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import { contactApi } from "../services/contactApi";
 import { reviewApi } from "../services/reviewApi";
 import { categoryApi } from "../services/categoryApi";
@@ -15,13 +15,12 @@ import { promoCodeApi } from "../services/promoCodeApi";
 import { tokenApi } from "../services/tokenApi";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['auth'] // only navigation will be persisted
+  whitelist: ["auth"], // only navigation will be persisted
+};
 
-}
-
-const persistedReducer=persistReducer(persistConfig,rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const makeStore = () =>
   configureStore({
@@ -36,11 +35,10 @@ const makeStore = () =>
         .concat(reviewApi.middleware)
         .concat(categoryApi.middleware)
         .concat(promoCodeApi.middleware)
-        .concat(tokenApi.middleware)
-
+        .concat(tokenApi.middleware),
   });
 
 const store = makeStore();
 setupListeners(store.dispatch);
-const persist=persistStore(store)
-export {store,persist}
+const persist = persistStore(store);
+export { store, persist };

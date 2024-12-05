@@ -1,4 +1,4 @@
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import PromoForm from "./form";
 
 export default function AddPromoCode({
@@ -11,6 +11,7 @@ export default function AddPromoCode({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
+        <DialogTitle>Add promo code</DialogTitle>
         <PromoForm
           setIsOpen={setIsOpen}
           isedit={isedit}

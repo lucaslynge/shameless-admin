@@ -102,9 +102,7 @@ function User() {
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan="5" className="w-full">
-                    <TableRowSkeleton cell={7} />
-                  </TableCell>
+                  <TableRowSkeleton cell={7} />
                 </TableRow>
               ) : (
                 data?.userData?.map((user, index) => (

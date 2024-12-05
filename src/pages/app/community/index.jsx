@@ -39,7 +39,7 @@ import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";
 import TableRowSkeleton from "@/components/TableRowSkeleton";
 
- function Community() {
+function Community() {
   const [isOpen, setIsOpen] = useState(false);
   const [search, onSearch] = useState();
   const [query, setQuery] = useState();
@@ -53,17 +53,15 @@ import TableRowSkeleton from "@/components/TableRowSkeleton";
     setCurrentPage(newPage);
     setFilters({
       ...filters,
-      page:newPage
-
-    })
+      page: newPage,
+    });
   };
   return (
-      <AppLayout>
-        <Card x-chunk="dashboard-05-chunk-3">
-          <CardHeader className="px-7">
+    <AppLayout>
+      <Card x-chunk="dashboard-05-chunk-3">
+        <CardHeader className="px-7">
           <div className="grid lg:grid-cols-2 gap-2 col-span-1">
             <div className="flex  lg:justify-normal justify-between gap-x-4">
-        
               <div className="flex flex-col gap-2">
                 <CardTitle>Community</CardTitle>
                 <CardDescription>
@@ -82,71 +80,66 @@ import TableRowSkeleton from "@/components/TableRowSkeleton";
               </div>
             </div>
             <SearchBox
-            onSearch={onSearch}
-            query={query}
-            placeholder="Search by email"
-            searchArray={["item 1", "item 2", "item 3"]}
-            setQuery={(searchQuery) => {
-              setQuery(searchQuery);
-              setFilters({
-                email: searchQuery,
-              });
-              if (searchQuery === "") {
+              onSearch={onSearch}
+              query={query}
+              placeholder="Search by email"
+              searchArray={["item 1", "item 2", "item 3"]}
+              setQuery={(searchQuery) => {
+                setQuery(searchQuery);
                 setFilters({
-                  page: currentPage,
+                  email: searchQuery,
                 });
-              }
-            }}/>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
+                if (searchQuery === "") {
+                  setFilters({
+                    page: currentPage,
+                  });
+                }
+              }}
+            />
+          </div>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="hidden xl:table-cell">ID</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead className="hidden sm:table-cell">
+                  Subscription
+                </TableHead>
+                <TableHead className="hidden md:table-cell">IsPaid</TableHead>
+                <TableHead className="hidden sm:table-cell">Status</TableHead>
+                <TableHead className="hidden xl:table-cell">Date</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading ? (
                 <TableRow>
-                  <TableHead className="hidden xl:table-cell">ID</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead className="hidden sm:table-cell">Subscription</TableHead>
-                  <TableHead className="hidden md:table-cell">IsPaid</TableHead>
-                  <TableHead className="hidden sm:table-cell">Status</TableHead>
-                  <TableHead className="hidden xl:table-cell">Date</TableHead>
-                  <TableHead >
-                    Actions
-                  </TableHead>
+                  <TableRowSkeleton cell={7} rows={4} />
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {isLoading ? (
-                  <TableRow>
-                    <TableCell colSpan="7" className="w-full">
-                      {/* <div className="flex justify-center mx-auto w-full text-center">
-                        <Loader />
-                      </div> */}
-                    <TableRowSkeleton cell={7} rows={4}/>
-
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  data.community?.map((community, index) => (
-                    <CummunityItem
-                      refetch={refetch}
-                      key={index}
-                      community={community}
-                    />
-                  ))
-                )}
-              </TableBody>
-            </Table>
-            <div className="flex mt-5 justify-center">
-              <Mypaginations
-                count={data?.pageCount}
-                page={currentPage}
-                onChange={onPageChange}
-              />
-            </div>
-          </CardContent>
-        </Card>
-      </AppLayout>
+              ) : (
+                data.community?.map((community, index) => (
+                  <CummunityItem
+                    refetch={refetch}
+                    key={index}
+                    community={community}
+                  />
+                ))
+              )}
+            </TableBody>
+          </Table>
+          <div className="flex mt-5 justify-center">
+            <Mypaginations
+              count={data?.pageCount}
+              page={currentPage}
+              onChange={onPageChange}
+            />
+          </div>
+        </CardContent>
+      </Card>
+    </AppLayout>
   );
 }
 
-export default withAuth(Community)
+export default withAuth(Community);
