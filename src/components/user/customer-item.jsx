@@ -22,11 +22,11 @@ export default function CustomerItem({ customer, refetch }) {
       </TableCell>
       <TableCell>
         <div className=" text-sm text-muted-foreground md:inline">
-          {customer.email}
+          {customer?.email}
         </div>
       </TableCell>
 
-      <TableCell className="hidden sm:table-cell">{customer.role}</TableCell>
+      <TableCell className="hidden sm:table-cell">{customer?.role}</TableCell>
       <TableCell className="hidden md:table-cell">
         {dateFormat(customer?.createdAt, "dd-mm-yyyy")}
       </TableCell>
@@ -45,7 +45,7 @@ export default function CustomerItem({ customer, refetch }) {
           setIsOpen={setIsOpenEdit}
         />
 
-        {user.email !== customer.email && (
+        {user?.email !== customer.email && (
           <Button
             variant={"destructive"}
             size={"icon"}
