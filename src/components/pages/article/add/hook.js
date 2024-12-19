@@ -5,7 +5,7 @@ import {
 } from "@/lib/services/articleApi";
 import { yup } from "@/lib/utils/yup";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import slugify from "slugify";
 import placeholderImg from "@/public/assest/placeholder_img.png";
 import { tryCatchWrapper } from "@/lib/utils/tryCatchWrapper";
@@ -68,6 +68,7 @@ export const useAddArticle = () => {
     slug: isEditing === "true" ? data?.slug : "",
     featuring_text: isEditing === "true" ? data?.featuring_text : "",
     front_page: isEditing === "true" ? data?.front_page : false,
+    tags: isEditing === "true" ? data?.tags : [],
     question_answers:
       isEditing && data?.question_answers
         ? data?.question_answers
@@ -132,6 +133,7 @@ export const useAddArticle = () => {
     formdata.append("category", data.category);
     formdata.append("featuring_text", data.featuring_text);
     formdata.append("front_page", data.front_page);
+    formdata.append("tags", JSON.stringify(data.tags));
     formdata.append(
       "question_answers",
       JSON.stringify(values.question_answers)

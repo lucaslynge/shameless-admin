@@ -22,6 +22,8 @@ import DatePickerPopover from "@/components/Date-single-picker-input";
 import { VectorImage } from "@/components/vectors/image";
 import AdditionalDetails from "@/components/ShareStory/Additional-details";
 import { useAddArticle } from "./hook";
+import { ReactTags } from "react-tag-autocomplete";
+import { defaultTags, tagsData } from "./data";
 
 export const AddArticleMain = () => {
   const {
@@ -40,8 +42,14 @@ export const AddArticleMain = () => {
 
   const ageOptions = Array.from({ length: 48 }, (_, i) => (i + 18).toString());
 
+  const getSuggestions = (stiStatus) => {
+    if (!stiStatus || stiStatus === "None") return defaultTags;
+
+    return tagsData[stiStatus];
+  };
+
   return (
-    <div className="md:w-[75%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%] mx-auto bg-white rounded-md md:px-7 mb-5">
+    <div className="md:w-[75%] with-react-tags lg:w-[60%] xl:w-[50%] 2xl:w-[40%] mx-auto bg-white rounded-md md:px-7 mb-5">
       <div>
         <p className="text-2xl font-bold">Share Your Story</p>
         <Formik
@@ -59,6 +67,7 @@ export const AddArticleMain = () => {
             isSubmitting,
             handleBlur,
             isValid,
+            setFieldValue,
           }) => (
             <Form className="pt-8" onSubmit={handleSubmit} id="share_story">
               <div>
@@ -79,10 +88,6 @@ export const AddArticleMain = () => {
                     {errors.headline}
                   </div>
                 )}
-
-                {/* <p className="text-end text-xs font-semibold text-[#414141] mt-1">
-                  {values.headline?.length}/{15}
-                </p> */}
               </div>
 
               <div className="mt-5">
@@ -287,10 +292,10 @@ export const AddArticleMain = () => {
                               </SelectItem>
                               <SelectItem value={"HIV"}>HIV</SelectItem>
                               <SelectItem value={"HPV"}>HPV</SelectItem>
+                              <SelectItem value={"HTLV"}>HTLV</SelectItem>
+                              <SelectItem value={"CMV"}>CMV</SelectItem>
+                              <SelectItem value={"EBV"}>EBV</SelectItem>
                               <SelectItem value={"Hepatitis B & C"}>
-                                Hepatitis B & C
-                              </SelectItem>
-                              <SelectItem value={"Hepatitis B & C(CMV)"}>
                                 Hepatitis B & C
                               </SelectItem>
                               <SelectItem value={"Molluscum"}>
@@ -305,6 +310,32 @@ export const AddArticleMain = () => {
                   </div>
                 </div>
               )}
+
+              <div className="mt-5">
+                <label htmlFor="tags" className="text-sm font-semibold">
+                  Tags
+                  <span className="ml-1 text-xs font-normal">
+                    (limited to 3)
+                  </span>
+                </label>
+                <ReactTags
+                  labelText="Add tags"
+                  selected={values.tags}
+                  suggestions={getSuggestions(values.STI_status)}
+                  onAdd={(tag) => {
+                    if (values.tags.length >= 3) return;
+
+                    setFieldValue("tags", values.tags.concat(tag));
+                  }}
+                  onDelete={(tagIndex) => {
+                    setFieldValue(
+                      "tags",
+                      values.tags.filter((tag, index) => index !== tagIndex)
+                    );
+                  }}
+                  noOptionsText="No matching tag"
+                />
+              </div>
 
               <div className="flex flex-col md:flex-row justify-between gap-4 mt-3">
                 <div className="w-full">
@@ -412,6 +443,7 @@ export const AddArticleMain = () => {
                   </div>
                 )}
               </div>
+
               <div className="mt-5">
                 <p className="text-sm font-semibold">
                   Upload picture (optional) Size(500 x 300)
