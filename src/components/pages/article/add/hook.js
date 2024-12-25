@@ -58,7 +58,7 @@ export const useAddArticle = () => {
     type: isEditing === "true" ? data?.type : "",
     age: isEditing === "true" ? data?.age?.toString() : 18,
     gender: isEditing === "true" ? data?.gender : "Male",
-    user_id: isEditing === "true" ? data?.user_id : "",
+    user_id: isEditing === "true" ? data?.user_id?._id : "",
     STI_status: isEditing === "true" ? data?.STI_status : "",
     image: isEditing === "true" ? data?.image : "",
     readTime: isEditing === "true" ? data?.readTime : "",
