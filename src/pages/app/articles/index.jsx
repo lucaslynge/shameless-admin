@@ -39,6 +39,7 @@ function Articel() {
   const [query, setQuery] = useState();
   const [filters, setFilters] = useState({
     page: currentPage,
+    sortBy: "most_recent",
   });
   const { data, isLoading, refetch } = useGetAllArticleQuery(filters);
 

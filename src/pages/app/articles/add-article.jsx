@@ -1,12 +1,12 @@
-import ShareMain from "@/components/ShareStory/ShareMain";
+import { AddArticleMain } from "@/components/pages/article/add";
 import withAuth from "@/hoc/withAuth";
 import AppLayout from "@/layouts/AppLayout";
 
- function AddArticle() {
+function AddArticle() {
   return (
     <AppLayout>
-      <ShareMain/>
+      <AddArticleMain />
     </AppLayout>
-  )
+  );
 }
-export default withAuth(AddArticle)
+export default withAuth(AddArticle);
