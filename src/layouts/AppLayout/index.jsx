@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FolderIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { UsersIcon } from "@heroicons/react/24/outline";
 import {
   MdCategory,
   MdCode,
@@ -7,6 +7,7 @@ import {
   MdEditDocument,
   MdReviews,
 } from "react-icons/md";
+import { FaCommentDots } from "react-icons/fa";
 
 import MobileSidebar from "@/components/Mobile/Sidebar";
 import DesktopSidebar from "@/components/Desktop/Sidebar";
@@ -20,6 +21,7 @@ let sidebarNavigation = [
   { name: "Articles", href: "articles", icon: MdEditDocument, current: false },
   { name: "Categories", href: "category", icon: MdCategory, current: false },
   { name: "Reviews", href: "review", icon: MdReviews, current: false },
+  { name: "Comments", href: "comments", icon: FaCommentDots, current: false },
   { name: "Community", href: "community", icon: CgCommunity, current: false },
   { name: "Payments", href: "payment", icon: MdOutlinePayment, current: false },
   {

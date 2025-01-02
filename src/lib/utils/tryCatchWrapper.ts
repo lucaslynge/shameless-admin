@@ -3,7 +3,10 @@ type Options = {
   finally: VoidFunction;
 };
 
-export const tryCatchWrapper = (call: VoidFunction, options: Options) => {
+export const tryCatchWrapper = (
+  call: VoidFunction,
+  options = {} as Options
+) => {
   try {
     call();
   } catch (error) {
