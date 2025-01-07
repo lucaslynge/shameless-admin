@@ -10,7 +10,7 @@ import withAuth from "@/hoc/withAuth";
 import { useGetAllCommentsQuery } from "@/lib/services/commentsApi";
 import { useSelector } from "react-redux";
 import { selectComments } from "@/lib/features/commentsSlice";
-import { Comment } from "./comment";
+import { Comment } from "../../../components/pages/comments/comment";
 import { useState } from "react";
 
 function Comments() {
