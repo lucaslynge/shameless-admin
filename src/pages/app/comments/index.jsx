@@ -11,12 +11,15 @@ import { useGetAllCommentsQuery } from "@/lib/services/commentsApi";
 import { useSelector } from "react-redux";
 import { selectComments } from "@/lib/features/commentsSlice";
 import { Comment } from "./comment";
+import { useState } from "react";
 
 function Comments() {
   useGetAllCommentsQuery();
-
   const comments = useSelector(selectComments);
-  
+  const [activeComments, setActiveComments] = useState("pending");
+
+  const handleSetActiveComments = (tab) => () => setActiveComments(tab);
+
   const renderComments = () => {
     const combinedComments = comments
       .reduce((accu, curr) => accu.concat(curr.comments), [])
@@ -40,6 +43,10 @@ function Comments() {
           </div>
         </CardHeader>
         <CardContent>
+          {/* <div classNam="flex items-center">
+            <button className={``} onClick={handleSetActiveComments("pending")}>Pending</button>
+            <button>Approved</button>
+          </div> */}
           <ul>{renderComments()}</ul>
         </CardContent>
       </Card>
