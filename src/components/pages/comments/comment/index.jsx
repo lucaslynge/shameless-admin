@@ -7,8 +7,8 @@ import { useState } from "react";
 import { useDeleteCommentMutation } from "@/lib/services/commentsApi";
 import { deleteComment } from "@/lib/features/commentsSlice";
 import { useDispatch } from "react-redux";
-import { ApproveCommentModal } from "./approve";
-import { EditCommentModal } from "./edit";
+import { ApproveCommentModal } from "../approve";
+import { EditCommentModal } from "../edit";
 
 export const Comment = ({ comment }) => {
   const [isOpenDelete, setIsOpenDelete] = useState(false);
