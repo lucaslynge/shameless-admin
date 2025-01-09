@@ -13,7 +13,7 @@ import { generateSlug } from "@/lib/utils/helper";
 import { toast } from "react-toastify";
 
 const validationSchema = yup.object().shape({
-  category: yup.string().required("Catgory is required"),
+  category: yup.string().required("Category is required"),
   headline: yup.string().required("headline is required"),
   slug: yup
     .string()
@@ -26,6 +26,7 @@ const validationSchema = yup.object().shape({
   status: yup.string().required("status is required"),
   readTime: yup.string().required("readTime is required"),
   publishDate: yup.string().required("publishdate is required"),
+  writtenBy: yup.string().optional(),
 });
 
 export const useAddArticle = () => {
@@ -38,6 +39,9 @@ export const useAddArticle = () => {
   const [UpdateArticle, { isLoading: isLoadingUpdate }] =
     useUpdateArticleMutation();
   const [filepath, setfilepath] = useState("");
+  const [verifiedByFile, setVerifiedByFile] = useState(null);
+  const [verifiedByFilePath, setVerifiedByFilePath] = useState("");
+
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
     const reader = new FileReader();
@@ -49,6 +53,20 @@ export const useAddArticle = () => {
     reader.readAsDataURL(file);
     reader.onload = function () {
       setfilepath(reader?.result);
+    };
+  };
+
+  const handleAddVerifiedByImage = (event) => {
+    const file = event.target.files?.[0];
+    const reader = new FileReader();
+
+    if (!file) return;
+
+    setVerifiedByFile(file);
+
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      setVerifiedByFilePath(reader?.result);
     };
   };
 
@@ -68,6 +86,11 @@ export const useAddArticle = () => {
     slug: isEditing === "true" ? data?.slug : "",
     featuring_text: isEditing === "true" ? data?.featuring_text : "",
     front_page: isEditing === "true" ? data?.front_page : false,
+    verifiedBy:
+      isEditing === "true" && data?.verifiedBy?.name !== "undefined"
+        ? data?.verifiedBy?.name
+        : "",
+    writtenBy: isEditing === "true" ? data?.writtenBy : "",
     tags: isEditing === "true" ? data?.tags : [],
     question_answers:
       isEditing && data?.question_answers
@@ -117,6 +140,7 @@ export const useAddArticle = () => {
     let data = {
       ...values,
       image: file,
+      verifiedByImage: verifiedByFile,
     };
     const formdata = new FormData();
 
@@ -138,6 +162,9 @@ export const useAddArticle = () => {
       "question_answers",
       JSON.stringify(values.question_answers)
     );
+    formdata.append("writtenBy", data.writtenBy);
+    formdata.append("verifiedByImage", data.verifiedByImage);
+    formdata.append("verifiedBy", data.verifiedBy);
 
     const slugfiy = generateSlug(data.slug);
     formdata.append("slug", slugfiy);
@@ -216,6 +243,9 @@ export const useAddArticle = () => {
   useEffect(() => {
     if (isEditing === "true") {
       setfilepath(data?.image ? data?.image : placeholderImg);
+      setVerifiedByFilePath(
+        data?.verifiedBy?.image ? data?.verifiedBy?.image : placeholderImg
+      );
     }
   }, [data]);
 
@@ -236,5 +266,7 @@ export const useAddArticle = () => {
     data,
     filepath,
     isEditing,
+    handleAddVerifiedByImage,
+    verifiedByFilePath,
   };
 };
