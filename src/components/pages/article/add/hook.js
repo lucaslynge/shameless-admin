@@ -213,6 +213,8 @@ export const useAddArticle = () => {
           getSlugArticle(slug);
           resetForm();
           toast.success(response.message);
+          setFile("");
+          setfilepath("");
           router.push("/app/articles");
         }
       },
@@ -224,9 +226,6 @@ export const useAddArticle = () => {
         },
         finally: () => {
           setSubmitting(false);
-          setFile("");
-          resetForm();
-          setfilepath("");
         },
       }
     );
