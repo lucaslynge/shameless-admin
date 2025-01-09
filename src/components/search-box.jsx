@@ -13,13 +13,11 @@ export default function SearchBox({
   const [selectedItemIndex, setSelectedItemIndex] = useState(-1);
   const [selectedSuggestion, setSelectedSuggestion] = useState(null);
   const inputRef = useRef(null);
-  
+
   const refineQuery = query?.trim();
   const limitedSuggestions =
     suggestions?.length > 10 ? suggestions.slice(0, 10) : suggestions;
 
-
-    
   const handleInputChange = (e) => {
     const inputText = e.target.value;
     setQuery(inputText);
@@ -56,7 +54,9 @@ export default function SearchBox({
       if (!query) {
         return;
       }
-      selectedSuggestion ? handleSearchUsingSuggestion(selectedSuggestion) : onSearch();
+      selectedSuggestion
+        ? handleSearchUsingSuggestion(selectedSuggestion)
+        : onSearch();
       handleBlur();
     } else if (e.key === "ArrowUp" && query) {
       e.preventDefault();
@@ -82,7 +82,6 @@ export default function SearchBox({
     const regex = new RegExp(`(${query})`, "gi");
     return text.replace(regex, '<span class="font-semibold">$1</span>');
   };
-  
 
   return (
     <div
@@ -137,7 +136,6 @@ export default function SearchBox({
           </ul>
         </div>
       )}
-      
     </div>
   );
 }

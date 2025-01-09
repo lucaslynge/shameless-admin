@@ -10,7 +10,6 @@ import {
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -26,13 +25,14 @@ import SearchBox from "@/components/search-box";
 import TableRowSkeleton from "@/components/TableRowSkeleton";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentArticlePage } from "@/lib/features/authSlice";
+import { useDebounce } from "@uidotdev/usehooks";
 
 function Articel() {
   const router = useRouter();
   const currentPageStored = useSelector(
     (state) => state?.auth?.articles_current_page
   );
-  const [currentPage, setCurrentPage] = useState(currentPageStored);
+  const [currentPage, setCurrentPage] = useState(currentPageStored ?? 1);
   const [_, onSearch] = useState();
   const dispatch = useDispatch();
 
@@ -41,7 +41,8 @@ function Articel() {
     page: currentPage,
     sortBy: "most_recent",
   });
-  const { data, isLoading, refetch } = useGetAllArticleQuery(filters);
+  const debouncedFilters = useDebounce(filters, 300);
+  const { data, isLoading, refetch } = useGetAllArticleQuery(debouncedFilters);
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -83,14 +84,16 @@ function Articel() {
               searchArray={["item 1", "item 2", "item 3"]}
               setQuery={(searchQuery) => {
                 setQuery(searchQuery);
-                setFilters({
-                  headline: searchQuery,
-                });
+                const newFilters = {
+                  headline: searchQuery ?? "",
+                };
                 if (searchQuery === "") {
-                  setFilters({
-                    page: currentPage,
-                  });
+                  newFilters.page = currentPage;
                 }
+                setFilters((prev) => ({
+                  ...prev,
+                  ...newFilters,
+                }));
               }}
             />
           </div>
