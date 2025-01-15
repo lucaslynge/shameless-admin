@@ -86,45 +86,13 @@ export const useAddArticle = () => {
     slug: isEditing === "true" ? data?.slug : "",
     featuring_text: isEditing === "true" ? data?.featuring_text : "",
     front_page: isEditing === "true" ? data?.front_page : false,
-    verifiedBy:
-      isEditing === "true" && data?.verifiedBy?.name !== "undefined"
-        ? data?.verifiedBy?.name
-        : "",
+
     writtenBy: isEditing === "true" ? data?.writtenBy : "",
     tags: isEditing === "true" ? data?.tags : [],
     question_answers:
       isEditing && data?.question_answers
         ? data?.question_answers
-        : [
-            {
-              question: "How has your STI diagnosis impacted your daily life?",
-              answer: "",
-            },
-            {
-              question: "What have been the biggest challenges you've faced?",
-              answer: "",
-            },
-            {
-              question:
-                "How do you manage your STI, both physically and emotionally?",
-              answer: "",
-            },
-            {
-              question:
-                "What advice would you give to someone newly diagnosed?",
-              answer: "",
-            },
-            {
-              question:
-                "What misconceptions about STIs would you like to correct?",
-              answer: "",
-            },
-            {
-              question:
-                "What are your goals moving forward in managing your STI?",
-              answer: "",
-            },
-          ],
+        : defaultQandA,
     details:
       isEditing && data?.details
         ? data?.details.map((detail) => {
@@ -134,6 +102,15 @@ export const useAddArticle = () => {
             };
           })
         : [],
+    verifiedBy:
+      isEditing === "true" && data?.verifiedBy?.name !== "undefined"
+        ? data?.verifiedBy?.name
+        : "",
+    isVerified: isEditing === "true" ? data?.isVerified : false,
+    verificationSources:
+      isEditing === "true" && data?.verificationSources?.length
+        ? data?.verificationSources
+        : [{ label: "", url: "" }],
   });
 
   const handleFormSubmit = async (values, { resetForm, setSubmitting }) => {
@@ -165,6 +142,13 @@ export const useAddArticle = () => {
     formdata.append("writtenBy", data.writtenBy);
     formdata.append("verifiedByImage", data.verifiedByImage);
     formdata.append("verifiedBy", data.verifiedBy);
+    formdata.append("isVerified", data.isVerified);
+    formdata.append(
+      "verificationSources",
+      data?.verificationSources?.length
+        ? JSON.stringify(data.verificationSources)
+        : "[]"
+    );
 
     const slugfiy = generateSlug(data.slug);
     formdata.append("slug", slugfiy);
@@ -269,3 +253,30 @@ export const useAddArticle = () => {
     verifiedByFilePath,
   };
 };
+
+const defaultQandA = [
+  {
+    question: "How has your STI diagnosis impacted your daily life?",
+    answer: "",
+  },
+  {
+    question: "What have been the biggest challenges you've faced?",
+    answer: "",
+  },
+  {
+    question: "How do you manage your STI, both physically and emotionally?",
+    answer: "",
+  },
+  {
+    question: "What advice would you give to someone newly diagnosed?",
+    answer: "",
+  },
+  {
+    question: "What misconceptions about STIs would you like to correct?",
+    answer: "",
+  },
+  {
+    question: "What are your goals moving forward in managing your STI?",
+    answer: "",
+  },
+];
