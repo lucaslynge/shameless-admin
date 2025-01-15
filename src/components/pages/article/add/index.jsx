@@ -1,5 +1,5 @@
 import React from "react";
-import { Field, Form, Formik } from "formik";
+import { Field, FieldArray, Form, Formik } from "formik";
 import Image from "next/image";
 import placeholderImg from "@/public/assest/placeholder_img.png";
 import { useGetAllCategoryQuery } from "@/lib/services/categoryApi";
@@ -24,6 +24,7 @@ import AdditionalDetails from "@/components/ShareStory/Additional-details";
 import { useAddArticle } from "./hook";
 import { ReactTags } from "react-tag-autocomplete";
 import { defaultTags, tagsData } from "./data";
+import { CircleX } from "lucide-react";
 
 export const AddArticleMain = () => {
   const {
@@ -450,40 +451,113 @@ export const AddArticleMain = () => {
               </div>
 
               <div className="mt-5">
-                <label htmlFor="verifiedBy" className="text-sm font-semibold">
-                  Verified by
-                </label>
-                <div className="flex items-end gap-x-2">
-                  <input
-                    type="file"
-                    id="verifiedByImage"
-                    style={{ display: "none" }}
-                    onChange={handleAddVerifiedByImage}
-                  />
-                  <label
-                    htmlFor="verifiedByImage"
-                    className="border grid place-content-center border-dashed border-[#C8C8C8] rounded-md cursor-pointer w-12 h-11 "
-                  >
-                    <Image
-                      src={
-                        verifiedByFilePath ? verifiedByFilePath : placeholderImg
-                      }
-                      alt=""
-                      width={40}
-                      height={40}
-                      className="rounded object-cover w-[40px] h-[40px] hover:cursor-pointer "
-                    />
-                  </label>
-                  <Field
-                    type="text"
-                    id="verifiedBy"
-                    value={values.verifiedBy}
-                    onChange={handleChange}
-                    name="verifiedBy"
-                    placeholder="Name here"
-                    className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-3"
-                  />
-                </div>
+                <Field name="isVerified" id="isVerified">
+                  {({ field, form }) => (
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={(value) =>
+                          form.setFieldValue(field.name, value)
+                        }
+                        id="airplane-mode"
+                      />
+                      <Label htmlFor="airplane-mode">
+                        Is medically verified
+                      </Label>
+                    </div>
+                  )}
+                </Field>
+                {values.isVerified && (
+                  <div className="pt-2">
+                    <label
+                      htmlFor="verifiedBy"
+                      className="text-sm font-semibold"
+                    >
+                      Verified by
+                    </label>
+                    <div className="flex items-end gap-x-2">
+                      <input
+                        type="file"
+                        id="verifiedByImage"
+                        style={{ display: "none" }}
+                        onChange={handleAddVerifiedByImage}
+                      />
+                      <label
+                        htmlFor="verifiedByImage"
+                        className="border grid place-content-center border-dashed border-[#C8C8C8] rounded-md cursor-pointer w-12 h-11 "
+                      >
+                        <Image
+                          src={
+                            verifiedByFilePath
+                              ? verifiedByFilePath
+                              : placeholderImg
+                          }
+                          alt=""
+                          width={40}
+                          height={40}
+                          className="rounded object-cover w-[40px] h-[40px] hover:cursor-pointer "
+                        />
+                      </label>
+                      <Field
+                        type="text"
+                        id="verifiedBy"
+                        value={values.verifiedBy}
+                        onChange={handleChange}
+                        name="verifiedBy"
+                        placeholder="Name here"
+                        className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-3"
+                      />
+                    </div>
+                    <div>
+                      <FieldArray
+                        name="verificationSources"
+                        render={(arrayHelpers) => (
+                          <div className="py-4 px-2 mt-4 border rounded border-gray-200 bg-gray-50 relative">
+                            {values.verificationSources.length > 0 &&
+                              values.verificationSources.map(
+                                (friend, index) => (
+                                  <div key={index}>
+                                    <div className="mb-4 flex w-full justify-between items-center gap-x-2">
+                                      <div>
+                                        <Field
+                                          type="text"
+                                          name={`verificationSources.${index}.label`}
+                                          className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-2"
+                                          placeholder="Source label"
+                                        />
+                                        <Field
+                                          type="text"
+                                          name={`verificationSources.${index}.url`}
+                                          className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-2"
+                                          placeholder="Source url"
+                                        />
+                                      </div>
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          arrayHelpers.remove(index)
+                                        }
+                                      >
+                                        <CircleX className="h-6 w-6" />
+                                      </button>
+                                    </div>
+                                  </div>
+                                )
+                              )}
+                            <Button
+                              type="button"
+                              onClick={() =>
+                                arrayHelpers.push({ label: "", url: "" })
+                              }
+                            >
+                              Add source
+                            </Button>
+                          </div>
+                        )}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="mt-5">
