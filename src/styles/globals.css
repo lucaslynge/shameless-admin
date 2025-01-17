@@ -56,6 +56,23 @@
   margin: 5px !important;
 }
 
+.editor {
+  .mdxeditor-root-contenteditable {
+    border: 1px solid #d1d1d1;
+    border-top: 0;
+    border-radius: 8px;
+    border-radius: 0 0 8px 8px;
+  }
+
+  [role="toolbar"] {
+    border-radius: 8px 8px 0 0;
+  }
+
+  [role="textbox"] {
+    min-height: 120px;
+  }
+}
+
 .with-react-tags {
   .react-tags {
     position: relative;

@@ -25,6 +25,11 @@ import { useAddArticle } from "./hook";
 import { ReactTags } from "react-tag-autocomplete";
 import { defaultTags, tagsData } from "./data";
 import { CircleX } from "lucide-react";
+// import dynamic from "next/dynamic";
+
+// const Editor = dynamic(() => import("../../../../components/editor"), {
+//   ssr: false,
+// });
 
 export const AddArticleMain = () => {
   const {
@@ -104,6 +109,14 @@ export const AddArticleMain = () => {
                     });
                   }}
                 />
+                {/* <div className="editor">
+                  <Editor
+                    onChange={(value) => {
+                      console.log(value);
+                    }}
+                    // markdown={data?.content ?? "Your content"}
+                  />
+                </div> */}
               </div>
               <div className="mt-5">
                 <label htmlFor={`review`} className="text-sm font-semibold">
@@ -437,8 +450,8 @@ export const AddArticleMain = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectItem value="Domshell John Cahiles">
-                            Domshell John Cahiles
+                          <SelectItem value="Tunggul Laras">
+                            Tunggul Laras
                           </SelectItem>
                           <SelectItem value="Noelyn Dyll Feliciano">
                             Noelyn Dyll Feliciano
