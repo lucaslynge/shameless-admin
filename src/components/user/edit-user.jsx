@@ -1,32 +1,22 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Label } from "../ui/label";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Field, Form, Formik } from "formik";
 import Loader from "../loader";
 import {
   useGetAllUsersQuery,
   useUpdateUserMutation,
 } from "@/lib/services/userApi";
-import { cssTransition, Slide, toast } from "react-toastify";
-import { Switch } from "../ui/switch";
+import { Slide, toast } from "react-toastify";
 import Input from "../form-input";
+
 export default function EidtUser({ customer, isOpen, setIsOpen, customerId }) {
   const [UpdateUser, { isLoading }] = useUpdateUserMutation();
   const { refetch: refetchUser } = useGetAllUsersQuery();
-
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <Formik
           initialValues={{
-            // role: customer?.role,
             email: customer?.email,
             password: customer?.password,
           }}
@@ -37,44 +27,23 @@ export default function EidtUser({ customer, isOpen, setIsOpen, customerId }) {
                 body: values,
               }).unwrap();
               toast.success(response.message, {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: true,
                 theme: "colored",
-                transition: Slide,
-                type: "success",
               });
               refetchUser();
               setIsOpen(false);
             } catch (error) {
-              toast.error(error.data.message, {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: true,
-                transition: Slide,
-                type: "error",
-              });
+              toast.error(error.data.message, {});
             } finally {
               setSubmitting(false);
             }
           }}
         >
-          {({ errors, touched, handleSubmit, values }) => (
+          {({ handleSubmit }) => (
             <Form
               onSubmit={handleSubmit}
               className="flex flex-col justify-center py-2 items-center "
             >
               <div className="w-full flex flex-col gap-y-5 gap-1">
-              {/* <label className="text-sm font-semibold">Role</label> */}
-                {/* <div>
-                  <Field
-                    component={Input}
-                    type="text"
-                    name="role"
-                    placeholder="Role"
-                  />
-                </div> */}
-                
                 <label className="text-sm font-semibold">Email address</label>
                 <Field
                   component={Input}

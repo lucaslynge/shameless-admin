@@ -5,14 +5,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import Loader from "../loader";
 import { Slide, toast } from "react-toastify";
-import { useDeleteUserMutation, useGetAllUsersQuery } from "@/lib/services/userApi";
-export default function DeleteUser({ isOpen, setIsOpen,customer,refetch }) {
-  const [DeleteUser,{isLoading}]=useDeleteUserMutation()
+import { useDeleteUserMutation } from "@/lib/services/userApi";
+
+export default function DeleteUser({ isOpen, setIsOpen, customer, refetch }) {
+  const [DeleteUser, { isLoading }] = useDeleteUserMutation();
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -25,46 +25,43 @@ export default function DeleteUser({ isOpen, setIsOpen,customer,refetch }) {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button 
-          type="button"
-          variant="destructive"
-          onClick={async() =>{
-            const id=customer._id
-            try {
-              const response = await DeleteUser(id).unwrap();
-              toast.success(response.message, {
-                position: "bottom-right",
-                autoClose: 3000,
-                hideProgressBar: true,
-                transition: Slide,
-                type: "warning",
-              });
-              refetch()
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={async () => {
+              const id = customer._id;
+              try {
+                const response = await DeleteUser(id).unwrap();
+                toast.success(response.message, {
+                  position: "bottom-right",
+                  autoClose: 3000,
+                  hideProgressBar: true,
+                  transition: Slide,
+                  type: "warning",
+                });
+                refetch();
 
-              setIsOpen(false)
-              
-            } catch (error) {
-              toast.error(error?.data?.message, {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: true,
-                transition: Slide,
-                type: "error",
-              });
-            } finally{
-              refetch()
-            }
-
-          }}
+                setIsOpen(false);
+              } catch (error) {
+                toast.error(error?.data?.message, {
+                  position: "top-center",
+                  autoClose: 3000,
+                  hideProgressBar: true,
+                  transition: Slide,
+                  type: "error",
+                });
+              } finally {
+                refetch();
+              }
+            }}
           >
-         
-          {isLoading ? (
-                  <div className="text-center flex gap-2 justify-center mx-auto">
-                     <Loader color="#00132f" /> <span>Loading...</span>
-                  </div>
-                ) : (
-                  "Confirm"
-                )}
+            {isLoading ? (
+              <div className="text-center flex gap-2 justify-center mx-auto">
+                <Loader color="#00132f" /> <span>Loading...</span>
+              </div>
+            ) : (
+              "Confirm"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

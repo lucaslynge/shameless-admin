@@ -16,9 +16,9 @@ export const tokenApi = createApi({
   }),
 
   endpoints: (build) => ({
-    Validate: build.mutation({
+    ValidateAdmin: build.mutation({
       query: () => ({
-        url: `/token/validate`,
+        url: `/token/validate/admin`,
         method: "POST",
         body: {},
       }),
@@ -27,4 +27,4 @@ export const tokenApi = createApi({
   }),
 });
 
-export const { useValidateMutation } = tokenApi;
+export const { useValidateAdminMutation } = tokenApi;
