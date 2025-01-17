@@ -1,15 +1,15 @@
 // components/AuthGarud.js
-import { useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useRouter } from 'next/router';
+import { useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useRouter } from "next/router";
 
-const AuthGarud = ({ children }) => {
+const AuthGuard = ({ children }) => {
   const { authToken } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (!authToken) {
-      router.push('/'); // Redirect to login if no token
+      router.push("/"); // Redirect to login if no token
     }
   }, [authToken, router]);
 
@@ -21,4 +21,4 @@ const AuthGarud = ({ children }) => {
   return <>{children}</>;
 };
 
-export default AuthGarud;
+export default AuthGuard;

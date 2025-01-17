@@ -1,7 +1,7 @@
 import { TableCell, TableRow } from "../ui/table";
 import { Button } from "../ui/button";
 import { MdDelete, MdEdit } from "react-icons/md";
-import EidtUser from "./edit-user";
+import EditUser from "./edit-user";
 import DeleteUser from "./delete-user";
 import dateFormat from "dateformat";
 import { useState } from "react";
@@ -38,7 +38,7 @@ export default function CustomerItem({ customer, refetch }) {
         >
           <MdEdit size={20} />
         </Button>
-        <EidtUser
+        <EditUser
           customer={customer}
           isOpen={isOpenEdit}
           customerId={customer._id}

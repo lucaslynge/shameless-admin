@@ -11,8 +11,6 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -21,7 +19,6 @@ import AppLayout from "@/layouts/AppLayout";
 import { useState } from "react";
 import AddUser from "@/components/user/add-user";
 import { useGetAllUsersQuery } from "@/lib/services/userApi";
-import Loader from "@/components/loader";
 import Mypaginations from "@/components/my-paginations";
 import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";

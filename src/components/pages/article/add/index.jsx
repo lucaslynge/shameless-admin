@@ -52,7 +52,7 @@ export const AddArticleMain = () => {
   };
 
   return (
-    <div className="md:w-[75%] with-react-tags lg:w-[60%] xl:w-[50%] 2xl:w-[40%] mx-auto bg-white rounded-md md:px-7 mb-5">
+    <div className="md:w-[75%] with-react-tags 2xl:w-[40%] mx-auto bg-white rounded-md md:px-7 mb-5">
       <div>
         <p className="text-2xl font-bold">Share Your Story</p>
         <Formik
