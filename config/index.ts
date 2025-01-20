@@ -32,11 +32,11 @@ export const config: Config = {
       monthly:
         process.env.NODE_ENV === "development"
           ? "prod_RDhB1cVQU2LYqV"
-          : "prod_Qwc7MGsgVhIIZ4",
+          : "prod_Qwc6Edo9LCw2tA",
       lifetime:
         process.env.NODE_ENV === "development"
           ? "prod_RDhCXXnxlxtUl7"
-          : "prod_Qwc6Edo9LCw2tA",
+          : "prod_Qwc7MGsgVhIIZ4",
     },
   },
 };
