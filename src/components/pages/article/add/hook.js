@@ -41,7 +41,7 @@ export const useAddArticle = () => {
   const [filepath, setfilepath] = useState("");
   const [verifiedByFile, setVerifiedByFile] = useState(null);
   const [verifiedByFilePath, setVerifiedByFilePath] = useState("");
- 
+
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
     const reader = new FileReader();
@@ -163,58 +163,48 @@ export const useAddArticle = () => {
     formdata.append("details", JSON.stringify(filteredetails));
 
     if (isEditing === "false") {
-      tryCatchWrapper(
-        async () => {
-          const response = await CreateArticle(formdata).unwrap();
-          if (response.success) {
-            resetForm();
-            toast.success(response.message);
-            router.push("/app/articles");
-          }
-        },
-        {
-          onError: (error) => {
-            toast.error(error.data.message);
-          },
-          finally: () => {
-            setSubmitting(false);
-            setFile("");
-            resetForm();
-            setfilepath("");
-          },
+      try {
+        const response = await CreateArticle(formdata).unwrap();
+        if (response.success) {
+          resetForm();
+          toast.success(response.message);
+          router.push("/app/articles");
+        } else {
+          toast.error(response.message, { theme: "colored" });
         }
-      );
+      } catch (error) {
+        toast.error(error.data.message);
+      } finally {
+        setSubmitting(false);
+        setFile("");
+        resetForm();
+        setfilepath("");
+      }
 
       return;
     }
 
-    tryCatchWrapper(
-      async () => {
-        const response = await UpdateArticle({
-          id: slug,
-          body: formdata,
-        }).unwrap();
+    try {
+      const response = await UpdateArticle({
+        id: slug,
+        body: formdata,
+      }).unwrap();
 
-        if (response.success) {
-          getSlugArticle(slug);
-          resetForm();
-          toast.success(response.message);
-          setFile("");
-          setfilepath("");
-          router.push("/app/articles");
-        }
-      },
-      {
-        onError: (error) => {
-          if (error.status == 404) {
-            toast.error(error.data.message, { theme: "colored" });
-          }
-        },
-        finally: () => {
-          setSubmitting(false);
-        },
+      if (response.success) {
+        getSlugArticle(slug);
+        resetForm();
+        toast.success(response.message);
+        setFile("");
+        setfilepath("");
+        router.push("/app/articles");
+      } else {
+        toast.error(response.message, { theme: "colored" });
       }
-    );
+    } catch (error) {
+      toast.error(error.data.message, { theme: "colored" });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleFileClick = () => {
