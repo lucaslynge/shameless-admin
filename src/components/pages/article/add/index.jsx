@@ -105,6 +105,7 @@ export const AddArticleMain = () => {
                       });
                     }}
                     markdown={values.content ? values.content : "Your content"}
+                    defaultValue={data?.content}
                   />
                 </div>
               </div>
