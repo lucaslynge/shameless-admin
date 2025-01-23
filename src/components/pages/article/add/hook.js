@@ -41,7 +41,7 @@ export const useAddArticle = () => {
   const [filepath, setfilepath] = useState("");
   const [verifiedByFile, setVerifiedByFile] = useState(null);
   const [verifiedByFilePath, setVerifiedByFilePath] = useState("");
-
+ 
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
     const reader = new FileReader();
@@ -111,6 +111,7 @@ export const useAddArticle = () => {
       isEditing === "true" && data?.verificationSources?.length
         ? data?.verificationSources
         : [{ label: "", url: "" }],
+    content: isEditing === "true" && data?.content ? data.content : "",
   });
 
   const handleFormSubmit = async (values, { resetForm, setSubmitting }) => {
@@ -123,6 +124,7 @@ export const useAddArticle = () => {
 
     formdata.append("headline", data.headline);
     formdata.append("primary_message", data.primary_message);
+    formdata.append("content", data.content);
     formdata.append("type", data.type);
     formdata.append("age", data.age ? data.age : "");
     formdata.append("gender", data.gender);
