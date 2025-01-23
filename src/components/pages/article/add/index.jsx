@@ -3,8 +3,6 @@ import { Field, FieldArray, Form, Formik } from "formik";
 import Image from "next/image";
 import placeholderImg from "@/public/assest/placeholder_img.png";
 import { useGetAllCategoryQuery } from "@/lib/services/categoryApi";
-import { ShareAccordion } from "@/components/ShareStory/ShareAccordion";
-import Quill from "@/components/ShareStory/TextEditor";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/loader";
 import {
@@ -25,11 +23,11 @@ import { useAddArticle } from "./hook";
 import { ReactTags } from "react-tag-autocomplete";
 import { defaultTags, tagsData } from "./data";
 import { CircleX } from "lucide-react";
-// import dynamic from "next/dynamic";
+import dynamic from "next/dynamic";
 
-// const Editor = dynamic(() => import("../../../../components/editor"), {
-//   ssr: false,
-// });
+const Editor = dynamic(() => import("../../../../components/editor"), {
+  ssr: false,
+});
 
 export const AddArticleMain = () => {
   const {
@@ -55,7 +53,6 @@ export const AddArticleMain = () => {
 
     return tagsData[stiStatus];
   };
-
   return (
     <div className="md:w-[75%] with-react-tags 2xl:w-[40%] mx-auto bg-white rounded-md md:px-7 mb-5">
       <div>
@@ -100,23 +97,16 @@ export const AddArticleMain = () => {
 
               <div className="mt-5">
                 <p className="text-sm font-semibold mb-2">Primary Message</p>
-                <Quill
-                  name="primary_message"
-                  valueText={values.primary_message}
-                  onSetValueTextEditor={(value) => {
-                    handleChange({
-                      target: { name: "primary_message", value: value },
-                    });
-                  }}
-                />
-                {/* <div className="editor">
+                <div className="editor">
                   <Editor
                     onChange={(value) => {
-                      console.log(value);
+                      handleChange({
+                        target: { name: "content", value },
+                      });
                     }}
-                    // markdown={data?.content ?? "Your content"}
+                    markdown={values.content ? values.content : "Your content"}
                   />
-                </div> */}
+                </div>
               </div>
               <div className="mt-5">
                 <label htmlFor={`review`} className="text-sm font-semibold">

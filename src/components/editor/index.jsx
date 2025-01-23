@@ -5,7 +5,7 @@ import {
   StrikeThroughSupSubToggles,
 } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
-import React from "react";
+import React, { useRef } from "react";
 const {
   MDXEditor,
   codeBlockPlugin,
@@ -57,8 +57,11 @@ const PlainTextCodeEditorDescriptor = {
 };
 
 const Editor = ({ onChange, markdown = "Your content" }) => {
+  const mdxEditorRef = useRef(null);
+
   return (
     <MDXEditor
+      ref={mdxEditorRef}
       onChange={onChange}
       markdown={markdown}
       plugins={[

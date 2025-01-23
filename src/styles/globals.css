@@ -30,6 +30,7 @@
     --radius: 0.5rem;
   }
 }
+
 .quill-container {
   position: relative;
 }
@@ -271,5 +272,70 @@
     font-size: 0.8125rem;
     line-height: 1.5rem;
     color: #00000080;
+  }
+}
+
+.mdxeditor {
+  .mdxeditor-root-contenteditable {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  font-size: 14px;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 14px 0;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
+  p {
+    margin: 14px 0;
+  }
+
+  ul,
+  ol {
+    margin: 14px 0 14px 16px;
+    padding-left: 24px;
+  }
+
+  ol {
+    list-style: decimal;
+
+    li {
+      margin: 4px 0;
+    }
+  }
+
+  ul {
+    list-style: disc;
+
+    li {
+      margin: 4px 0;
+
+      &[role="checkbox"] {
+        line-height: 1;
+        margin: 6px 0;
+      }
+    }
   }
 }
