@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export default function ArticelItem({ articel, refetch }) {
   const [isOpenDelete, setIsOpenDelete] = React.useState(false);
-  const router = useRouter();
+  console.log(articel);
 
   return (
     <TableRow className="bg-accent">
@@ -21,8 +21,12 @@ export default function ArticelItem({ articel, refetch }) {
         <div className="font-medium">{articel.headline}</div>
       </TableCell>
       <TableCell className="hidden sm:table-cell">{articel.status}</TableCell>
-      <TableCell className="hidden xl:table-cell">{articel.age}</TableCell>
-      <TableCell className="hidden xl:table-cell">{articel.gender}</TableCell>
+      <TableCell className="hidden xl:table-cell">
+        {articel.type !== "medical_trial" ? articel.age : ""}
+      </TableCell>
+      <TableCell className="hidden xl:table-cell">
+        {articel.type !== "medical_trial" ? articel.gender : ""}
+      </TableCell>
       <TableCell className="hidden sm:table-cell">{articel.type}</TableCell>
 
       <TableCell className="hidden sm:table-cell">
