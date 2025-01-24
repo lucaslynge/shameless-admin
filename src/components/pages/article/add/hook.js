@@ -106,7 +106,7 @@ export const useAddArticle = () => {
       isEditing === "true" && data?.verifiedBy?.name !== "undefined"
         ? data?.verifiedBy?.name
         : "",
-    isVerified: isEditing === "true" ? data?.isVerified : false,
+    isVerified: isEditing === "true" ? data?.isVerified ?? false : false,
     verificationSources:
       isEditing === "true" && data?.verificationSources?.length
         ? data?.verificationSources
