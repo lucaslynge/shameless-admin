@@ -10,7 +10,6 @@ import Link from "next/link";
 
 export default function ArticelItem({ articel, refetch }) {
   const [isOpenDelete, setIsOpenDelete] = React.useState(false);
-  console.log(articel);
 
   return (
     <TableRow className="bg-accent">
