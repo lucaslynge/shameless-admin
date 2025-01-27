@@ -75,6 +75,15 @@
 }
 
 .with-react-tags {
+  .grouped {
+    .react-tags__listbox-option {
+      &:nth-of-type(5) {
+        border-bottom: 1.5px solid rgb(241, 241, 241);
+        padding-bottom: 8px;
+      }
+    }
+  }
+
   .react-tags {
     position: relative;
     padding: 0.25rem 0 0 0.25rem;

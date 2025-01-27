@@ -230,9 +230,9 @@ export const tagsData = {
 };
 
 export const defaultTags = [
-  { value: "Dating and Disclosure", label: "Dating and Disclosure" },
   { value: "Relationships ", label: "Relationships " },
-  { value: "Life After Diagnosis", label: "Life After Diagnosis" },
-  { value: "Treatment Options", label: "Treatment Options" },
   { value: "Mental Health", label: "Mental Health" },
+  { value: "Treatment Options", label: "Treatment Options" },
+  { value: "Life After Diagnosis", label: "Life After Diagnosis" },
+  { value: "Dating and Disclosure", label: "Dating and Disclosure" },
 ];
