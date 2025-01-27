@@ -49,10 +49,11 @@ export const AddArticleMain = () => {
   const ageOptions = Array.from({ length: 48 }, (_, i) => (i + 18).toString());
 
   const getSuggestions = (stiStatus) => {
-    if (!stiStatus || stiStatus === "None") return defaultTags;
+    if (!stiStatus || stiStatus === "General") return defaultTags;
 
-    return tagsData[stiStatus];
+    return defaultTags.concat(tagsData[stiStatus]);
   };
+
   return (
     <div className="md:w-[75%] with-react-tags 2xl:w-[40%] mx-auto bg-white rounded-md md:px-7 mb-5">
       <div>
@@ -308,7 +309,7 @@ export const AddArticleMain = () => {
                               <SelectItem value={"Molluscum"}>
                                 Molluscum
                               </SelectItem>
-                              <SelectItem value={"None"}>None</SelectItem>
+                              <SelectItem value={"General"}>General</SelectItem>
                             </SelectGroup>
                           </SelectContent>
                         </Select>
@@ -318,7 +319,15 @@ export const AddArticleMain = () => {
                 </div>
               )}
 
-              <div className="mt-5">
+              <div
+                className={`mt-5 ${
+                  values.STI_status &&
+                  (values.STI_status !== "General" ||
+                    values.STI_status !== "None")
+                    ? "grouped"
+                    : ""
+                }`}
+              >
                 <label htmlFor="tags" className="text-sm font-semibold">
                   Tags
                   <span className="ml-1 text-xs font-normal">
