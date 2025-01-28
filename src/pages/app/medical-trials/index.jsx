@@ -34,7 +34,7 @@ function Articel() {
   const [filters, setFilters] = useState({
     page: currentPage,
     sortBy: "most_recent",
-    type: "artical",
+    type: "medical_trial",
   });
   const debouncedFilters = useDebounce(filters, 300);
   const { data, isLoading, refetch } = useGetAllArticleQuery(debouncedFilters);
@@ -55,9 +55,9 @@ function Articel() {
           <div className="grid lg:grid-cols-2 gap-2 col-span-1">
             <div className="flex  lg:justify-normal justify-between gap-x-4">
               <div className="flex flex-col gap-2">
-                <CardTitle>Articles</CardTitle>
+                <CardTitle>Medical Trials</CardTitle>
                 <CardDescription>
-                  Recent Articles from your shamelessPath.
+                  Recent Medical Trials from your shamelessPath.
                 </CardDescription>
               </div>
               <div>
