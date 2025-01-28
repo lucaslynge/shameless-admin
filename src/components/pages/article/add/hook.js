@@ -5,15 +5,13 @@ import {
 } from "@/lib/services/articleApi";
 import { yup } from "@/lib/utils/yup";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import slugify from "slugify";
 import placeholderImg from "@/public/assest/placeholder_img.png";
-import { tryCatchWrapper } from "@/lib/utils/tryCatchWrapper";
 import { generateSlug } from "@/lib/utils/helper";
 import { toast } from "react-toastify";
 
 const validationSchema = yup.object().shape({
-  category: yup.string().required("Category is required"),
   headline: yup.string().required("headline is required"),
   slug: yup
     .string()
@@ -80,7 +78,6 @@ export const useAddArticle = () => {
     STI_status: isEditing === "true" ? data?.STI_status : "",
     image: isEditing === "true" ? data?.image : "",
     readTime: isEditing === "true" ? data?.readTime : "",
-    category: isEditing === "true" ? data?.category?._id : "",
     status: isEditing === "true" ? data?.status : "",
     publishDate: isEditing === "true" ? data?.publishDate : "",
     slug: isEditing === "true" ? data?.slug : "",
@@ -133,7 +130,6 @@ export const useAddArticle = () => {
     formdata.append("readTime", data.readTime);
     formdata.append("image", data.image);
     formdata.append("status", data.status);
-    formdata.append("category", data.category);
     formdata.append("featuring_text", data.featuring_text);
     formdata.append("front_page", data.front_page);
     formdata.append("tags", JSON.stringify(data.tags));
