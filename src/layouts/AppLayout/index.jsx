@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { UsersIcon } from "@heroicons/react/24/outline";
 import {
-  MdCategory,
   MdCode,
   MdContactEmergency,
   MdEditDocument,
@@ -31,7 +30,6 @@ let sidebarNavigation = [
     icon: FaFileMedical,
     current: false,
   },
-  { name: "Categories", href: "category", icon: MdCategory, current: false },
   { name: "Reviews", href: "review", icon: MdReviews, current: false },
   { name: "Comments", href: "comments", icon: FaCommentDots, current: false },
   { name: "Community", href: "community", icon: CgCommunity, current: false },

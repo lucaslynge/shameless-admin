@@ -10,7 +10,6 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { contactApi } from "../services/contactApi";
 import { reviewApi } from "../services/reviewApi";
-import { categoryApi } from "../services/categoryApi";
 import { promoCodeApi } from "../services/promoCodeApi";
 import { tokenApi } from "../services/tokenApi";
 import { commentsApi } from "../services/commentsApi";
@@ -34,7 +33,6 @@ const makeStore = () =>
         .concat(communityApi.middleware)
         .concat(contactApi.middleware)
         .concat(reviewApi.middleware)
-        .concat(categoryApi.middleware)
         .concat(promoCodeApi.middleware)
         .concat(tokenApi.middleware)
         .concat(commentsApi.middleware),

@@ -2,7 +2,6 @@ import React from "react";
 import { Field, FieldArray, Form, Formik } from "formik";
 import Image from "next/image";
 import placeholderImg from "@/public/assest/placeholder_img.png";
-import { useGetAllCategoryQuery } from "@/lib/services/categoryApi";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/loader";
 import {
@@ -44,7 +43,6 @@ export const AddArticleMain = () => {
     verifiedByFilePath,
     handleAddVerifiedByImage,
   } = useAddArticle();
-  const { data: dataCategory } = useGetAllCategoryQuery();
 
   const ageOptions = Array.from({ length: 48 }, (_, i) => (i + 18).toString());
 
@@ -390,43 +388,6 @@ export const AddArticleMain = () => {
                     )}
                   </div>
                 </div>
-              </div>
-
-              <div className="mt-5">
-                <label htmlFor="category" className="text-sm font-semibold">
-                  Category*
-                </label>
-                <Field id="category" name="category">
-                  {({ field, form }) => (
-                    <Select
-                      name={field.name}
-                      value={field.value}
-                      onValueChange={(value) =>
-                        form.setFieldValue(field.name, value)
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          {dataCategory?.categoryData?.map((item, index) => {
-                            return (
-                              <SelectItem key={index} value={item._id}>
-                                {item.name}
-                              </SelectItem>
-                            );
-                          })}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  )}
-                </Field>
-                {errors.category && touched.category && (
-                  <div id="feedback" className="text-[12px]  text-red-500	">
-                    {errors.category}
-                  </div>
-                )}
               </div>
 
               <div className="mt-5">

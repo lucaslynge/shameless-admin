@@ -7,7 +7,6 @@ import { communityApi } from "../services/communityApi";
 import { paymentApi } from "../services/paymentApi";
 import { contactApi } from "../services/contactApi";
 import { reviewApi } from "../services/reviewApi";
-import { categoryApi } from "../services/categoryApi";
 import { promoCodeApi } from "../services/promoCodeApi";
 import { tokenApi } from "../services/tokenApi";
 import { commentsApi } from "../services/commentsApi";
@@ -28,7 +27,6 @@ const rootReducer = combineReducers({
   [paymentApi.reducerPath]: paymentApi.reducer,
   [contactApi.reducerPath]: contactApi.reducer,
   [reviewApi.reducerPath]: reviewApi.reducer,
-  [categoryApi.reducerPath]: categoryApi.reducer,
   [promoCodeApi.reducerPath]: promoCodeApi.reducer,
   [tokenApi.reducerPath]: tokenApi.reducer,
   [commentsApi.reducerPath]: commentsApi.reducer,
