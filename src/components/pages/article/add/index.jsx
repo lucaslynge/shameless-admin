@@ -198,124 +198,127 @@ export const AddArticleMain = () => {
                 </Field>
               </div>
 
-              {(values.type === "personal_story" ||
-                values.type === "artical") && (
-                <div className="grid grid-cols-12  justify-between gap-4 mt-3">
-                  <div className="col-span-4">
-                    <label
-                      className="text-sm font-semibold mb-1 block"
-                      htmlFor="age"
-                    >
-                      Age
-                    </label>
-                    <Field name="age" id="age">
-                      {({ field, form }) => (
-                        <Select
-                          name={field.name}
-                          value={field.value}
-                          onValueChange={(value) =>
-                            form.setFieldValue(field.name, value)
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              {ageOptions.map((age, index) => (
-                                <SelectItem key={index} value={age}>
-                                  {age}
-                                </SelectItem>
-                              ))}
-                              <SelectItem value={null}>None</SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      )}
-                    </Field>
-                  </div>
+              <div className="grid grid-cols-12  justify-between gap-4 mt-3">
+                {(values.type === "artical" ||
+                  values.type === "personal_story") && (
+                  <>
+                    <div className="col-span-4">
+                      <label
+                        className="text-sm font-semibold mb-1 block"
+                        htmlFor="age"
+                      >
+                        Age
+                      </label>
+                      <Field name="age" id="age">
+                        {({ field, form }) => (
+                          <Select
+                            name={field.name}
+                            value={field.value}
+                            onValueChange={(value) =>
+                              form.setFieldValue(field.name, value)
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                {ageOptions.map((age, index) => (
+                                  <SelectItem key={index} value={age}>
+                                    {age}
+                                  </SelectItem>
+                                ))}
+                                <SelectItem value={null}>None</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        )}
+                      </Field>
+                    </div>
 
-                  <div className="col-span-4">
-                    <label
-                      htmlFor="gender"
-                      className="text-sm font-semibold mb-1 block"
-                    >
-                      Gender
-                    </label>
-                    <Field id="gender" name="gender">
-                      {({ field, form }) => (
-                        <Select
-                          name={field.name}
-                          value={field.value}
-                          onValueChange={(value) =>
-                            form.setFieldValue(field.name, value)
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectItem value={"Male"}>Male</SelectItem>
-                              <SelectItem value={"Female"}>Female</SelectItem>
-                              <SelectItem value={"Other"}>Other</SelectItem>
-                              <SelectItem value={"none"}>None</SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      )}
-                    </Field>
-                  </div>
-                  <div className="col-span-4">
-                    <label
-                      className="text-sm font-semibold block mb-1"
-                      htmlFor="STI_status"
-                    >
-                      STI Status
-                    </label>
-                    <Field id="STI_status" name="STI_status">
-                      {({ field, form }) => (
-                        <Select
-                          name={field.name}
-                          value={field.value}
-                          onValueChange={(value) =>
-                            form.setFieldValue(field.name, value)
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectItem value={"Herpes (HSV)"}>
-                                Herpes (HSV)
-                              </SelectItem>
-                              <SelectItem value={"Herpes (HSV-1)"}>
-                                Herpes (HSV-1)
-                              </SelectItem>
-                              <SelectItem value={"Herpes (HSV-2)"}>
-                                Herpes (HSV-2)
-                              </SelectItem>
-                              <SelectItem value={"HIV"}>HIV</SelectItem>
-                              <SelectItem value={"HPV"}>HPV</SelectItem>
-                              <SelectItem value={"HTLV"}>HTLV</SelectItem>
-                              <SelectItem value={"CMV"}>CMV</SelectItem>
-                              <SelectItem value={"EBV"}>EBV</SelectItem>
-                              <SelectItem value={"Hepatitis B & C"}>
-                                Hepatitis B & C
-                              </SelectItem>
-                              <SelectItem value={"Molluscum"}>
-                                Molluscum
-                              </SelectItem>
-                              <SelectItem value={"General"}>General</SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      )}
-                    </Field>
-                  </div>
+                    <div className="col-span-4">
+                      <label
+                        htmlFor="gender"
+                        className="text-sm font-semibold mb-1 block"
+                      >
+                        Gender
+                      </label>
+                      <Field id="gender" name="gender">
+                        {({ field, form }) => (
+                          <Select
+                            name={field.name}
+                            value={field.value}
+                            onValueChange={(value) =>
+                              form.setFieldValue(field.name, value)
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectItem value={"Male"}>Male</SelectItem>
+                                <SelectItem value={"Female"}>Female</SelectItem>
+                                <SelectItem value={"Other"}>Other</SelectItem>
+                                <SelectItem value={"none"}>None</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        )}
+                      </Field>
+                    </div>
+                  </>
+                )}
+
+                <div className="col-span-4">
+                  <label
+                    className="text-sm font-semibold block mb-1"
+                    htmlFor="STI_status"
+                  >
+                    STI Status
+                  </label>
+                  <Field id="STI_status" name="STI_status">
+                    {({ field, form }) => (
+                      <Select
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={(value) =>
+                          form.setFieldValue(field.name, value)
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value={"Herpes (HSV)"}>
+                              Herpes (HSV)
+                            </SelectItem>
+                            <SelectItem value={"Herpes (HSV-1)"}>
+                              Herpes (HSV-1)
+                            </SelectItem>
+                            <SelectItem value={"Herpes (HSV-2)"}>
+                              Herpes (HSV-2)
+                            </SelectItem>
+                            <SelectItem value={"HIV"}>HIV</SelectItem>
+                            <SelectItem value={"HPV"}>HPV</SelectItem>
+                            <SelectItem value={"HTLV"}>HTLV</SelectItem>
+                            <SelectItem value={"CMV"}>CMV</SelectItem>
+                            <SelectItem value={"EBV"}>EBV</SelectItem>
+                            <SelectItem value={"Hepatitis B & C"}>
+                              Hepatitis B & C
+                            </SelectItem>
+                            <SelectItem value={"Molluscum"}>
+                              Molluscum
+                            </SelectItem>
+                            <SelectItem value={"General"}>General</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </Field>
                 </div>
-              )}
+              </div>
 
               <div
                 className={`mt-5 ${
