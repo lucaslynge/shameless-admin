@@ -420,6 +420,9 @@ export const AddArticleMain = () => {
                           <SelectItem value="Noelyn Dyll Feliciano">
                             Noelyn Dyll Feliciano
                           </SelectItem>
+                          <SelectItem value="Winda Adriana">
+                            Winda Adriana
+                          </SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
