@@ -1,4 +1,3 @@
-import CustomerItem from "@/components/user/customer-item";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,7 +10,6 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -19,11 +17,7 @@ import {
 } from "@/components/ui/table";
 import AppLayout from "@/layouts/AppLayout";
 import { useState } from "react";
-import Loader from "@/components/loader";
 import Mypaginations from "@/components/my-paginations";
-import { useGetAllContactsQuery } from "@/lib/services/contactApi";
-import ContactItem from "@/components/contact/contact-item";
-import AddContact from "@/components/contact/add-contact";
 import withAuth from "@/hoc/withAuth";
 import SearchBox from "@/components/search-box";
 import { useGetAllReviewsQuery } from "@/lib/services/reviewApi";
@@ -44,18 +38,16 @@ function Review() {
     setCurrentPage(newPage);
     setFilters({
       ...filters,
-      page:newPage
-
-    })
+      page: newPage,
+    });
   };
-  console.log("review data",data)
+  console.log("review data", data);
   return (
-      <AppLayout>
-        <Card x-chunk="dashboard-05-chunk-3">
-          <CardHeader className="px-7">
+    <AppLayout>
+      <Card x-chunk="dashboard-05-chunk-3">
+        <CardHeader className="px-7">
           <div className="grid lg:grid-cols-2 gap-2 col-span-1">
             <div className="flex  lg:justify-normal justify-between gap-x-4">
-        
               <div className="flex flex-col gap-2">
                 <CardTitle>Reviews</CardTitle>
                 <CardDescription>
@@ -79,66 +71,61 @@ function Review() {
               </div>
             </div>
             <SearchBox
-            onSearch={onSearch}
-            query={query}
-            placeholder="Search by name..."
-            searchArray={["item 1", "item 2", "item 3"]}
-            setQuery={(searchQuery) => {
-              setQuery(searchQuery);
-              setFilters({
-                name: searchQuery,
-              });
-              if (searchQuery === "") {
+              onSearch={onSearch}
+              query={query}
+              placeholder="Search by name..."
+              searchArray={["item 1", "item 2", "item 3"]}
+              setQuery={(searchQuery) => {
+                setQuery(searchQuery);
                 setFilters({
-                  page: currentPage,
+                  name: searchQuery,
                 });
-              }
-            }}/>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="hidden md:table-cell">ID</TableHead>
-                  <TableHead >Name</TableHead>
-                  <TableHead className="hidden md:table-cell">Ratting</TableHead>
-                 
-                  <TableHead className="hidden md:table-cell">Date</TableHead>
-                  <TableHead>
-                    Actions
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {isLoading ? (
-                  <TableRow>
-                    <TableCell colSpan="5" className="w-full">
-                      {/* <div className="flex justify-center mx-auto w-full text-center">
-                        <Loader />
-                      </div> */}
-                    <TableRowSkeleton cell={7} rows={4}/>
+                if (searchQuery === "") {
+                  setFilters({
+                    page: currentPage,
+                  });
+                }
+              }}
+            />
+          </div>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="hidden md:table-cell">ID</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead className="hidden md:table-cell">Ratting</TableHead>
 
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  data.review?.map((item, index) => (
-                    <ReviewItem  refetch={refetch} key={index} review={item} />
-                  ))
-                )}
-              </TableBody>
-            </Table>
-            <div className="flex mt-5 justify-center">
-              <Mypaginations
-                count={data?.pageCount}
-                page={currentPage}
-                onChange={onPageChange}
-              />
-            </div>
-          </CardContent>
-        </Card>
-      </AppLayout>
+                <TableHead className="hidden md:table-cell">Date</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan="5" className="w-full">
+                    <TableRowSkeleton cell={7} rows={4} />
+                  </TableCell>
+                </TableRow>
+              ) : (
+                data.review?.map((item, index) => (
+                  <ReviewItem refetch={refetch} key={index} review={item} />
+                ))
+              )}
+            </TableBody>
+          </Table>
+          <div className="flex mt-5 justify-center">
+            <Mypaginations
+              count={data?.pageCount}
+              page={currentPage}
+              onChange={onPageChange}
+            />
+          </div>
+        </CardContent>
+      </Card>
+    </AppLayout>
   );
 }
 
-export default withAuth(Review)
+export default withAuth(Review);
