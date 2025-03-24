@@ -30,7 +30,7 @@ const validationSchema = yup.object().shape({
 export const useAddArticle = () => {
   const router = useRouter();
   const slug = router.query.slug;
-  const isEditing = router.query.isediting;
+  const isEditing = router.query.isediting === "true";
   const [file, setFile] = useState(null);
   const [getSlugArticle, { data }] = useLazyGetBySlugArticleQuery();
   const [CreateArticle, { isLoading }] = useCreateArticleMutation();
@@ -69,27 +69,24 @@ export const useAddArticle = () => {
   };
 
   const getInitialValues = () => ({
-    headline: isEditing === "true" ? data?.headline : "",
-    primary_message: isEditing === "true" ? data?.primary_message : "",
-    type: isEditing === "true" ? data?.type : "",
-    age: isEditing === "true" ? data?.age?.toString() : 18,
-    gender: isEditing === "true" ? data?.gender : "Male",
-    user_id: isEditing === "true" ? data?.user_id?._id : "",
-    STI_status: isEditing === "true" ? data?.STI_status : "",
-    image: isEditing === "true" ? data?.image : "",
-    readTime: isEditing === "true" ? data?.readTime : "",
-    status: isEditing === "true" ? data?.status : "",
-    publishDate: isEditing === "true" ? data?.publishDate : "",
-    slug: isEditing === "true" ? data?.slug : "",
-    featuring_text: isEditing === "true" ? data?.featuring_text : "",
-    front_page: isEditing === "true" ? data?.front_page : false,
-
-    writtenBy: isEditing === "true" ? data?.writtenBy : "",
-    tags: isEditing === "true" ? data?.tags : [],
-    question_answers:
-      isEditing && data?.question_answers
-        ? data?.question_answers
-        : defaultQandA,
+    headline: isEditing ? data?.headline : "",
+    primary_message: isEditing ? data?.primary_message : "",
+    type: isEditing ? data?.type : "",
+    age: isEditing ? data?.age?.toString() : 18,
+    gender: isEditing ? data?.gender : "Male",
+    user_id: isEditing ? data?.user_id?._id : "",
+    STI_status: isEditing ? data?.STI_status : "",
+    image: isEditing ? data?.image : "",
+    readTime: isEditing ? data?.readTime : "",
+    status: isEditing ? data?.status : "",
+    publishDate: isEditing ? data?.publishDate : "",
+    slug: isEditing ? data?.slug : "",
+    featuring_text: isEditing ? data?.featuring_text : "",
+    front_page: isEditing ? data?.front_page : false,
+    medicallyReviewedDate: isEditing ? data?.medicallyReviewedDate : "",
+    writtenBy: isEditing ? data?.writtenBy : "",
+    tags: isEditing ? data?.tags : [],
+    question_answers: defaultQandA,
     details:
       isEditing && data?.details
         ? data?.details.map((detail) => {
@@ -100,15 +97,15 @@ export const useAddArticle = () => {
           })
         : [],
     verifiedBy:
-      isEditing === "true" && data?.verifiedBy?.name !== "undefined"
+      isEditing && data?.verifiedBy?.name !== "undefined"
         ? data?.verifiedBy?.name
         : "",
-    isVerified: isEditing === "true" ? data?.isVerified ?? false : false,
+    isVerified: isEditing ? data?.isVerified ?? false : false,
     verificationSources:
-      isEditing === "true" && data?.verificationSources?.length
+      isEditing && data?.verificationSources?.length
         ? data?.verificationSources
         : [{ label: "", url: "" }],
-    content: isEditing === "true" && data?.content ? data.content : "",
+    content: isEditing && data?.content ? data.content : "",
   });
 
   const handleFormSubmit = async (values, { resetForm, setSubmitting }) => {
@@ -127,6 +124,7 @@ export const useAddArticle = () => {
     formdata.append("gender", data.gender);
     formdata.append("STI_status", data.STI_status);
     formdata.append("publishDate", data.publishDate);
+    formdata.append("medicallyReviewedDate", data.medicallyReviewedDate);
     formdata.append("readTime", data.readTime);
     formdata.append("image", data.image);
     formdata.append("status", data.status);
@@ -158,48 +156,47 @@ export const useAddArticle = () => {
     }));
     formdata.append("details", JSON.stringify(filteredetails));
 
-    if (isEditing === "false") {
+    if (isEditing) {
       try {
-        const response = await CreateArticle(formdata).unwrap();
+        const response = await UpdateArticle({
+          id: slug,
+          body: formdata,
+        }).unwrap();
+
         if (response.success) {
+          getSlugArticle(slug);
           resetForm();
           toast.success(response.message);
+          setFile("");
+          setfilepath("");
           router.push("/app/articles");
         } else {
           toast.error(response.message, { theme: "colored" });
         }
       } catch (error) {
-        toast.error(error.data.message);
+        toast.error(error.data.message, { theme: "colored" });
       } finally {
         setSubmitting(false);
-        setFile("");
-        resetForm();
-        setfilepath("");
       }
 
       return;
     }
 
     try {
-      const response = await UpdateArticle({
-        id: slug,
-        body: formdata,
-      }).unwrap();
-
+      const response = await CreateArticle(formdata).unwrap();
       if (response.success) {
-        getSlugArticle(slug);
-        resetForm();
         toast.success(response.message);
-        setFile("");
-        setfilepath("");
         router.push("/app/articles");
       } else {
         toast.error(response.message, { theme: "colored" });
       }
     } catch (error) {
-      toast.error(error.data.message, { theme: "colored" });
+      toast.error(error.data.message);
     } finally {
       setSubmitting(false);
+      setFile("");
+      resetForm();
+      setfilepath("");
     }
   };
 
