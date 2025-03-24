@@ -9,13 +9,16 @@ const DatePickerPopover = ({ initialDate = null, name = "publishDate" }) => {
 
   useEffect(() => {
     // Ensure the value from Formik is a valid date
-    if (values.publishDate && !(values.publishDate instanceof Date)) {
-      const parsedDate = new Date(values.publishDate);
-      if (!isNaN(parsedDate)) {
-        setDate(parsedDate);
-      }
-    }
-  }, [values.publishDate, initialDate]);
+    // if (values.publishDate && !(values.publishDate instanceof Date)) {
+    //   const parsedDate = new Date(values.publishDate);
+    //   if (!isNaN(parsedDate)) {
+    //     setDate(parsedDate);
+    //   }
+    // }
+    if (!initialDate) return;
+
+    setDate(new Date(initialDate));
+  }, [initialDate]);
 
   return (
     <Field name={name}>
