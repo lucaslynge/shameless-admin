@@ -498,7 +498,7 @@ export const AddArticleMain = () => {
                       </div>
                       <div className="basis-full">
                         <p className="text-sm font-semibold">
-                          Medically Reviewed Date*
+                          Medically Reviewed Date
                         </p>
                         <div className="mt-1">
                           <DatePickerPopover
@@ -648,20 +648,16 @@ export const AddArticleMain = () => {
                   type="submit"
                   disabled={(!isValid || isSubmitting) && isEditing === "false"}
                 >
-                  {isEditing ? (
-                    isUpdatingArticle ? (
+                  {isUpdatingArticle || isCreatingArticle ? (
+                    <div>
                       <div className="flex gap-x-2 justify-center">
                         <Loader /> <p> Loading...</p>
                       </div>
-                    ) : (
-                      " Update the Story"
-                    )
-                  ) : isCreatingArticle ? (
-                    <div className="flex gap-x-2 justify-center">
-                      <Loader /> <p> Loading...</p>
                     </div>
+                  ) : isEditing ? (
+                    "Update the Story"
                   ) : (
-                    " Post the Story"
+                    "Post the story"
                   )}
                 </Button>
               </div>
