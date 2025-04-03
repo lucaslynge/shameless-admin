@@ -1,4 +1,4 @@
-export default function Input({ field, form, placeholder, ...props }) {
+export default function Input({ field, placeholder, ...props }) {
   const { name, value, onChange, onBlur } = field;
   return (
     <input

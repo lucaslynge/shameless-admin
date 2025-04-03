@@ -14,9 +14,13 @@ import { useRouter } from "next/router";
 import { MdOutlinePayment } from "react-icons/md";
 import { CgCommunity } from "react-icons/cg";
 import { TbBrandStorybook } from "react-icons/tb";
+import { PiUsersThreeBold } from "react-icons/pi";
+import { FaUserDoctor } from "react-icons/fa6";
 
 let sidebarNavigation = [
   { name: "Users", href: "user", icon: UsersIcon, current: false },
+  { name: "Authors", href: "authors", icon: PiUsersThreeBold, current: false },
+  { name: "Doctors", href: "doctors", icon: FaUserDoctor, current: false },
   { name: "Articles", href: "articles", icon: MdEditDocument, current: false },
   {
     name: "Personal Stories",
