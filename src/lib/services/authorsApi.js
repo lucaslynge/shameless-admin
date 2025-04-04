@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../utils/contant";
 import { getToken } from "../utils/helper";
-import { setComments } from "../features/commentsSlice";
+import { setDoctors } from "../features/doctorsSlice";
 import { setAuthors } from "../features/authorsSlice";
 
 export const authorsApi = createApi({
@@ -22,21 +22,35 @@ export const authorsApi = createApi({
   endpoints: (build) => ({
     // queries
     getAllAuthors: build.query({
-      query: () => ({ url: `/authors/all` }),
-      transformResponse: (response) => response,
+      query: () => ({ url: `/authors` }),
+      transformResponse: (response) => ({
+        response: response.data,
+        status: response.success,
+        message: response.message,
+      }),
       async onQueryStarted(filter, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
 
-          dispatch(setAuthors(data)); // Dispatch to update the slice with fetched comments
+          dispatch(setAuthors(data.response));
         } catch (error) {
           console.error("Error fetching authors:", error);
         }
       },
     }),
     // mutations
+    createAuthor: build.mutation({
+      query: (body) => ({ url: `/authors`, method: "POST", body }),
+      transformResponse: (response) => {
+        return {
+          response: response.data,
+          status: response.success,
+          message: response.message,
+        };
+      },
+    }),
     deleteAuthor: build.mutation({
-      query: (id) => ({ url: `/comments/delete/${id} `, method: "DELETE" }),
+      query: (id) => ({ url: `/authors/${id} `, method: "DELETE" }),
       transformResponse: (response) => {
         return {
           response: response.data,
@@ -45,20 +59,10 @@ export const authorsApi = createApi({
         };
       },
     }),
-    approveComment: build.mutation({
-      query: (id) => ({ url: `/comments/approve/${id} `, method: "POST" }),
-      transformResponse: (response) => {
-        return {
-          response: response.data,
-          status: response.success,
-          message: response.message,
-        };
-      },
-    }),
-    editComment: build.mutation({
+    updateAuthor: build.mutation({
       query: ({ id, body }) => ({
-        url: `/comments/update/${id} `,
-        method: "POST",
+        url: `/authors/${id} `,
+        method: "PUT",
         body,
       }),
       transformResponse: (response) => {
@@ -74,7 +78,7 @@ export const authorsApi = createApi({
 
 export const {
   useGetAllAuthorsQuery,
-  // usedeleteAuthorMutation,
-  useApproveCommentMutation,
-  useEditCommentMutation,
+  useCreateAuthorMutation,
+  useUpdateAuthorMutation,
+  useDeleteAuthorMutation,
 } = authorsApi;

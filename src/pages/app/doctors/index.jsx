@@ -7,16 +7,11 @@ import {
 } from "@/components/ui/card";
 import AppLayout from "@/layouts/AppLayout";
 import withAuth from "@/hoc/withAuth";
-import { useSelector } from "react-redux";
-import { useGetAllAuthorsQuery } from "@/lib/services/authorsApi";
-import { selectAuthors } from "@/lib/features/authorsSlice";
-import { Author, Doctor } from "@/components/pages/doctors/doctor";
+import { useDispatch, useSelector } from "react-redux";
+import { Doctor } from "@/components/pages/doctors/doctor";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import {
-  AddAuthorDialog,
-  AddDoctorDialog,
-} from "@/components/pages/doctors/add";
+import { AddDoctorDialog } from "@/components/pages/doctors/add";
 import SearchBox from "@/components/search-box";
 import {
   Table,
@@ -26,27 +21,35 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import TableRowSkeleton from "@/components/TableRowSkeleton";
-import { useGetAllDoctorsQuery } from "@/lib/services/doctorsApi";
-import { selectDoctors } from "@/lib/features/doctorsSlice";
+import {
+  useDeleteDoctorMutation,
+  useGetAllDoctorsQuery,
+} from "@/lib/services/doctorsApi";
+import { removeDoctor, selectDoctors } from "@/lib/features/doctorsSlice";
+import GenericDeleteDialog from "@/components/GenericDeleteDialog";
+import { ViewDoctorDialog } from "@/components/pages/doctors/view";
+import { EditDoctorDialog } from "@/components/pages/doctors/edit";
 
 function Doctors() {
   const { isLoading } = useGetAllDoctorsQuery();
+  const deleteDoctor = useDeleteDoctorMutation();
   const doctors = useSelector(selectDoctors);
   const [isAddDoctorOpen, setIsAddDoctorOpen] = useState(false);
   const [isViewDoctorOpen, setIsViewDoctorOpen] = useState(false);
   const [isEditDoctorOpen, setIsEditDoctorOpen] = useState(false);
   const [isDeleteDoctorOpen, setIsDeleteDoctorOpen] = useState(false);
   const [searchEmail, setSearchEmail] = useState("");
-  const [doctorToUse, setDoctorToOpen] = useState(null);
+  const [doctorToUse, setDoctorToUse] = useState(null);
+  const dispatch = useDispatch();
 
   const handleCloseAddDoctor = () => setIsAddDoctorOpen(false);
 
   const handleSetSearchEmail = (search) => setSearchEmail(search);
 
-  const handleRemoveDoctorToUse = () => setDoctorToOpen(null);
+  const handleRemoveDoctorToUse = () => setDoctorToUse(null);
 
-  const handleEditDoctor = (author) => {
-    setDoctorToOpen(author);
+  const handleEditDoctor = (doctor) => {
+    setDoctorToUse(doctor);
     setIsEditDoctorOpen(true);
   };
 
@@ -55,8 +58,8 @@ function Doctors() {
     setIsEditDoctorOpen(false);
   };
 
-  const handleViewDoctor = (author) => {
-    setDoctorToOpen(author);
+  const handleViewDoctor = (doctor) => {
+    setDoctorToUse(doctor);
     setIsViewDoctorOpen(true);
   };
 
@@ -65,26 +68,28 @@ function Doctors() {
     setIsViewDoctorOpen(false);
   };
 
-  const handleDeleteDoctor = (author) => {
-    setDoctorToOpen(author);
+  const handleDeleteDoctor = (doctor) => {
+    setDoctorToUse(doctor);
     setIsDeleteDoctorOpen(true);
   };
 
-  const handleCloseDeleteDoctor = () => {
-    handleRemoveDoctorToUse();
-    setIsDeleteDoctorOpen(false);
-  };
-
   const renderDoctors = () => {
-    const mappedDoctors = doctors.map((doctor) => (
-      <Doctor
-        doctor={doctor}
-        key={doctor._id}
-        handleDeleteDoctor={() => handleDeleteDoctor(doctor)}
-        handleViewDoctor={() => handleViewDoctor(doctor)}
-        handleEditDoctor={() => handleEditDoctor(doctor)}
-      />
-    ));
+    const mappedDoctors = doctors
+      .filter((doctor) => {
+        if (searchEmail)
+          return doctor.name.toLowerCase().includes(searchEmail.toLowerCase());
+
+        return true;
+      })
+      .map((doctor) => (
+        <Doctor
+          doctor={doctor}
+          key={doctor._id}
+          handleDeleteDoctor={() => handleDeleteDoctor(doctor)}
+          handleViewDoctor={() => handleViewDoctor(doctor)}
+          handleEditDoctor={() => handleEditDoctor(doctor)}
+        />
+      ));
 
     return mappedDoctors;
   };
@@ -142,6 +147,24 @@ function Doctors() {
       <AddDoctorDialog
         isOpen={isAddDoctorOpen}
         handleCloseAddDoctor={handleCloseAddDoctor}
+      />
+      <EditDoctorDialog
+        isOpen={isEditDoctorOpen}
+        handleCloseEditDoctor={handleCloseEditDoctor}
+        doctor={doctorToUse}
+      />
+      <ViewDoctorDialog
+        isOpen={isViewDoctorOpen}
+        handleCloseViewDoctor={handleCloseViewDoctor}
+        doctor={doctorToUse}
+      />
+      <GenericDeleteDialog
+        isOpen={isDeleteDoctorOpen}
+        setIsOpen={setIsDeleteDoctorOpen}
+        item={doctorToUse}
+        deleteAction={deleteDoctor}
+        refetch={() => dispatch(removeDoctor(doctorToUse))}
+        entityName="Doctor"
       />
     </AppLayout>
   );

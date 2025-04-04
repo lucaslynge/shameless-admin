@@ -8,7 +8,7 @@ export default function Input({ field, placeholder, ...props }) {
       onChange={onChange}
       onBlur={onBlur}
       placeholder={placeholder}
-      className="text-base text-primaryColor border border-primaryColor w-full rounded-md focus:outline-none px-5 py-3 placeholder:text-primaryColor"
+      className="text-primaryColor text-sm border border-primaryColor w-full rounded-md focus:outline-none px-5 py-3 placeholder:text-primaryColor"
     />
   );
 }

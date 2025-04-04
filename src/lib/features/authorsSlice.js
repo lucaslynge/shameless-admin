@@ -1,4 +1,3 @@
-// redux/slices/authorsSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 export const authorsSlice = createSlice({
@@ -9,27 +8,26 @@ export const authorsSlice = createSlice({
     setAuthors: (state, action) => {
       return action.payload;
     },
-    updateComment: (state, action) => {
-      const updatedComment = action.payload;
-      return state.map((comments) => ({
-        ...comments,
-        comments: comments.comments.map((comment) =>
-          comment._id === action.payload._id ? updatedComment : comment
-        ),
-      }));
+    addAuthor: (state, action) => {
+      return state.concat(action.payload);
     },
-    deleteComment: (state, action) => {
-      return state.map((comments) => ({
-        ...comments,
-        comments: comments.comments.filter(
-          (comment) => comment._id !== action.payload._id
-        ),
-      }));
+    updateAuthor: (state, action) => {
+      return state.map((author) =>
+        author._id === action.payload._id
+          ? {
+              ...author,
+              ...action.payload,
+            }
+          : author
+      );
+    },
+    removeAuthor: (state, action) => {
+      return state.filter((author) => author._id !== action.payload._id);
     },
   },
 });
 
-export const { setAuthors, updateComment, deleteComment } =
+export const { setAuthors, addAuthor, updateAuthor, removeAuthor } =
   authorsSlice.actions;
 
 export const selectAuthors = (rootState) => rootState.authors;

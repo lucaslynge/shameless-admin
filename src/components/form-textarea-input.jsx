@@ -17,7 +17,7 @@ export default function TextAreaInput({
       onBlur={onBlur}
       placeholder={placeholder}
       rows={7}
-      className="w-full text-base text-primaryColor border border-primaryColor rounded-md focus:outline-none px-5 py-3 placeholder:text-primaryColor"
+      className="w-full text-sm text-primaryColor border border-primaryColor rounded-md focus:outline-none px-5 py-3 placeholder:text-primaryColor"
     ></textarea>
   );
 }

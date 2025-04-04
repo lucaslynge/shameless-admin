@@ -7,9 +7,7 @@ import {
 } from "@/components/ui/card";
 import AppLayout from "@/layouts/AppLayout";
 import withAuth from "@/hoc/withAuth";
-import { useSelector } from "react-redux";
-import { useGetAllAuthorsQuery } from "@/lib/services/authorsApi";
-import { selectAuthors } from "@/lib/features/authorsSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { Author } from "@/components/pages/authors/author";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -23,9 +21,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import TableRowSkeleton from "@/components/TableRowSkeleton";
+import {
+  useGetAllAuthorsQuery,
+  useDeleteAuthorMutation,
+} from "@/lib/services/authorsApi";
+import { removeAuthor, selectAuthors } from "@/lib/features/authorsSlice";
+import GenericDeleteDialog from "@/components/GenericDeleteDialog";
+import { ViewAuthorDialog } from "@/components/pages/authors/view";
+import { EditAuthorDialog } from "@/components/pages/authors/edit";
 
 function Authors() {
   const { isLoading } = useGetAllAuthorsQuery();
+  const deleteAuthor = useDeleteAuthorMutation();
   const authors = useSelector(selectAuthors);
   const [isAddAuthorOpen, setIsAddAuthorOpen] = useState(false);
   const [isViewAuthorOpen, setIsViewAuthorOpen] = useState(false);
@@ -33,6 +40,7 @@ function Authors() {
   const [isDeleteAuthorOpen, setIsDeleteAuthorOpen] = useState(false);
   const [searchEmail, setSearchEmail] = useState("");
   const [authorToUse, setAuthorToUse] = useState(null);
+  const dispatch = useDispatch();
 
   const handleCloseAddAuthor = () => setIsAddAuthorOpen(false);
 
@@ -65,21 +73,23 @@ function Authors() {
     setIsDeleteAuthorOpen(true);
   };
 
-  const handleCloseDeleteAuthor = () => {
-    handleRemoveAuthorToUse();
-    setIsDeleteAuthorOpen(false);
-  };
-
   const renderAuthors = () => {
-    const mappedAuthors = authors.map((author) => (
-      <Author
-        author={author}
-        key={author._id}
-        handleDeleteAuthor={() => handleDeleteAuthor(author)}
-        handleViewAuthor={() => handleViewAuthor(author)}
-        handleEditAuthor={() => handleEditAuthor(author)}
-      />
-    ));
+    const mappedAuthors = authors
+      .filter((author) => {
+        if (searchEmail)
+          return author.name.toLowerCase().includes(searchEmail.toLowerCase());
+
+        return true;
+      })
+      .map((author) => (
+        <Author
+          author={author}
+          key={author._id}
+          handleDeleteAuthor={() => handleDeleteAuthor(author)}
+          handleViewAuthor={() => handleViewAuthor(author)}
+          handleEditAuthor={() => handleEditAuthor(author)}
+        />
+      ));
 
     return mappedAuthors;
   };
@@ -137,6 +147,24 @@ function Authors() {
       <AddAuthorDialog
         isOpen={isAddAuthorOpen}
         handleCloseAddAuthor={handleCloseAddAuthor}
+      />
+      <EditAuthorDialog
+        isOpen={isEditAuthorOpen}
+        handleCloseEditAuthor={handleCloseEditAuthor}
+        author={authorToUse}
+      />
+      <ViewAuthorDialog
+        isOpen={isViewAuthorOpen}
+        handleCloseViewAuthor={handleCloseViewAuthor}
+        author={authorToUse}
+      />
+      <GenericDeleteDialog
+        isOpen={isDeleteAuthorOpen}
+        setIsOpen={setIsDeleteAuthorOpen}
+        item={authorToUse}
+        deleteAction={deleteAuthor}
+        refetch={() => dispatch(removeAuthor(authorToUse))}
+        entityName="Author"
       />
     </AppLayout>
   );
