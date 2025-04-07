@@ -40,8 +40,7 @@ export const AddArticleMain = () => {
     data,
     filepath,
     isEditing,
-    verifiedByFilePath,
-    handleAddVerifiedByImage,
+    doctors,
   } = useAddArticle();
 
   const ageOptions = Array.from({ length: 48 }, (_, i) => (i + 18).toString());
@@ -53,7 +52,7 @@ export const AddArticleMain = () => {
   };
 
   return (
-    <div className="md:w-[75%] with-react-tags 2xl:w-[40%] mx-auto bg-white rounded-md md:px-7 mb-5">
+    <div className="article_add md:w-[75%] with-react-tags 2xl:w-[40%] mx-auto bg-white rounded-md md:px-7 mb-5">
       <div>
         <p className="text-2xl font-bold">Share Your Story</p>
         <Formik
@@ -455,7 +454,7 @@ export const AddArticleMain = () => {
                 {values.isVerified && (
                   <div className="pt-2">
                     <div className="flex flex-col md:flex-row justify-between gap-4 mt-3">
-                      <div className="mb-3 basis-full">
+                      {/* <div className="mb-3 basis-full">
                         <label
                           htmlFor="verifiedBy"
                           className="text-sm font-semibold"
@@ -495,6 +494,41 @@ export const AddArticleMain = () => {
                             className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-3"
                           />
                         </div>
+                      </div> */}
+                      <div className="basis-full">
+                        <label
+                          htmlFor="writtenBy"
+                          className="text-sm font-semibold mb-2"
+                        >
+                          Verified By
+                        </label>
+                        <Field id="verifiedBy" name="verifiedBy">
+                          {({ field, form }) => (
+                            <Select
+                              name={field.name}
+                              value={field.value}
+                              onValueChange={(value) =>
+                                form.setFieldValue(field.name, value)
+                              }
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectGroup>
+                                  {doctors.map((doctor) => (
+                                    <SelectItem
+                                      key={doctor._id}
+                                      value={doctor._id}
+                                    >
+                                      {doctor.name}
+                                    </SelectItem>
+                                  ))}
+                                </SelectGroup>
+                              </SelectContent>
+                            </Select>
+                          )}
+                        </Field>
                       </div>
                       <div className="basis-full">
                         <p className="text-sm font-semibold">

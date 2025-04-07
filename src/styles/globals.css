@@ -352,3 +352,9 @@
 .no-shadow {
   box-shadow: none !important;
 }
+
+.article_add {
+  button[role="combobox"] {
+    height: 46px;
+  }
+}
