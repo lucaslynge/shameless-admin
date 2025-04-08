@@ -18,6 +18,7 @@ import promoCodesReducer from "./promoCodesSlice";
 import commentsReducer from "./commentsSlice";
 import authorsReducer from "./authorsSlice";
 import doctorsReducer from "./doctorsSlice";
+import articlesReducer from "./articlesSlice";
 
 const rootReducer = combineReducers({
   counter: counterReducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   comments: commentsReducer,
   authors: authorsReducer,
   doctors: doctorsReducer,
+  articles: articlesReducer,
   [userApi.reducerPath]: userApi.reducer,
   [articleApi.reducerPath]: articleApi.reducer,
   [communityApi.reducerPath]: communityApi.reducer,

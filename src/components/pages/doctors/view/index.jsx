@@ -6,7 +6,7 @@ export const ViewDoctorDialog = ({ isOpen, handleCloseViewDoctor, doctor }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleCloseViewDoctor}>
-      <DialogContent className="max-h-screen overflow-y-scroll p-6">
+      <DialogContent className="max-h-screen overflow-y-scroll p-6 max-w-2xl">
         <div className="flex flex-col items-center text-center mb-4">
           {doctor.avatar ? (
             <Image
@@ -45,6 +45,7 @@ export const ViewDoctorDialog = ({ isOpen, handleCloseViewDoctor, doctor }) => {
               <p className="text-gray-800 text-sm">N/A</p>
             )}
           </fieldset>
+
           <fieldset className="mb-4 border border-gray-300 rounded-lg p-4">
             <legend className="text-sm font-semibold px-2">Social Links</legend>
             <div className="mb-3">
@@ -77,6 +78,51 @@ export const ViewDoctorDialog = ({ isOpen, handleCloseViewDoctor, doctor }) => {
                 <p className="text-gray-800 text-sm">N/A</p>
               )}
             </div>
+          </fieldset>
+
+          <fieldset className="mb-4 border border-gray-300 rounded-lg p-4">
+            <legend className="text-sm font-semibold px-2">
+              Featured Video
+            </legend>
+            {doctor.video?.link ? (
+              <div>
+                <p className="text-sm font-medium mb-1">
+                  {doctor.video.headline}
+                </p>
+                <p className="text-gray-800 text-sm mb-2">
+                  {doctor.video.description}
+                </p>
+                <div className="aspect-w-16 aspect-h-9">
+                  <iframe
+                    className="w-full h-64 rounded-md"
+                    src={doctor.video.link}
+                    title="Doctor's Featured Video"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
+            ) : (
+              <p className="text-gray-800 text-sm">N/A</p>
+            )}
+          </fieldset>
+
+          <fieldset className="mb-4 border border-gray-300 rounded-lg p-4">
+            <legend className="text-sm font-semibold px-2">
+              Article Picks
+            </legend>
+            {doctor.picks?.length ? (
+              <ul className="list-disc pl-4">
+                {doctor.picks.map((pick, index) => (
+                  <li key={index} className="text-gray-800 text-sm">
+                    {pick.label || pick.value}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-800 text-sm">N/A</p>
+            )}
           </fieldset>
         </div>
       </DialogContent>

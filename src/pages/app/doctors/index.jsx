@@ -29,8 +29,10 @@ import { removeDoctor, selectDoctors } from "@/lib/features/doctorsSlice";
 import GenericDeleteDialog from "@/components/GenericDeleteDialog";
 import { ViewDoctorDialog } from "@/components/pages/doctors/view";
 import { EditDoctorDialog } from "@/components/pages/doctors/edit";
+import { usePickArticles } from "@/lib/hooks/usePickArticles";
 
 function Doctors() {
+  usePickArticles();
   const { isLoading } = useGetAllDoctorsQuery();
   const deleteDoctor = useDeleteDoctorMutation();
   const doctors = useSelector(selectDoctors);
