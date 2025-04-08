@@ -454,47 +454,6 @@ export const AddArticleMain = () => {
                 {values.isVerified && (
                   <div className="pt-2">
                     <div className="flex flex-col md:flex-row justify-between gap-4 mt-3">
-                      {/* <div className="mb-3 basis-full">
-                        <label
-                          htmlFor="verifiedBy"
-                          className="text-sm font-semibold"
-                        >
-                          Verified by
-                        </label>
-                        <div className="flex items-end gap-x-2">
-                          <input
-                            type="file"
-                            id="verifiedByImage"
-                            style={{ display: "none" }}
-                            onChange={handleAddVerifiedByImage}
-                          />
-                          <label
-                            htmlFor="verifiedByImage"
-                            className="border grid place-content-center border-dashed border-[#C8C8C8] rounded-md cursor-pointer w-12 h-11 "
-                          >
-                            <Image
-                              src={
-                                verifiedByFilePath
-                                  ? verifiedByFilePath
-                                  : placeholderImg
-                              }
-                              alt=""
-                              width={40}
-                              height={40}
-                              className="rounded object-cover w-[40px] h-[40px] hover:cursor-pointer "
-                            />
-                          </label>
-                          <Field
-                            type="text"
-                            id="verifiedBy"
-                            value={values.verifiedBy}
-                            onChange={handleChange}
-                            name="verifiedBy"
-                            placeholder="Name here"
-                            className="w-full text-sm border border-[#C8C8C8] rounded-md focus:outline-none placeholder:text-[#414141] mt-1 px-4 py-3"
-                          />
-                        </div>
-                      </div> */}
                       <div className="basis-full">
                         <label
                           htmlFor="writtenBy"
