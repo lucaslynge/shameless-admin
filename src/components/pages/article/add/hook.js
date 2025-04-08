@@ -85,7 +85,7 @@ export const useAddArticle = () => {
             };
           })
         : [],
-    verifiedBy: isEditing && data?.verifiedBy ? data?.verifiedBy : "",
+    verifiedBy: isEditing ? data?.verifiedBy?._id ?? "" : "",
     isVerified: isEditing ? data?.isVerified ?? false : false,
     verificationSources:
       isEditing && data?.verificationSources?.length
