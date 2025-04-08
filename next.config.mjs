@@ -3,7 +3,12 @@ const nextConfig = {
   transpilePackages: ["@mdxeditor/editor"],
   reactStrictMode: true,
   images: {
-    domains: ["res.cloudinary.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**", // Allows all external image sources
+      },
+    ],
   },
   webpack: (config) => {
     // this will override the experiments

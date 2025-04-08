@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../utils/contant";
 import { getToken } from "../utils/helper";
+import { setPicksArticles } from "../features/articlesSlice";
 export const articleApi = createApi({
   reducerPath: "articleApi",
   baseQuery: fetchBaseQuery({
@@ -30,6 +31,21 @@ export const articleApi = createApi({
         return { url: `artical/reviewById/${slug}` };
       },
       transformResponse: (response) => response.data,
+    }),
+    getPicksArticles: build.query({
+      query: (filter) => {
+        return { url: `artical/picks` };
+      },
+      providesTags: ["Articles"],
+      transformResponse: (response) => response.data,
+      async onQueryStarted(filter, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setPicksArticles(data.picks));
+        } catch (error) {
+          console.error("Error fetching doctors:", error);
+        }
+      },
     }),
     CreateArticle: build.mutation({
       query: (credentials) => ({
@@ -99,4 +115,5 @@ export const {
   useGetBySlugArticleQuery,
   useLazyGetBySlugArticleQuery,
   useUploadArticleImageMutation,
+  useLazyGetPicksArticlesQuery,
 } = articleApi;

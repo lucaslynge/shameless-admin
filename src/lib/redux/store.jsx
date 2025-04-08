@@ -13,6 +13,8 @@ import { reviewApi } from "../services/reviewApi";
 import { promoCodeApi } from "../services/promoCodeApi";
 import { tokenApi } from "../services/tokenApi";
 import { commentsApi } from "../services/commentsApi";
+import { authorsApi } from "../services/authorsApi";
+import { doctorsApi } from "../services/doctorsApi";
 
 const persistConfig = {
   key: "root",
@@ -35,7 +37,9 @@ const makeStore = () =>
         .concat(reviewApi.middleware)
         .concat(promoCodeApi.middleware)
         .concat(tokenApi.middleware)
-        .concat(commentsApi.middleware),
+        .concat(commentsApi.middleware)
+        .concat(authorsApi.middleware)
+        .concat(doctorsApi.middleware),
   });
 
 const store = makeStore();

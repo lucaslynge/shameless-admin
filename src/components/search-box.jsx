@@ -85,7 +85,7 @@ export default function SearchBox({
 
   return (
     <div
-      className={`w-full relative flex items-center border rounded-full bg-white text-zinc-700 z-30`}
+      className={`w-full relative flex items-center border rounded-full bg-white text-zinc-700 z-30 focus-within:outline-blue-500 focus-within:outline-1 focus-within:outline`}
     >
       <button
         className=" text-zinc-500 px-4 py-3 rounded-r-lg"
@@ -106,7 +106,7 @@ export default function SearchBox({
         onKeyDown={handleKeyPress}
         onFocus={() => handleFocus()}
         ref={inputRef}
-        className="w-full rounded-full !focus-visible:outline-none border-none   py-3 "
+        className="w-full rounded-full !focus-visible:outline-none border-none py-3 no-shadow"
       />
       {query && (
         <button

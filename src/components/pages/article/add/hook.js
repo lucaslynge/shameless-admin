@@ -10,6 +10,9 @@ import slugify from "slugify";
 import placeholderImg from "@/public/assest/placeholder_img.png";
 import { generateSlug } from "@/lib/utils/helper";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { selectDoctors } from "@/lib/features/doctorsSlice";
+import { useGetAllDoctorsQuery } from "@/lib/services/doctorsApi";
 
 const validationSchema = yup.object().shape({
   headline: yup.string().required("headline is required"),
@@ -28,6 +31,8 @@ const validationSchema = yup.object().shape({
 });
 
 export const useAddArticle = () => {
+  useGetAllDoctorsQuery();
+  const doctors = useSelector(selectDoctors);
   const router = useRouter();
   const slug = router.query.slug;
   const isEditing = router.query.isediting === "true";
@@ -37,8 +42,6 @@ export const useAddArticle = () => {
   const [UpdateArticle, { isLoading: isLoadingUpdate }] =
     useUpdateArticleMutation();
   const [filepath, setfilepath] = useState("");
-  const [verifiedByFile, setVerifiedByFile] = useState(null);
-  const [verifiedByFilePath, setVerifiedByFilePath] = useState("");
 
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
@@ -51,20 +54,6 @@ export const useAddArticle = () => {
     reader.readAsDataURL(file);
     reader.onload = function () {
       setfilepath(reader?.result);
-    };
-  };
-
-  const handleAddVerifiedByImage = (event) => {
-    const file = event.target.files?.[0];
-    const reader = new FileReader();
-
-    if (!file) return;
-
-    setVerifiedByFile(file);
-
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      setVerifiedByFilePath(reader?.result);
     };
   };
 
@@ -96,10 +85,7 @@ export const useAddArticle = () => {
             };
           })
         : [],
-    verifiedBy:
-      isEditing && data?.verifiedBy?.name !== "undefined"
-        ? data?.verifiedBy?.name
-        : "",
+    verifiedBy: isEditing && data?.verifiedBy ? data?.verifiedBy : "",
     isVerified: isEditing ? data?.isVerified ?? false : false,
     verificationSources:
       isEditing && data?.verificationSources?.length
@@ -112,7 +98,6 @@ export const useAddArticle = () => {
     let data = {
       ...values,
       image: file,
-      verifiedByImage: verifiedByFile,
     };
     const formdata = new FormData();
 
@@ -136,7 +121,6 @@ export const useAddArticle = () => {
       JSON.stringify(values.question_answers)
     );
     formdata.append("writtenBy", data.writtenBy);
-    formdata.append("verifiedByImage", data.verifiedByImage);
     formdata.append("verifiedBy", data.verifiedBy);
     formdata.append("isVerified", data.isVerified);
     formdata.append(
@@ -211,9 +195,6 @@ export const useAddArticle = () => {
   useEffect(() => {
     if (isEditing === "true") {
       setfilepath(data?.image ? data?.image : placeholderImg);
-      setVerifiedByFilePath(
-        data?.verifiedBy?.image ? data?.verifiedBy?.image : placeholderImg
-      );
     }
   }, [data]);
 
@@ -234,8 +215,7 @@ export const useAddArticle = () => {
     data,
     filepath,
     isEditing,
-    handleAddVerifiedByImage,
-    verifiedByFilePath,
+    doctors,
   };
 };
 

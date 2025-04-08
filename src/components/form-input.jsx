@@ -1,4 +1,4 @@
-export default function Input({ field, form, placeholder, ...props }) {
+export default function Input({ field, placeholder, ...props }) {
   const { name, value, onChange, onBlur } = field;
   return (
     <input
@@ -8,7 +8,7 @@ export default function Input({ field, form, placeholder, ...props }) {
       onChange={onChange}
       onBlur={onBlur}
       placeholder={placeholder}
-      className="text-base text-primaryColor border border-primaryColor w-full rounded-md focus:outline-none px-5 py-3 placeholder:text-primaryColor"
+      className="text-primaryColor text-sm border border-primaryColor w-full rounded-md focus:outline-none px-5 py-3 placeholder:text-primaryColor"
     />
   );
 }
