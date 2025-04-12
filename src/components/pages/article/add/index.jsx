@@ -629,10 +629,6 @@ export const AddArticleMain = () => {
                   </div>
                 </div>
               </div>
-
-              {/* <div className="mt-5">
-                <ShareAccordion />
-              </div> */}
               <div className="my-5">
                 <AdditionalDetails />
               </div>

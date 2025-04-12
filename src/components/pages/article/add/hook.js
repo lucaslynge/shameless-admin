@@ -81,7 +81,6 @@ export const useAddArticle = () => {
         ? data?.details.map((detail) => {
             return {
               ...detail,
-              iconPreview: detail.icon,
             };
           })
         : [],
@@ -133,7 +132,6 @@ export const useAddArticle = () => {
     const slugfiy = generateSlug(data.slug);
     formdata.append("slug", slugfiy);
     const filteredetails = values.details.map((detail) => ({
-      icon: detail.icon,
       title: detail.title,
       description: detail.description,
       keywords: detail.keywords,
