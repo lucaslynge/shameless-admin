@@ -191,9 +191,8 @@ export const useAddArticle = () => {
       fileInput.click();
     }
   };
-
   useEffect(() => {
-    if (isEditing === "true") {
+    if (isEditing) {
       setfilepath(data?.image ? data?.image : placeholderImg);
     }
   }, [data]);
