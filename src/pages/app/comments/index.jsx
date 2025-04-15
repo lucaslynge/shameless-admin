@@ -11,18 +11,25 @@ import { useGetAllCommentsQuery } from "@/lib/services/commentsApi";
 import { useSelector } from "react-redux";
 import { selectComments } from "@/lib/features/commentsSlice";
 import { Comment } from "../../../components/pages/comments/comment";
-import { useState } from "react";
+import { usePickArticles } from "@/lib/hooks/usePickArticles";
 
 function Comments() {
+  usePickArticles();
   useGetAllCommentsQuery();
   const comments = useSelector(selectComments);
-  const [activeComments, setActiveComments] = useState("pending");
-
-  const handleSetActiveComments = (tab) => () => setActiveComments(tab);
 
   const renderComments = () => {
     const combinedComments = comments
-      .reduce((accu, curr) => accu.concat(curr.comments), [])
+      .reduce(
+        (accu, curr) =>
+          accu.concat(
+            curr.comments.map((comment) => ({
+              ...comment,
+              article_id: curr.article_id,
+            }))
+          ),
+        []
+      )
       .filter((comment) => comment.status === "pending");
     const mappedComments = combinedComments.map((comment) => (
       <Comment comment={comment} key={comment._id} />
@@ -43,10 +50,6 @@ function Comments() {
           </div>
         </CardHeader>
         <CardContent>
-          {/* <div classNam="flex items-center">
-            <button className={``} onClick={handleSetActiveComments("pending")}>Pending</button>
-            <button>Approved</button>
-          </div> */}
           <ul>{renderComments()}</ul>
         </CardContent>
       </Card>
