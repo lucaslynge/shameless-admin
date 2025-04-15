@@ -6,17 +6,22 @@ import GenericDeleteDialog from "@/components/GenericDeleteDialog";
 import { useState } from "react";
 import { useDeleteCommentMutation } from "@/lib/services/commentsApi";
 import { deleteComment } from "@/lib/features/commentsSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ApproveCommentModal } from "../approve";
 import { EditCommentModal } from "../edit";
+import { selectArticles } from "@/lib/features/articlesSlice";
 
 export const Comment = ({ comment }) => {
+  const { picks } = useSelector(selectArticles);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const dispatch = useDispatch();
   const onDelete = useDeleteCommentMutation();
   const [showApproveComment, setShowApproveComment] = useState(false);
   const [showEditComment, setShowEditComment] = useState(false);
 
+  const getCommentArticle = () =>
+    picks.find((article) => article._id === comment.article_id);
+  console.log(comment.user_id);
   return (
     <>
       <li
@@ -34,6 +39,10 @@ export const Comment = ({ comment }) => {
             <div>
               <p className="text-[#001C46] !leading-[1] text-sm lg:text-base font-semibold">
                 {comment.firstName}
+
+                <span className="text-[13px] font-normal">
+                  {comment.user_id ? ` - (${comment.user_id.email})` : ""}
+                </span>
               </p>
               <p className="text-sm font-light">
                 {formatDistanceToNow(new Date(comment.date), {
@@ -42,7 +51,14 @@ export const Comment = ({ comment }) => {
               </p>
             </div>
           </div>
-          <p className="text-[#001C46] font-light">{comment.content}</p>
+          <div>
+            {getCommentArticle() && (
+              <p className="text-[#001C46] text-sm !leading-[1] mb-2 font-medium">
+                {getCommentArticle().headline}
+              </p>
+            )}
+            <p className="text-[#001C46] font-light">{comment.content}</p>
+          </div>
         </div>
         <div className="flex gap-x-2 ml-auto">
           <Button
