@@ -309,8 +309,8 @@ export const AddArticleMain = () => {
                             <SelectItem value={"HTLV"}>HTLV</SelectItem>
                             <SelectItem value={"CMV"}>CMV</SelectItem>
                             <SelectItem value={"EBV"}>EBV</SelectItem>
-                            <SelectItem value={"Hepatitis B & C"}>
-                              Hepatitis B & C
+                            <SelectItem value={"Hepatitis B and C"}>
+                              Hepatitis B and C
                             </SelectItem>
                             <SelectItem value={"Molluscum"}>
                               Molluscum

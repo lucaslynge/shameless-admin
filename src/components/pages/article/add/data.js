@@ -87,7 +87,7 @@ export const tagsData = {
     },
     { value: "HIV and Mental Health", label: "HIV and Mental Health" },
   ],
-  "Hepatitis B & C": [
+  "Hepatitis B and C": [
     { value: "Hepatitis Disclosure", label: "Hepatitis Disclosure" },
     {
       value: "Managing Chronic Hepatitis",
