@@ -50,7 +50,14 @@ function User() {
           <div className="grid lg:grid-cols-2 gap-2 col-span-1">
             <div className="flex  lg:justify-normal justify-between gap-x-4">
               <div className="flex flex-col  gap-2">
-                <CardTitle>Users</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  Users
+                  {data?.totalCount != null && (
+                    <span className="inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+                      {data.totalCount} total
+                    </span>
+                  )}
+                </CardTitle>
                 <CardDescription>
                   Recent Users from your shamelessPath.
                 </CardDescription>
