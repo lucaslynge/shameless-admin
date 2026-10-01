@@ -48,7 +48,7 @@ export const AddArticleMain = () => {
   const getSuggestions = (stiStatus) => {
     if (!stiStatus || stiStatus === "General") return defaultTags;
 
-    return defaultTags.concat(tagsData[stiStatus]);
+    return defaultTags.concat(tagsData[stiStatus] || []);
   };
 
   return (
@@ -315,6 +315,8 @@ export const AddArticleMain = () => {
                             <SelectItem value={"Molluscum"}>
                               Molluscum
                             </SelectItem>
+                            <SelectItem value={"Chlamydia"}>Chlamydia</SelectItem>
+                            <SelectItem value={"Syphilis"}>Syphilis</SelectItem>
                             <SelectItem value={"General"}>General</SelectItem>
                           </SelectGroup>
                         </SelectContent>
